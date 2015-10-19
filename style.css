@@ -1,0 +1,41 @@
+html,head,body {
+    padding:0;
+    margin:0;
+}
+body {
+    font-family: calibri, helvetica, arial, sans-serif;
+}
+.header {
+  display: flex;
+  flex-flow: row || nowrap;
+  justify-content: space-between;
+  border-bottom: thin solid black;
+}
+
+.nav {
+  display: flex;
+  flex-flow: row || nowrap;
+  justify-content: space-between;
+}
+
+.nav_button {
+  padding: 20px;
+}
+
+a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}
+
+.content {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+}
+
+.greeter {
+    margin: auto;
+}

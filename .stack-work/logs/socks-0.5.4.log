@@ -1,0 +1,23 @@
+Configuring socks-0.5.4...
+Building socks-0.5.4...
+Preprocessing library socks-0.5.4...
+[1 of 6] Compiling Network.Socks5.Types ( Network/Socks5/Types.hs, .stack-work/dist/x86_64-osx/Cabal-1.22.4.0/build/Network/Socks5/Types.o )
+[2 of 6] Compiling Network.Socks5.Wire ( Network/Socks5/Wire.hs, .stack-work/dist/x86_64-osx/Cabal-1.22.4.0/build/Network/Socks5/Wire.o )
+
+Network/Socks5/Wire.hs:15:1: Warning:
+    The import of ‘Control.Applicative’ is redundant
+      except perhaps to import instances from ‘Control.Applicative’
+    To import instances alone, use: import Control.Applicative()
+[3 of 6] Compiling Network.Socks5.Command ( Network/Socks5/Command.hs, .stack-work/dist/x86_64-osx/Cabal-1.22.4.0/build/Network/Socks5/Command.o )
+
+Network/Socks5/Command.hs:25:1: Warning:
+    The import of ‘Control.Applicative’ is redundant
+      except perhaps to import instances from ‘Control.Applicative’
+    To import instances alone, use: import Control.Applicative()
+[4 of 6] Compiling Network.Socks5.Lowlevel ( Network/Socks5/Lowlevel.hs, .stack-work/dist/x86_64-osx/Cabal-1.22.4.0/build/Network/Socks5/Lowlevel.o )
+[5 of 6] Compiling Network.Socks5.Conf ( Network/Socks5/Conf.hs, .stack-work/dist/x86_64-osx/Cabal-1.22.4.0/build/Network/Socks5/Conf.o )
+[6 of 6] Compiling Network.Socks5   ( Network/Socks5.hs, .stack-work/dist/x86_64-osx/Cabal-1.22.4.0/build/Network/Socks5.o )
+In-place registering socks-0.5.4...
+Installing library in
+/Users/davidrusu/.stack/snapshots/x86_64-osx/lts-3.6/7.10.2/lib/x86_64-osx-ghc-7.10.2/socks-0.5.4-9FgpVcsLUOt9Bxui5SOHLA
+Registering socks-0.5.4...

@@ -1,0 +1,194 @@
+Configuring hslua-0.4.1...
+Building hslua-0.4.1...
+Preprocessing library hslua-0.4.1...
+[1 of 2] Compiling Scripting.Lua.Raw ( .stack-work/dist/x86_64-osx/Cabal-1.22.4.0/build/Scripting/Lua/Raw.hs, .stack-work/dist/x86_64-osx/Cabal-1.22.4.0/build/Scripting/Lua/Raw.o )
+[2 of 2] Compiling Scripting.Lua    ( .stack-work/dist/x86_64-osx/Cabal-1.22.4.0/build/Scripting/Lua.hs, .stack-work/dist/x86_64-osx/Cabal-1.22.4.0/build/Scripting/Lua.o )
+
+src/Scripting/Lua.hsc:16:1: Warning:
+    The import of ‘Control.Applicative’ is redundant
+      except perhaps to import instances from ‘Control.Applicative’
+    To import instances alone, use: import Control.Applicative()
+
+lua-5.1.5/lauxlib.c:577:61:
+     warning: while loop has empty body [-Wempty-body]
+       while ((c = getc(lf.f)) != EOF && c != LUA_SIGNATURE[0]) ;
+                                                                ^
+
+lua-5.1.5/lauxlib.c:577:61:
+     note: put the semicolon on a separate line to silence this warning
+1 warning generated.
+
+lua-5.1.5/lauxlib.c:577:61:
+     warning: while loop has empty body [-Wempty-body]
+       while ((c = getc(lf.f)) != EOF && c != LUA_SIGNATURE[0]) ;
+                                                                ^
+
+lua-5.1.5/lauxlib.c:577:61:
+     note: put the semicolon on a separate line to silence this warning
+1 warning generated.
+
+lua-5.1.5/loadlib.c:164:3:
+     warning: 'NSLinkEditError' is deprecated: first deprecated in OS X 10.5 [-Wdeprecated-declarations]
+      NSLinkEditError(&err, &err_num, &err_file, &err_str);
+      ^
+
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include/mach-o/dyld.h:210:13:
+     note: 'NSLinkEditError' has been explicitly marked deprecated here
+extern void NSLinkEditError(NSLinkEditErrors *c, int *errorNumber, const char** fileName, const char** errorString) __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_1,__MAC_10_5,__IPHONE_NA,__IPHONE_NA);
+            ^
+
+lua-5.1.5/loadlib.c:187:3:
+     warning: 'NSUnLinkModule' is deprecated: first deprecated in OS X 10.5 [-Wdeprecated-declarations]
+      NSUnLinkModule((NSModule)lib, NSUNLINKMODULE_OPTION_RESET_LAZY_REFERENCES);
+      ^
+
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include/mach-o/dyld.h:162:13:
+     note: 'NSUnLinkModule' has been explicitly marked deprecated here
+extern bool NSUnLinkModule(NSModule module, uint32_t options) __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_1,__MAC_10_5,__IPHONE_NA,__IPHONE_NA);
+            ^
+
+lua-5.1.5/loadlib.c:195:7:
+     warning: '_dyld_present' is deprecated: first deprecated in OS X 10.5 [-Wdeprecated-declarations]
+      if(!_dyld_present()) {
+          ^
+
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include/mach-o/dyld.h:230:13:
+     note: '_dyld_present' has been explicitly marked deprecated here
+extern bool _dyld_present(void)                                                              __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_1,__MAC_10_5,__IPHONE_NA,__IPHONE_NA);
+            ^
+
+lua-5.1.5/loadlib.c:199:9:
+     warning: 'NSCreateObjectFileImageFromFile' is deprecated: first deprecated in OS X 10.5 [-Wdeprecated-declarations]
+      ret = NSCreateObjectFileImageFromFile(path, &img);
+            ^
+
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include/mach-o/dyld.h:138:36:
+     note: 'NSCreateObjectFileImageFromFile' has been explicitly marked deprecated here
+extern NSObjectFileImageReturnCode NSCreateObjectFileImageFromFile(const char* pathName, NSObjectFileImage *objectFileImage)               __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_1,__MAC_10_5,__IPHONE_NA,__IPHONE_NA);
+                                   ^
+
+lua-5.1.5/loadlib.c:201:20:
+     warning: 'NSLinkModule' is deprecated: first deprecated in OS X 10.5 [-Wdeprecated-declarations]
+        NSModule mod = NSLinkModule(img, path, NSLINKMODULE_OPTION_PRIVATE |
+                       ^
+
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include/mach-o/dyld.h:154:17:
+     note: 'NSLinkModule' has been explicitly marked deprecated here
+extern NSModule NSLinkModule(NSObjectFileImage objectFileImage, const char* moduleName, uint32_t options) __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_1,__MAC_10_5,__IPHONE_NA,__IPHONE_NA);
+                ^
+
+lua-5.1.5/loadlib.c:203:5:
+     warning: 'NSDestroyObjectFileImage' is deprecated: first deprecated in OS X 10.5 [-Wdeprecated-declarations]
+        NSDestroyObjectFileImage(img);
+        ^
+
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include/mach-o/dyld.h:140:36:
+     note: 'NSDestroyObjectFileImage' has been explicitly marked deprecated here
+extern bool                        NSDestroyObjectFileImage(NSObjectFileImage objectFileImage)                                             __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_1,__MAC_10_5,__IPHONE_NA,__IPHONE_NA);
+                                   ^
+
+lua-5.1.5/loadlib.c:213:18:
+     warning: 'NSLookupSymbolInModule' is deprecated: first deprecated in OS X 10.5 [-Wdeprecated-declarations]
+      NSSymbol nss = NSLookupSymbolInModule((NSModule)lib, sym);
+                     ^
+
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include/mach-o/dyld.h:174:17:
+     note: 'NSLookupSymbolInModule' has been explicitly marked deprecated here
+extern NSSymbol NSLookupSymbolInModule(NSModule module, const char* symbolName)                                  __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_1,__MAC_10_5,__IPHONE_NA,__IPHONE_NA);
+                ^
+
+lua-5.1.5/loadlib.c:218:25:
+     warning: 'NSAddressOfSymbol' is deprecated: first deprecated in OS X 10.5 [-Wdeprecated-declarations]
+      return (lua_CFunction)NSAddressOfSymbol(nss);
+                            ^
+
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include/mach-o/dyld.h:181:21:
+     note: 'NSAddressOfSymbol' has been explicitly marked deprecated here
+extern void *       NSAddressOfSymbol(NSSymbol symbol) __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_1,__MAC_10_5,__IPHONE_NA,__IPHONE_NA);
+                    ^
+8 warnings generated.
+
+lua-5.1.5/loadlib.c:164:3:
+     warning: 'NSLinkEditError' is deprecated: first deprecated in OS X 10.5 [-Wdeprecated-declarations]
+      NSLinkEditError(&err, &err_num, &err_file, &err_str);
+      ^
+
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include/mach-o/dyld.h:210:13:
+     note: 'NSLinkEditError' has been explicitly marked deprecated here
+extern void NSLinkEditError(NSLinkEditErrors *c, int *errorNumber, const char** fileName, const char** errorString) __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_1,__MAC_10_5,__IPHONE_NA,__IPHONE_NA);
+            ^
+
+lua-5.1.5/loadlib.c:187:3:
+     warning: 'NSUnLinkModule' is deprecated: first deprecated in OS X 10.5 [-Wdeprecated-declarations]
+      NSUnLinkModule((NSModule)lib, NSUNLINKMODULE_OPTION_RESET_LAZY_REFERENCES);
+      ^
+
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include/mach-o/dyld.h:162:13:
+     note: 'NSUnLinkModule' has been explicitly marked deprecated here
+extern bool NSUnLinkModule(NSModule module, uint32_t options) __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_1,__MAC_10_5,__IPHONE_NA,__IPHONE_NA);
+            ^
+
+lua-5.1.5/loadlib.c:195:7:
+     warning: '_dyld_present' is deprecated: first deprecated in OS X 10.5 [-Wdeprecated-declarations]
+      if(!_dyld_present()) {
+          ^
+
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include/mach-o/dyld.h:230:13:
+     note: '_dyld_present' has been explicitly marked deprecated here
+extern bool _dyld_present(void)                                                              __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_1,__MAC_10_5,__IPHONE_NA,__IPHONE_NA);
+            ^
+
+lua-5.1.5/loadlib.c:199:9:
+     warning: 'NSCreateObjectFileImageFromFile' is deprecated: first deprecated in OS X 10.5 [-Wdeprecated-declarations]
+      ret = NSCreateObjectFileImageFromFile(path, &img);
+            ^
+
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include/mach-o/dyld.h:138:36:
+     note: 'NSCreateObjectFileImageFromFile' has been explicitly marked deprecated here
+extern NSObjectFileImageReturnCode NSCreateObjectFileImageFromFile(const char* pathName, NSObjectFileImage *objectFileImage)               __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_1,__MAC_10_5,__IPHONE_NA,__IPHONE_NA);
+                                   ^
+
+lua-5.1.5/loadlib.c:201:20:
+     warning: 'NSLinkModule' is deprecated: first deprecated in OS X 10.5 [-Wdeprecated-declarations]
+        NSModule mod = NSLinkModule(img, path, NSLINKMODULE_OPTION_PRIVATE |
+                       ^
+
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include/mach-o/dyld.h:154:17:
+     note: 'NSLinkModule' has been explicitly marked deprecated here
+extern NSModule NSLinkModule(NSObjectFileImage objectFileImage, const char* moduleName, uint32_t options) __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_1,__MAC_10_5,__IPHONE_NA,__IPHONE_NA);
+                ^
+
+lua-5.1.5/loadlib.c:203:5:
+     warning: 'NSDestroyObjectFileImage' is deprecated: first deprecated in OS X 10.5 [-Wdeprecated-declarations]
+        NSDestroyObjectFileImage(img);
+        ^
+
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include/mach-o/dyld.h:140:36:
+     note: 'NSDestroyObjectFileImage' has been explicitly marked deprecated here
+extern bool                        NSDestroyObjectFileImage(NSObjectFileImage objectFileImage)                                             __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_1,__MAC_10_5,__IPHONE_NA,__IPHONE_NA);
+                                   ^
+
+lua-5.1.5/loadlib.c:213:18:
+     warning: 'NSLookupSymbolInModule' is deprecated: first deprecated in OS X 10.5 [-Wdeprecated-declarations]
+      NSSymbol nss = NSLookupSymbolInModule((NSModule)lib, sym);
+                     ^
+
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include/mach-o/dyld.h:174:17:
+     note: 'NSLookupSymbolInModule' has been explicitly marked deprecated here
+extern NSSymbol NSLookupSymbolInModule(NSModule module, const char* symbolName)                                  __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_1,__MAC_10_5,__IPHONE_NA,__IPHONE_NA);
+                ^
+
+lua-5.1.5/loadlib.c:218:25:
+     warning: 'NSAddressOfSymbol' is deprecated: first deprecated in OS X 10.5 [-Wdeprecated-declarations]
+      return (lua_CFunction)NSAddressOfSymbol(nss);
+                            ^
+
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include/mach-o/dyld.h:181:21:
+     note: 'NSAddressOfSymbol' has been explicitly marked deprecated here
+extern void *       NSAddressOfSymbol(NSSymbol symbol) __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_1,__MAC_10_5,__IPHONE_NA,__IPHONE_NA);
+                    ^
+8 warnings generated.
+In-place registering hslua-0.4.1...
+Installing library in
+/Users/davidrusu/.stack/snapshots/x86_64-osx/lts-3.6/7.10.2/lib/x86_64-osx-ghc-7.10.2/hslua-0.4.1-DAXOloNJurRCYy4KgxvZeZ
+Registering hslua-0.4.1...

@@ -1,0 +1,71 @@
+Elm.Router = Elm.Router || {};
+Elm.Router.make = function (_elm) {
+   "use strict";
+   _elm.Router = _elm.Router || {};
+   if (_elm.Router.values)
+   return _elm.Router.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Router",
+   $Basics = Elm.Basics.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $String = Elm.String.make(_elm);
+   _op[":->"] = F2(function (v0,
+   v1) {
+      return {ctor: "_Tuple2"
+             ,_0: v0
+             ,_1: v1};
+   });
+   var matchPrefix = F2(function (prefix,
+   string) {
+      return A2($String.startsWith,
+      prefix,
+      string) ? $Maybe.Just(A2($String.dropLeft,
+      $String.length(prefix),
+      string)) : $Maybe.Nothing;
+   });
+   var match = F3(function (routers,
+   defaultRoute,
+   url) {
+      return function () {
+         switch (routers.ctor)
+         {case "::":
+            switch (routers._0.ctor)
+              {case "_Tuple2":
+                 return _U.eq(routers._0._0,
+                   "") || _U.eq(routers._0._0,
+                   "/") ? _U.eq(url,
+                   routers._0._0) ? routers._0._1(url) : A3(match,
+                   routers._1,
+                   defaultRoute,
+                   url) : function () {
+                      var _v5 = A2(matchPrefix,
+                      routers._0._0,
+                      url);
+                      switch (_v5.ctor)
+                      {case "Just":
+                         return routers._0._1(_v5._0);
+                         case "Nothing": return A3(match,
+                           routers._1,
+                           defaultRoute,
+                           url);}
+                      _U.badCase($moduleName,
+                      "between lines 94 and 96");
+                   }();}
+              break;
+            case "[]":
+            return defaultRoute(url);}
+         _U.badCase($moduleName,
+         "between lines 81 and 96");
+      }();
+   });
+   _elm.Router.values = {_op: _op
+                        ,match: match
+                        ,matchPrefix: matchPrefix};
+   return _elm.Router.values;
+};

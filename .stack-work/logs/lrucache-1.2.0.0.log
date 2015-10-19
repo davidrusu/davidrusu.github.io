@@ -1,0 +1,28 @@
+Configuring lrucache-1.2.0.0...
+Building lrucache-1.2.0.0...
+Preprocessing library lrucache-1.2.0.0...
+[1 of 4] Compiling Data.Cache.LRU.Internal ( src/Data/Cache/LRU/Internal.hs, .stack-work/dist/x86_64-osx/Cabal-1.22.4.0/build/Data/Cache/LRU/Internal.o )
+
+src/Data/Cache/LRU/Internal.hs:15:1: Warning:
+    The import of ‘pure, Applicative’
+    from module ‘Control.Applicative’ is redundant
+
+src/Data/Cache/LRU/Internal.hs:16:1: Warning:
+    The import of ‘Traversable, traverse’
+    from module ‘Data.Traversable’ is redundant
+
+src/Data/Cache/LRU/Internal.hs:17:1: Warning:
+    The import of ‘Foldable, foldMap’
+    from module ‘Data.Foldable’ is redundant
+[2 of 4] Compiling Data.Cache.LRU   ( src/Data/Cache/LRU.hs, .stack-work/dist/x86_64-osx/Cabal-1.22.4.0/build/Data/Cache/LRU.o )
+[3 of 4] Compiling Data.Cache.LRU.IO.Internal ( src/Data/Cache/LRU/IO/Internal.hs, .stack-work/dist/x86_64-osx/Cabal-1.22.4.0/build/Data/Cache/LRU/IO/Internal.o )
+
+src/Data/Cache/LRU/IO/Internal.hs:17:1: Warning:
+    The import of ‘Control.Applicative’ is redundant
+      except perhaps to import instances from ‘Control.Applicative’
+    To import instances alone, use: import Control.Applicative()
+[4 of 4] Compiling Data.Cache.LRU.IO ( src/Data/Cache/LRU/IO.hs, .stack-work/dist/x86_64-osx/Cabal-1.22.4.0/build/Data/Cache/LRU/IO.o )
+In-place registering lrucache-1.2.0.0...
+Installing library in
+/Users/davidrusu/.stack/snapshots/x86_64-osx/lts-3.6/7.10.2/lib/x86_64-osx-ghc-7.10.2/lrucache-1.2.0.0-5ORNFcWmVqyJCaO7H4QFJm
+Registering lrucache-1.2.0.0...
