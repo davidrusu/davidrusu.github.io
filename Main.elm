@@ -14,7 +14,7 @@ initHeader = Header.init
                ("David Rusu", basePath)
                [ ("Projects", projectsPath)
                , ("Stats", statsPath)
-               , ("Teas", teasPath) ] -1
+               , ("Tea Log", teasPath) ] -1
 
 init = { header = initHeader }
 

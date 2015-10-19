@@ -4198,7 +4198,7 @@ Elm.Main.make = function (_elm) {
                  ,_0: "Stats"
                  ,_1: statsPath}
                 ,{ctor: "_Tuple2"
-                 ,_0: "Teas"
+                 ,_0: "Tea Log"
                  ,_1: teasPath}]),
    -1);
    var init = {_: {}
