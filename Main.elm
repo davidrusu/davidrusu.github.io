@@ -36,7 +36,7 @@ view address model =
     [ viewHeader address model
     , div
         [class "greeter"]
-        [ text "hey ;)"]
+        [ p [] [text "hey", b [] [ em [] [ text " you "] ], text ";)"] ]
     ]
 models = Signal.foldp update init actionMailbox.signal
 

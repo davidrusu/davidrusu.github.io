@@ -4174,7 +4174,15 @@ Elm.Main.make = function (_elm) {
                    model)
                    ,A2($Html.div,
                    _L.fromArray([$Html$Attributes.$class("greeter")]),
-                   _L.fromArray([$Html.text("hey ;)")]))]));
+                   _L.fromArray([A2($Html.p,
+                   _L.fromArray([]),
+                   _L.fromArray([$Html.text("hey")
+                                ,A2($Html.b,
+                                _L.fromArray([]),
+                                _L.fromArray([A2($Html.em,
+                                _L.fromArray([]),
+                                _L.fromArray([$Html.text(" you ")]))]))
+                                ,$Html.text(";)")]))]))]));
    });
    var NoOp = {ctor: "NoOp"};
    var actionMailbox = $Signal.mailbox(NoOp);
