@@ -4144,6 +4144,7 @@ Elm.Main.make = function (_elm) {
    $Maybe = Elm.Maybe.make(_elm),
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm),
+   $Signal$Extra = Elm.Signal.Extra.make(_elm),
    $Spiral = Elm.Spiral.make(_elm);
    var update = F2(function (action,
    model) {
@@ -4161,7 +4162,7 @@ Elm.Main.make = function (_elm) {
                                ,action._0]],
               model);}
          _U.badCase($moduleName,
-         "between lines 30 and 33");
+         "between lines 31 and 34");
       }();
    });
    var Spiral = function (a) {
@@ -4224,15 +4225,16 @@ Elm.Main.make = function (_elm) {
    var init = {_: {}
               ,header: initHeader
               ,spiral: $Spiral.init};
-   var models = A3($Signal.foldp,
+   var modelSignal = A2($Signal$Extra.foldp$,
    update,
-   init,
-   A2($Signal.merge,
-   actionMailbox.signal,
-   spirals));
+   function (a) {
+      return A2(update,a,init);
+   })(A2($Signal.merge,
+   spirals,
+   actionMailbox.signal));
    var main = A2($Signal.map,
    view(actionMailbox.address),
-   models);
+   modelSignal);
    _elm.Main.values = {_op: _op
                       ,basePath: basePath
                       ,projectsPath: projectsPath
@@ -4249,7 +4251,7 @@ Elm.Main.make = function (_elm) {
                       ,viewHeader: viewHeader
                       ,view: view
                       ,spirals: spirals
-                      ,models: models
+                      ,modelSignal: modelSignal
                       ,main: main};
    return _elm.Main.values;
 };
@@ -12215,6 +12217,75 @@ Elm.Native.VirtualDom.make = function(elm)
 
 },{"virtual-dom/vdom/create-element":6,"virtual-dom/vdom/patch":9,"virtual-dom/vnode/is-vhook":13,"virtual-dom/vnode/vnode":18,"virtual-dom/vnode/vtext":20,"virtual-dom/vtree/diff":22}]},{},[23]);
 
+Elm.Native = Elm.Native || {};
+Elm.Native.Window = {};
+Elm.Native.Window.make = function(localRuntime) {
+
+	localRuntime.Native = localRuntime.Native || {};
+	localRuntime.Native.Window = localRuntime.Native.Window || {};
+	if (localRuntime.Native.Window.values)
+	{
+		return localRuntime.Native.Window.values;
+	}
+
+	var NS = Elm.Native.Signal.make(localRuntime);
+	var Tuple2 = Elm.Native.Utils.make(localRuntime).Tuple2;
+
+
+	function getWidth()
+	{
+		return localRuntime.node.clientWidth;
+	}
+
+
+	function getHeight()
+	{
+		if (localRuntime.isFullscreen())
+		{
+			return window.innerHeight;
+		}
+		return localRuntime.node.clientHeight;
+	}
+
+
+	var dimensions = NS.input('Window.dimensions', Tuple2(getWidth(), getHeight()));
+
+
+	function resizeIfNeeded()
+	{
+		// Do not trigger event if the dimensions have not changed.
+		// This should be most of the time.
+		var w = getWidth();
+		var h = getHeight();
+		if (dimensions.value._0 === w && dimensions.value._1 === h)
+		{
+			return;
+		}
+
+		setTimeout(function () {
+			// Check again to see if the dimensions have changed.
+			// It is conceivable that the dimensions have changed
+			// again while some other event was being processed.
+			var w = getWidth();
+			var h = getHeight();
+			if (dimensions.value._0 === w && dimensions.value._1 === h)
+			{
+				return;
+			}
+			localRuntime.notify(dimensions.id, Tuple2(w,h));
+		}, 0);
+	}
+
+
+	localRuntime.addListener([dimensions.id], window, 'resize', resizeIfNeeded);
+
+
+	return localRuntime.Native.Window.values = {
+		dimensions: dimensions,
+		resizeIfNeeded: resizeIfNeeded
+	};
+};
+
 Elm.Result = Elm.Result || {};
 Elm.Result.make = function (_elm) {
    "use strict";
@@ -12603,6 +12674,548 @@ Elm.Signal.make = function (_elm) {
                         ,Mailbox: Mailbox};
    return _elm.Signal.values;
 };
+Elm.Signal = Elm.Signal || {};
+Elm.Signal.Extra = Elm.Signal.Extra || {};
+Elm.Signal.Extra.make = function (_elm) {
+   "use strict";
+   _elm.Signal = _elm.Signal || {};
+   _elm.Signal.Extra = _elm.Signal.Extra || {};
+   if (_elm.Signal.Extra.values)
+   return _elm.Signal.Extra.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Signal.Extra",
+   $Basics = Elm.Basics.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var passiveMap2 = F2(function (func,
+   a) {
+      return function ($) {
+         return A2($Signal.map2,
+         func,
+         a)($Signal.sampleOn(a)($));
+      };
+   });
+   var withPassive = passiveMap2(F2(function (x,
+   y) {
+      return x(y);
+   }));
+   var combine = A2($List.foldr,
+   $Signal.map2(F2(function (x,y) {
+      return A2($List._op["::"],
+      x,
+      y);
+   })),
+   $Signal.constant(_L.fromArray([])));
+   var mapMany = F2(function (f,
+   l) {
+      return A2($Signal._op["<~"],
+      f,
+      combine(l));
+   });
+   var applyMany = F2(function (fs,
+   l) {
+      return A2($Signal._op["~"],
+      fs,
+      combine(l));
+   });
+   var mergeMany = F2(function (original,
+   others) {
+      return A3($List.foldl,
+      $Signal.merge,
+      original,
+      others);
+   });
+   var filter = function (initial) {
+      return A2($Signal.filterMap,
+      $Basics.identity,
+      initial);
+   };
+   var keepIf = $Signal.filter;
+   var runBuffer$ = F3(function (l,
+   n,
+   input) {
+      return function () {
+         var f = F2(function (inp,
+         prev) {
+            return function () {
+               var l = $List.length(prev);
+               return _U.cmp(l,
+               n) < 0 ? A2($Basics._op["++"],
+               prev,
+               _L.fromArray([inp])) : A2($Basics._op["++"],
+               A2($List.drop,l - n + 1,prev),
+               _L.fromArray([inp]));
+            }();
+         });
+         return A3($Signal.foldp,
+         f,
+         l,
+         input);
+      }();
+   });
+   var runBuffer = runBuffer$(_L.fromArray([]));
+   var foldps = F3(function (f,
+   bs,
+   aS) {
+      return A2($Signal._op["<~"],
+      $Basics.fst,
+      A3($Signal.foldp,
+      F2(function (a,_v0) {
+         return function () {
+            switch (_v0.ctor)
+            {case "_Tuple2": return A2(f,
+                 a,
+                 _v0._1);}
+            _U.badCase($moduleName,
+            "on line 174, column 29 to 34");
+         }();
+      }),
+      bs,
+      aS));
+   });
+   var delayRound = F2(function (b,
+   bS) {
+      return A3(foldps,
+      F2(function ($new,old) {
+         return {ctor: "_Tuple2"
+                ,_0: old
+                ,_1: $new};
+      }),
+      {ctor: "_Tuple2",_0: b,_1: b},
+      bS);
+   });
+   var filterFold = F2(function (f,
+   initial) {
+      return function () {
+         var f$ = F2(function (a,s) {
+            return function () {
+               var res = A2(f,a,s);
+               return {ctor: "_Tuple2"
+                      ,_0: res
+                      ,_1: A2($Maybe.withDefault,
+                      s,
+                      res)};
+            }();
+         });
+         return function ($) {
+            return filter(initial)(A2(foldps,
+            f$,
+            {ctor: "_Tuple2"
+            ,_0: $Maybe.Just(initial)
+            ,_1: initial})($));
+         };
+      }();
+   });
+   var initSignal = function (s) {
+      return A2($Signal.sampleOn,
+      $Signal.constant({ctor: "_Tuple0"}),
+      s);
+   };
+   var switchHelper = F4(function (filter,
+   b,
+   l,
+   r) {
+      return function () {
+         var fromJust = function (_v4) {
+            return function () {
+               switch (_v4.ctor)
+               {case "Just": return _v4._0;}
+               _U.badCase($moduleName,
+               "on line 285, column 25 to 26");
+            }();
+         };
+         var lAndR = A2($Signal.merge,
+         A3(filter,
+         b,
+         $Maybe.Nothing,
+         A2($Signal._op["<~"],
+         $Maybe.Just,
+         l)),
+         A3(filter,
+         A2($Signal._op["<~"],
+         $Basics.not,
+         b),
+         $Maybe.Nothing,
+         A2($Signal._op["<~"],
+         $Maybe.Just,
+         r)));
+         var base = A2($Signal._op["~"],
+         A2($Signal._op["~"],
+         A2($Signal._op["<~"],
+         F3(function (bi,li,ri) {
+            return $Maybe.Just(bi ? li : ri);
+         }),
+         initSignal(b)),
+         initSignal(l)),
+         initSignal(r));
+         return A2($Signal._op["<~"],
+         fromJust,
+         A2($Signal.merge,base,lAndR));
+      }();
+   });
+   var unzip4 = function (pairS) {
+      return {ctor: "_Tuple4"
+             ,_0: A2($Signal._op["<~"],
+             function (_v7) {
+                return function () {
+                   switch (_v7.ctor)
+                   {case "_Tuple4": return _v7._0;}
+                   _U.badCase($moduleName,
+                   "on line 134, column 19 to 20");
+                }();
+             },
+             pairS)
+             ,_1: A2($Signal._op["<~"],
+             function (_v13) {
+                return function () {
+                   switch (_v13.ctor)
+                   {case "_Tuple4":
+                      return _v13._1;}
+                   _U.badCase($moduleName,
+                   "on line 134, column 47 to 48");
+                }();
+             },
+             pairS)
+             ,_2: A2($Signal._op["<~"],
+             function (_v19) {
+                return function () {
+                   switch (_v19.ctor)
+                   {case "_Tuple4":
+                      return _v19._2;}
+                   _U.badCase($moduleName,
+                   "on line 134, column 75 to 76");
+                }();
+             },
+             pairS)
+             ,_3: A2($Signal._op["<~"],
+             function (_v25) {
+                return function () {
+                   switch (_v25.ctor)
+                   {case "_Tuple4":
+                      return _v25._3;}
+                   _U.badCase($moduleName,
+                   "on line 134, column 103 to 104");
+                }();
+             },
+             pairS)};
+   };
+   var unzip3 = function (pairS) {
+      return {ctor: "_Tuple3"
+             ,_0: A2($Signal._op["<~"],
+             function (_v31) {
+                return function () {
+                   switch (_v31.ctor)
+                   {case "_Tuple3":
+                      return _v31._0;}
+                   _U.badCase($moduleName,
+                   "on line 128, column 17 to 18");
+                }();
+             },
+             pairS)
+             ,_1: A2($Signal._op["<~"],
+             function (_v36) {
+                return function () {
+                   switch (_v36.ctor)
+                   {case "_Tuple3":
+                      return _v36._1;}
+                   _U.badCase($moduleName,
+                   "on line 128, column 43 to 44");
+                }();
+             },
+             pairS)
+             ,_2: A2($Signal._op["<~"],
+             function (_v41) {
+                return function () {
+                   switch (_v41.ctor)
+                   {case "_Tuple3":
+                      return _v41._2;}
+                   _U.badCase($moduleName,
+                   "on line 128, column 69 to 70");
+                }();
+             },
+             pairS)};
+   };
+   var unzip = function (pairS) {
+      return {ctor: "_Tuple2"
+             ,_0: A2($Signal._op["<~"],
+             $Basics.fst,
+             pairS)
+             ,_1: A2($Signal._op["<~"],
+             $Basics.snd,
+             pairS)};
+   };
+   var zip4 = $Signal.map4(F4(function (v0,
+   v1,
+   v2,
+   v3) {
+      return {ctor: "_Tuple4"
+             ,_0: v0
+             ,_1: v1
+             ,_2: v2
+             ,_3: v3};
+   }));
+   var zip3 = $Signal.map3(F3(function (v0,
+   v1,
+   v2) {
+      return {ctor: "_Tuple3"
+             ,_0: v0
+             ,_1: v1
+             ,_2: v2};
+   }));
+   var zip = $Signal.map2(F2(function (v0,
+   v1) {
+      return {ctor: "_Tuple2"
+             ,_0: v0
+             ,_1: v1};
+   }));
+   var keepWhen = F3(function (boolSig,
+   a,
+   aSig) {
+      return $Signal.map($Basics.snd)(A2(keepIf,
+      $Basics.fst,
+      {ctor: "_Tuple2"
+      ,_0: true
+      ,_1: a})($Signal.sampleOn(aSig)(A2(zip,
+      boolSig,
+      aSig))));
+   });
+   var switchWhen = F3(function (b,
+   l,
+   r) {
+      return A4(switchHelper,
+      keepWhen,
+      b,
+      l,
+      r);
+   });
+   var sampleWhen = F3(function (bs,
+   def,
+   sig) {
+      return $Signal.map($Basics.snd)(A2(keepIf,
+      $Basics.fst,
+      {ctor: "_Tuple2"
+      ,_0: true
+      ,_1: def})(A2(zip,bs,sig)));
+   });
+   var switchSample = F3(function (b,
+   l,
+   r) {
+      return A4(switchHelper,
+      sampleWhen,
+      b,
+      l,
+      r);
+   });
+   var keepThen = F3(function (choice,
+   base,
+   signal) {
+      return A2(switchSample,
+      choice,
+      signal)($Signal.constant(base));
+   });
+   var andMap = F2(function (x,y) {
+      return A2($Signal._op["~"],
+      x,
+      y);
+   });
+   _op["~>"] = $Basics.flip($Signal.map);
+   var foldp$ = F3(function (fun,
+   initFun,
+   input) {
+      return function () {
+         var fromJust = function (_v46) {
+            return function () {
+               switch (_v46.ctor)
+               {case "Just": return _v46._0;}
+               _U.badCase($moduleName,
+               "on line 161, column 25 to 26");
+            }();
+         };
+         var fun$ = F2(function (_v49,
+         mb) {
+            return function () {
+               switch (_v49.ctor)
+               {case "_Tuple2":
+                  return $Maybe.Just(fun(_v49._0)(A2($Maybe.withDefault,
+                    _v49._1,
+                    mb)));}
+               _U.badCase($moduleName,
+               "between lines 158 and 159");
+            }();
+         });
+         var initial = A2(_op["~>"],
+         initSignal(input),
+         initFun);
+         var rest = A3($Signal.foldp,
+         fun$,
+         $Maybe.Nothing,
+         A2(zip,input,initial));
+         return A2($Signal._op["<~"],
+         fromJust,
+         A2($Signal.merge,
+         A2($Signal._op["<~"],
+         $Maybe.Just,
+         initial),
+         rest));
+      }();
+   });
+   var foldps$ = F3(function (f,
+   iF,
+   aS) {
+      return A2($Signal._op["<~"],
+      $Basics.fst,
+      A3(foldp$,
+      F2(function (a,_v53) {
+         return function () {
+            switch (_v53.ctor)
+            {case "_Tuple2": return A2(f,
+                 a,
+                 _v53._1);}
+            _U.badCase($moduleName,
+            "on line 180, column 46 to 51");
+         }();
+      }),
+      iF,
+      aS));
+   });
+   var deltas = function (signal) {
+      return function () {
+         var initial = function (value) {
+            return {ctor: "_Tuple2"
+                   ,_0: value
+                   ,_1: value};
+         };
+         var step = F2(function (value,
+         delta) {
+            return {ctor: "_Tuple2"
+                   ,_0: $Basics.snd(delta)
+                   ,_1: value};
+         });
+         return A3(foldp$,
+         step,
+         initial,
+         signal);
+      }();
+   };
+   var foldpWith = F4(function (unpack,
+   step,
+   init,
+   input) {
+      return function () {
+         var step$ = F2(function (a,
+         _v57) {
+            return function () {
+               switch (_v57.ctor)
+               {case "_Tuple2":
+                  return unpack(A2(step,
+                    a,
+                    _v57._1));}
+               _U.badCase($moduleName,
+               "on line 194, column 7 to 25");
+            }();
+         });
+         return A2(_op["~>"],
+         A3($Signal.foldp,
+         step$,
+         init,
+         input),
+         $Basics.fst);
+      }();
+   });
+   var keepWhenI = F2(function (fs,
+   s) {
+      return function () {
+         var fromJust = function (_v61) {
+            return function () {
+               switch (_v61.ctor)
+               {case "Just": return _v61._0;}
+               _U.badCase($moduleName,
+               "on line 331, column 25 to 26");
+            }();
+         };
+         return A2(_op["~>"],
+         A3(keepWhen,
+         A2($Signal.merge,
+         $Signal.constant(true),
+         fs),
+         $Maybe.Nothing,
+         A2($Signal._op["<~"],
+         $Maybe.Just,
+         s)),
+         fromJust);
+      }();
+   });
+   var fairMerge = F3(function (resolve,
+   left,
+   right) {
+      return function () {
+         var merged = A2($Signal.merge,
+         left,
+         right);
+         var boolRight = A2($Signal._op["<~"],
+         $Basics.always(false),
+         right);
+         var boolLeft = A2($Signal._op["<~"],
+         $Basics.always(true),
+         left);
+         var bothUpdated = A2($Signal._op["~"],
+         A2($Signal._op["<~"],
+         F2(function (x,y) {
+            return !_U.eq(x,y);
+         }),
+         A2($Signal.merge,
+         boolLeft,
+         boolRight)),
+         A2($Signal.merge,
+         boolRight,
+         boolLeft));
+         var keep = keepWhenI(bothUpdated);
+         var resolved = A2($Signal._op["~"],
+         A2($Signal._op["<~"],
+         resolve,
+         keep(left)),
+         keep(right));
+         return $Signal.merge(resolved)(merged);
+      }();
+   });
+   _elm.Signal.Extra.values = {_op: _op
+                              ,andMap: andMap
+                              ,zip: zip
+                              ,zip3: zip3
+                              ,zip4: zip4
+                              ,unzip: unzip
+                              ,unzip3: unzip3
+                              ,unzip4: unzip4
+                              ,foldp$: foldp$
+                              ,foldps: foldps
+                              ,foldps$: foldps$
+                              ,runBuffer: runBuffer
+                              ,runBuffer$: runBuffer$
+                              ,deltas: deltas
+                              ,delayRound: delayRound
+                              ,keepIf: keepIf
+                              ,keepWhen: keepWhen
+                              ,sampleWhen: sampleWhen
+                              ,switchWhen: switchWhen
+                              ,keepWhenI: keepWhenI
+                              ,switchSample: switchSample
+                              ,keepThen: keepThen
+                              ,filter: filter
+                              ,filterFold: filterFold
+                              ,fairMerge: fairMerge
+                              ,mergeMany: mergeMany
+                              ,combine: combine
+                              ,mapMany: mapMany
+                              ,applyMany: applyMany
+                              ,passiveMap2: passiveMap2
+                              ,withPassive: withPassive};
+   return _elm.Signal.Extra.values;
+};
 Elm.Spiral = Elm.Spiral || {};
 Elm.Spiral.make = function (_elm) {
    "use strict";
@@ -12622,46 +13235,119 @@ Elm.Spiral.make = function (_elm) {
    $Maybe = Elm.Maybe.make(_elm),
    $Mouse = Elm.Mouse.make(_elm),
    $Result = Elm.Result.make(_elm),
-   $Signal = Elm.Signal.make(_elm);
-   var addP = F2(function (_v0,
-   _v1) {
+   $Signal = Elm.Signal.make(_elm),
+   $Signal$Extra = Elm.Signal.Extra.make(_elm),
+   $Window = Elm.Window.make(_elm);
+   var transformMouse = F2(function (model,
+   _v0) {
       return function () {
-         switch (_v1.ctor)
+         switch (_v0.ctor)
          {case "_Tuple2":
-            return function () {
-                 switch (_v0.ctor)
-                 {case "_Tuple2":
-                    return {ctor: "_Tuple2"
-                           ,_0: _v0._0 + _v1._0
-                           ,_1: _v0._1 + _v1._1};}
-                 _U.badCase($moduleName,
-                 "on line 46, column 23 to 35");
-              }();}
+            return {ctor: "_Tuple2"
+                   ,_0: _v0._0 - $Basics.toFloat(model.w) / 2
+                   ,_1: 0 - _v0._1 + $Basics.toFloat(model.h) / 2};}
          _U.badCase($moduleName,
-         "on line 46, column 23 to 35");
+         "on line 79, column 34 to 89");
       }();
    });
-   var distortVector = F2(function (_v8,
-   _v9) {
+   var addP = F2(function (_v4,
+   _v5) {
       return function () {
-         switch (_v9.ctor)
+         switch (_v5.ctor)
          {case "_Tuple2":
             return function () {
-                 switch (_v8.ctor)
+                 switch (_v4.ctor)
                  {case "_Tuple2":
-                    return function () {
-                         var d = $Basics.sqrt(Math.pow(_v8._0 - _v9._0,
-                         2) + Math.pow(_v8._1 - _v9._1,
-                         2));
-                         return {ctor: "_Tuple2"
-                                ,_0: (_v8._0 - _v9._0) / d * 50
-                                ,_1: (_v8._1 - _v9._1) / d * 50};
-                      }();}
+                    return {ctor: "_Tuple2"
+                           ,_0: _v4._0 + _v5._0
+                           ,_1: _v4._1 + _v5._1};}
                  _U.badCase($moduleName,
-                 "between lines 43 and 44");
+                 "on line 56, column 23 to 35");
               }();}
          _U.badCase($moduleName,
-         "between lines 43 and 44");
+         "on line 56, column 23 to 35");
+      }();
+   });
+   var warpDist = function (d) {
+      return 1;
+   };
+   var NoOp = {ctor: "NoOp"};
+   var MouseMove = function (a) {
+      return {ctor: "MouseMove"
+             ,_0: a};
+   };
+   var mousePos = A2($Signal.map,
+   function (_v12) {
+      return function () {
+         switch (_v12.ctor)
+         {case "_Tuple2":
+            return MouseMove({ctor: "_Tuple2"
+                             ,_0: $Basics.toFloat(_v12._0)
+                             ,_1: $Basics.toFloat(_v12._1)});}
+         _U.badCase($moduleName,
+         "on line 76, column 35 to 66");
+      }();
+   },
+   $Mouse.position);
+   var WindowDim = function (a) {
+      return {ctor: "WindowDim"
+             ,_0: a};
+   };
+   var windowDims = A2($Signal.map,
+   WindowDim,
+   $Window.dimensions);
+   var view = function (model) {
+      return A2($Graphics$Collage.collage,
+      model.w,
+      model.h)(_L.fromArray([$Graphics$Collage.filled($Color.white)(A2($Graphics$Collage.rect,
+                            $Basics.toFloat(model.w),
+                            $Basics.toFloat(model.h)))
+                            ,$Graphics$Collage.traced($Graphics$Collage.solid($Color.black))($Graphics$Collage.path(model.points))]));
+   };
+   var viewPoint = function (point) {
+      return A2($Graphics$Collage.move,
+      point,
+      A2($Graphics$Collage.filled,
+      $Color.black,
+      $Graphics$Collage.circle(1)));
+   };
+   var init = {_: {}
+              ,h: 0
+              ,mouse: {ctor: "_Tuple2"
+                      ,_0: 0
+                      ,_1: 0}
+              ,points: _L.fromArray([])
+              ,targetPoints: _L.fromArray([])
+              ,w: 0};
+   var distortion = 50;
+   var distortVector = F2(function (_v16,
+   _v17) {
+      return function () {
+         switch (_v17.ctor)
+         {case "_Tuple2":
+            return function () {
+                 switch (_v16.ctor)
+                 {case "_Tuple2":
+                    return function () {
+                         var dy = _v16._1 - _v17._1;
+                         var dx = _v16._0 - _v17._0;
+                         var d = $Basics.max(1)($Basics.sqrt(Math.pow(dx,
+                         2) + Math.pow(dy,2)));
+                         var distortionAmnt = distortion * warpDist(d);
+                         var $ = {ctor: "_Tuple2"
+                                 ,_0: dx / d
+                                 ,_1: dy / d},
+                         nx = $._0,
+                         ny = $._1;
+                         return {ctor: "_Tuple2"
+                                ,_0: nx * distortionAmnt
+                                ,_1: ny * distortionAmnt};
+                      }();}
+                 _U.badCase($moduleName,
+                 "between lines 49 and 54");
+              }();}
+         _U.badCase($moduleName,
+         "between lines 49 and 54");
       }();
    });
    var distortPoint = F2(function (model,
@@ -12672,103 +13358,98 @@ Elm.Spiral.make = function (_elm) {
       model.mouse,
       p));
    });
+   var distort = F2(function (model,
+   ps) {
+      return A2($List.map,
+      distortPoint(model),
+      ps);
+   });
+   var spirals = 10;
+   var numPoints = 10000;
+   var genPoints = function (_v24) {
+      return function () {
+         switch (_v24.ctor)
+         {case "_Tuple2":
+            return A2($List.map,
+              function (n) {
+                 return function () {
+                    var p = n / numPoints;
+                    var r = p * 2 * spirals * $Basics.pi;
+                    var scale = p * $Basics.sqrt(Math.pow($Basics.toFloat(_v24._0),
+                    2) + Math.pow($Basics.toFloat(_v24._1),
+                    2)) / 2;
+                    return {ctor: "_Tuple2"
+                           ,_0: scale * $Basics.cos(r)
+                           ,_1: scale * $Basics.sin(r)};
+                 }();
+              },
+              _L.range(0,numPoints));}
+         _U.badCase($moduleName,
+         "between lines 23 and 26");
+      }();
+   };
    var update = F2(function (action,
    model) {
       return function () {
          switch (action.ctor)
          {case "MouseMove":
             return _U.replace([["mouse"
-                               ,action._0]
+                               ,A2(transformMouse,
+                               model,
+                               action._0)]
                               ,["points"
-                               ,A2($List.map,
-                               distortPoint(model),
+                               ,A2(distort,
+                               model,
                                model.targetPoints)]],
               model);
-            case "NoOp": return model;}
+            case "NoOp": return model;
+            case "WindowDim":
+            switch (action._0.ctor)
+              {case "_Tuple2":
+                 return function () {
+                      var ps = genPoints({ctor: "_Tuple2"
+                                         ,_0: action._0._0
+                                         ,_1: action._0._1});
+                      return _U.replace([["w"
+                                         ,action._0._0]
+                                        ,["h",action._0._1]
+                                        ,["targetPoints",ps]
+                                        ,["points"
+                                         ,A2(distort,model,ps)]],
+                      model);
+                   }();}
+              break;}
          _U.badCase($moduleName,
-         "between lines 52 and 55");
+         "between lines 65 and 73");
       }();
    });
-   var NoOp = {ctor: "NoOp"};
-   var MouseMove = function (a) {
-      return {ctor: "MouseMove"
-             ,_0: a};
-   };
-   var viewPoint = function (point) {
-      return A2($Graphics$Collage.move,
-      point,
-      A2($Graphics$Collage.filled,
-      $Color.black,
-      $Graphics$Collage.circle(1)));
-   };
-   var distortion = 50;
-   var spirals = 10;
-   var numPoints = 1000;
-   var h = 400;
-   var w = 400;
-   var genPoints = A2($List.map,
-   function (n) {
-      return function () {
-         var p = n / numPoints;
-         var r = p * 2 * spirals * $Basics.pi;
-         var scale = p * $Basics.sqrt(Math.pow(w,
-         2) + Math.pow(h,2)) / 2;
-         return {ctor: "_Tuple2"
-                ,_0: scale * $Basics.cos(r)
-                ,_1: scale * $Basics.sin(r)};
-      }();
-   },
-   _L.range(0,numPoints));
-   var init = {_: {}
-              ,mouse: {ctor: "_Tuple2"
-                      ,_0: 0
-                      ,_1: 0}
-              ,points: genPoints
-              ,targetPoints: genPoints};
-   var view = function (model) {
-      return A2($Graphics$Collage.collage,
-      w,
-      h)(_L.fromArray([A2($Graphics$Collage.filled,
-                      $Color.white,
-                      A2($Graphics$Collage.rect,w,h))
-                      ,A2($Graphics$Collage.move,
-                      model.mouse,
-                      A2($Graphics$Collage.filled,
-                      $Color.black,
-                      $Graphics$Collage.circle(10)))
-                      ,$Graphics$Collage.traced($Graphics$Collage.solid($Color.black))($Graphics$Collage.path(model.points))]));
-   };
-   var transformMouse = function (_v18) {
-      return function () {
-         switch (_v18.ctor)
-         {case "_Tuple2":
-            return MouseMove({ctor: "_Tuple2"
-                             ,_0: $Basics.toFloat(_v18._0) - w / 2
-                             ,_1: 0 - $Basics.toFloat(_v18._1) + h / 2});}
-         _U.badCase($moduleName,
-         "on line 58, column 27 to 81");
-      }();
-   };
-   var modelSignal = A2($Signal.foldp,
+   var modelSignal = A2($Signal$Extra.foldp$,
    update,
-   init)(A2($Signal.map,
-   transformMouse,
-   $Mouse.position));
+   function (a) {
+      return A2(update,a,init);
+   })(A2($Signal.merge,
+   windowDims,
+   mousePos));
    var main = A2($Signal.map,
    view,
    modelSignal);
-   var Model = F3(function (a,
+   var Model = F5(function (a,
    b,
-   c) {
+   c,
+   d,
+   e) {
       return {_: {}
+             ,h: c
              ,mouse: a
-             ,points: c
-             ,targetPoints: b};
+             ,points: e
+             ,targetPoints: d
+             ,w: b};
    });
    _elm.Spiral.values = {_op: _op
                         ,init: init
                         ,modelSignal: modelSignal
                         ,view: view
+                        ,main: main
                         ,Model: Model};
    return _elm.Spiral.values;
 };
@@ -13394,4 +14075,31 @@ Elm.VirtualDom.make = function (_elm) {
                             ,lazy3: lazy3
                             ,Options: Options};
    return _elm.VirtualDom.values;
+};
+Elm.Window = Elm.Window || {};
+Elm.Window.make = function (_elm) {
+   "use strict";
+   _elm.Window = _elm.Window || {};
+   if (_elm.Window.values)
+   return _elm.Window.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Window",
+   $Basics = Elm.Basics.make(_elm),
+   $Native$Window = Elm.Native.Window.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var dimensions = $Native$Window.dimensions;
+   var width = A2($Signal.map,
+   $Basics.fst,
+   dimensions);
+   var height = A2($Signal.map,
+   $Basics.snd,
+   dimensions);
+   _elm.Window.values = {_op: _op
+                        ,dimensions: dimensions
+                        ,width: width
+                        ,height: height};
+   return _elm.Window.values;
 };

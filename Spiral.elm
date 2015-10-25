@@ -1,63 +1,86 @@
-module Spiral (Model, init, modelSignal, view) where
+module Spiral (Model, init, modelSignal, view, main) where
 
 import Graphics.Collage exposing (..)
 import Graphics.Element exposing (Element)
 import Color exposing (..)
 import Mouse
 import Time
+import Window
+import Signal.Extra exposing (foldp')
 
 type alias Point = (Float, Float)
 type alias Model = { mouse : Point
+                   , w : Int
+                   , h : Int
                    , targetPoints : List Point
                    , points : List Point }
-
-w = 400
-h = 400
 
 numPoints = 1000 -- resolution of the spirals
 spirals = 10
 distortion = 50 -- the max distortion length in pixels
 
-genPoints = List.map (\n -> let p = n/numPoints
-                                r = p * 2 * spirals * pi
-                                scale = p * (sqrt <| w ^ 2 + h ^ 2) / 2
-                            in (scale * cos r, scale * sin r)) [0..numPoints]
+genPoints : (Int, Int) -> List Point
+genPoints (w, h) = List.map (\n -> let p = n/numPoints
+                                       r = p * 2 * spirals * pi
+                                       scale = p * (sqrt <| (toFloat w) ^ 2 + (toFloat h) ^ 2) / 2
+                                   in (scale * cos r, scale * sin r)) [0..numPoints]
 
 init : Model
 init = { mouse = (0, 0)
-       , targetPoints = genPoints
-       , points = genPoints
+       , w = 0
+       , h = 0
+       , targetPoints = []
+       , points = []
        }
 
-viewPoint : Point -> Form
-viewPoint point = move point (filled black (circle 1))
+background model = filled white <| rect (toFloat model.w) (toFloat model.h)
+
+spiral model = traced (solid black) <| path model.points
 
 view : Model -> Element
-view model = collage w h <| [ filled white (rect w h)
-                            , move model.mouse (filled Color.black (circle 10))
-                            , traced (solid black) <| path model.points
-                            ] 
+view model = collage model.w model.h <| [ background model
+                                        , spiral model
+                                        ]
                    
-type Action = MouseMove Point | NoOp
+type Action = WindowDim (Int, Int) | MouseMove Point | NoOp
 
-distortVector (mx, my) (bx, by) = let d = sqrt <| (mx-bx)^2 + (my-by)^2
-                                  in ((mx - bx) / d * 50, (my - by) / d * 50)
+warpDist d = 1 -- logBase 2 d
+
+distortVector (mx, my) (bx, by) = let dx = mx - bx
+                                      dy = my - by
+                                      d = max 1 <| sqrt <| dx^2 + dy^2
+                                      (nx, ny) = (dx / d, dy / d)
+                                      distortionAmnt = distortion * warpDist d
+                                  in (nx * distortionAmnt, ny * distortionAmnt)
 
 addP (a, b) (c, d) = (a + c, b + d)
 
 distortPoint : Model -> Point -> Point
-distortPoint model p = addP p (distortVector model.mouse p)
+distortPoint model point = addP point (distortVector model.mouse point)
+
+distort : Model -> List Point -> List Point
+distort model ps = List.map (distortPoint model) ps
 
 update : Action -> Model -> Model
 update action model = case action of
-                        NoOp            -> model
-                        MouseMove mouse -> { model | mouse <- mouse
-                                                   , points <- List.map (distortPoint model) model.targetPoints}
+                        NoOp             -> model
+                        WindowDim (w, h) -> let ps = genPoints (w, h) in
+                                            { model | w <- w
+                                                    , h <- h
+                                                    , targetPoints <- ps
+                                                    , points <- distort model ps }
+                        MouseMove mouse  -> { model | mouse <- transformMouse model mouse
+                                                    , points <- distort model model.targetPoints }
 
-transformMouse : (Int, Int) -> Action
-transformMouse (mx, my) = MouseMove (toFloat mx - (w / 2), -(toFloat my) + (h/2))
+windowDims = Signal.map (WindowDim) Window.dimensions
+
+mousePos = Signal.map (\(x, y) -> MouseMove (toFloat x, toFloat y)) Mouse.position
+
+transformMouse : Model -> Point -> Point
+transformMouse model (mx, my) = (mx - (toFloat model.w) / 2, -my + (toFloat model.h) / 2)
 
 modelSignal : Signal Model
-modelSignal = Signal.foldp update init <| Signal.map transformMouse Mouse.position
+modelSignal = foldp' update (\a -> update a init)  <| Signal.merge windowDims mousePos
 
+main : Signal Element
 main = Signal.map view modelSignal
