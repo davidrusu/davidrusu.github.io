@@ -13205,8 +13205,8 @@ Elm.Spiral.make = function (_elm) {
    var init = {_: {}
               ,h: 0
               ,mouse: {ctor: "_Tuple2"
-                      ,_0: 0
-                      ,_1: 0}
+                      ,_0: -1
+                      ,_1: 1}
               ,points: _L.fromArray([])
               ,targetPoints: _L.fromArray([])
               ,w: 0};

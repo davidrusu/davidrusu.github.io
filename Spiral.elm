@@ -27,7 +27,7 @@ genPoints (w, h) =
                   in (scale * cos r, scale * sin r)) [0..numPoints]
 
 init : Model
-init = { mouse = (0, 0)
+init = { mouse = (-1, 1)
        , w = 0
        , h = 0
        , targetPoints = []
