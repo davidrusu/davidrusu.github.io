@@ -8,7 +8,7 @@ import Signal.Extra exposing (foldp')
 basePath = "https://davidrusu.github.io"
 projectsPath = "https://github.com/davidrusu" -- basePath ++ "/projects.html"
 statsPath = "http://davidrusu.github.io/mastery/" -- basePath ++ "/stats.html"
-teasPath = basePath ++ "/teas.html"
+teasPath = "pages/tea_log.html"
 
 type alias Model = { header : Header.Model
                    , spiral : Spiral.Model }
