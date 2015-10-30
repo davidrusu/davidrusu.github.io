@@ -2,7 +2,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Signal exposing (..)
 import Header
-import Spiral
+import Curve
 import Signal.Extra exposing (foldp')
           
 basePath = "https://davidrusu.github.io"
@@ -11,7 +11,7 @@ statsPath = "http://davidrusu.github.io/mastery/" -- basePath ++ "/stats.html"
 teasPath = "pages/tea_log.html"
 
 type alias Model = { header : Header.Model
-                   , spiral : Spiral.Model }
+                   , curve : Curve.Model }
 
 initHeader = Header.init 
                ("David Rusu", basePath)
@@ -20,9 +20,9 @@ initHeader = Header.init
                , ("Tea Log", teasPath) ] -1
 
 init = { header = initHeader
-       , spiral = Spiral.init }
+       , curve = Curve.init }
  
-type Action = NoOp | ModifyHeader Header.Action | Spiral Spiral.Model
+type Action = NoOp | ModifyHeader Header.Action | Curve Curve.Model
 
 actionMailbox : Signal.Mailbox Action
 actionMailbox = mailbox NoOp
@@ -31,7 +31,7 @@ update : Action -> Model -> Model
 update action model = case action of
                         NoOp           -> model
                         ModifyHeader a -> { model | header <- Header.update a model.header }
-                        Spiral spiral  -> { model | spiral <- spiral }
+                        Curve curve    -> { model | curve <- curve }
 
 viewHeader a m = Header.view (Signal.forwardTo a ModifyHeader) m.header
 
@@ -41,11 +41,11 @@ view address model =
     [ viewHeader address model
     , div
         [ class "greeter" ]
-        [ fromElement (Spiral.view model.spiral) ]
+        [ fromElement (Curve.view model.curve) ]
     ]
 
-spiralSignal = Signal.map (Spiral) Spiral.modelSignal
+curveSignal = Signal.map (Curve) Curve.modelSignal
 
-modelSignal = foldp' update (\a -> update a init)  <| Signal.merge spiralSignal actionMailbox.signal
+modelSignal = foldp' update (\a -> update a init)  <| Signal.mergeMany [ curveSignal, actionMailbox.signal ]
 
 main = Signal.map (view actionMailbox.address) modelSignal

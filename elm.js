@@ -785,6 +785,276 @@ Elm.Color.make = function (_elm) {
                        ,darkGray: darkGray};
    return _elm.Color.values;
 };
+Elm.Curve = Elm.Curve || {};
+Elm.Curve.make = function (_elm) {
+   "use strict";
+   _elm.Curve = _elm.Curve || {};
+   if (_elm.Curve.values)
+   return _elm.Curve.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Curve",
+   $Basics = Elm.Basics.make(_elm),
+   $Color = Elm.Color.make(_elm),
+   $Graphics$Collage = Elm.Graphics.Collage.make(_elm),
+   $Graphics$Element = Elm.Graphics.Element.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Mouse = Elm.Mouse.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $Signal$Extra = Elm.Signal.Extra.make(_elm),
+   $Window = Elm.Window.make(_elm);
+   var transformMouse = F2(function (model,
+   _v0) {
+      return function () {
+         switch (_v0.ctor)
+         {case "_Tuple2":
+            return {ctor: "_Tuple2"
+                   ,_0: _v0._0 - $Basics.toFloat(model.w) / 2
+                   ,_1: 0 - _v0._1 + $Basics.toFloat(model.h) / 2};}
+         _U.badCase($moduleName,
+         "on line 92, column 4 to 59");
+      }();
+   });
+   var intPair2FloatPair = function (_v4) {
+      return function () {
+         switch (_v4.ctor)
+         {case "_Tuple2":
+            return {ctor: "_Tuple2"
+                   ,_0: $Basics.toFloat(_v4._0)
+                   ,_1: $Basics.toFloat(_v4._1)};}
+         _U.badCase($moduleName,
+         "on line 86, column 29 to 49");
+      }();
+   };
+   var scaleP = F2(function (s,
+   _v8) {
+      return function () {
+         switch (_v8.ctor)
+         {case "_Tuple2":
+            return {ctor: "_Tuple2"
+                   ,_0: s * _v8._0
+                   ,_1: s * _v8._1};}
+         _U.badCase($moduleName,
+         "on line 64, column 20 to 32");
+      }();
+   });
+   var addP = F2(function (_v12,
+   _v13) {
+      return function () {
+         switch (_v13.ctor)
+         {case "_Tuple2":
+            return function () {
+                 switch (_v12.ctor)
+                 {case "_Tuple2":
+                    return {ctor: "_Tuple2"
+                           ,_0: _v12._0 + _v13._0
+                           ,_1: _v12._1 + _v13._1};}
+                 _U.badCase($moduleName,
+                 "on line 63, column 23 to 35");
+              }();}
+         _U.badCase($moduleName,
+         "on line 63, column 23 to 35");
+      }();
+   });
+   var warpDist = function (d) {
+      return -1;
+   };
+   var NoOp = {ctor: "NoOp"};
+   var MouseMove = function (a) {
+      return {ctor: "MouseMove"
+             ,_0: a};
+   };
+   var mousePos = A2($Signal.map,
+   function ($) {
+      return MouseMove(intPair2FloatPair($));
+   },
+   $Mouse.position);
+   var WindowDim = function (a) {
+      return {ctor: "WindowDim"
+             ,_0: a};
+   };
+   var windowDims = A2($Signal.map,
+   WindowDim,
+   $Window.dimensions);
+   var connection = F2(function (a,
+   b) {
+      return $Graphics$Collage.traced($Graphics$Collage.solid(A4($Color.rgba,
+      0,
+      0,
+      0,
+      1)))(A2($Graphics$Collage.segment,
+      a,
+      b));
+   });
+   var curve = function (model) {
+      return $Graphics$Collage.traced($Graphics$Collage.solid($Color.black))($Graphics$Collage.path(model.points));
+   };
+   var background = function (model) {
+      return $Graphics$Collage.filled($Color.white)(A2($Graphics$Collage.rect,
+      $Basics.toFloat(model.w),
+      $Basics.toFloat(model.h)));
+   };
+   var init = {_: {}
+              ,h: 0
+              ,mouse: {ctor: "_Tuple2"
+                      ,_0: 0
+                      ,_1: 100}
+              ,points: _L.fromArray([])
+              ,targetPoints: _L.fromArray([])
+              ,w: 0};
+   var distortion = 50;
+   var distortVector = F2(function (_v20,
+   _v21) {
+      return function () {
+         switch (_v21.ctor)
+         {case "_Tuple2":
+            return function () {
+                 switch (_v20.ctor)
+                 {case "_Tuple2":
+                    return function () {
+                         var dy = _v20._1 - _v21._1;
+                         var dx = _v20._0 - _v21._0;
+                         var d = $Basics.max(1)($Basics.sqrt(Math.pow(dx,
+                         2) + Math.pow(dy,2)));
+                         var distortionAmnt = distortion * warpDist(d);
+                         var $ = {ctor: "_Tuple2"
+                                 ,_0: dx / d
+                                 ,_1: dy / d},
+                         nx = $._0,
+                         ny = $._1;
+                         return {ctor: "_Tuple2"
+                                ,_0: nx * distortionAmnt
+                                ,_1: ny * distortionAmnt};
+                      }();}
+                 _U.badCase($moduleName,
+                 "between lines 56 and 61");
+              }();}
+         _U.badCase($moduleName,
+         "between lines 56 and 61");
+      }();
+   });
+   var distortPoint = F2(function (model,
+   point) {
+      return A2(addP,
+      point,
+      A2(distortVector,
+      model.mouse,
+      point));
+   });
+   var distort = F2(function (model,
+   ps) {
+      return A2($List.map,
+      distortPoint(model),
+      ps);
+   });
+   var numPoints = 500;
+   var genPoints = function (_v28) {
+      return function () {
+         switch (_v28.ctor)
+         {case "_Tuple2":
+            return function () {
+                 var windowDiag = $Basics.sqrt(Math.pow($Basics.toFloat(_v28._0),
+                 2) + Math.pow($Basics.toFloat(_v28._1),
+                 2)) / 2;
+                 return A2($List.map,
+                 function (n) {
+                    return function () {
+                       var p = n / numPoints;
+                       var scale = p * windowDiag;
+                       return {ctor: "_Tuple2"
+                              ,_0: (0 - windowDiag) / 2 + scale
+                              ,_1: 0};
+                    }();
+                 },
+                 _L.range(0,numPoints));
+              }();}
+         _U.badCase($moduleName,
+         "between lines 23 and 28");
+      }();
+   };
+   var update = F2(function (action,
+   model) {
+      return function () {
+         switch (action.ctor)
+         {case "MouseMove":
+            return _U.replace([["mouse"
+                               ,addP(model.mouse)(scaleP(1)(A2(addP,
+                               A2(transformMouse,
+                               model,
+                               action._0),
+                               A2(scaleP,-1,model.mouse))))]
+                              ,["points"
+                               ,A2(distort,
+                               model,
+                               model.targetPoints)]],
+              model);
+            case "NoOp": return model;
+            case "WindowDim":
+            switch (action._0.ctor)
+              {case "_Tuple2":
+                 return function () {
+                      var ps = genPoints({ctor: "_Tuple2"
+                                         ,_0: action._0._0
+                                         ,_1: action._0._1});
+                      return _U.replace([["w"
+                                         ,action._0._0]
+                                        ,["h",action._0._1]
+                                        ,["targetPoints",ps]
+                                        ,["points"
+                                         ,A2(distort,model,ps)]],
+                      model);
+                   }();}
+              break;}
+         _U.badCase($moduleName,
+         "between lines 74 and 82");
+      }();
+   });
+   var modelSignal = A2($Signal$Extra.foldp$,
+   update,
+   function (a) {
+      return A2(update,a,init);
+   })(A2($Signal.merge,
+   windowDims,
+   mousePos));
+   var numToDrop = $Basics.floor($Basics.toFloat(numPoints) / distortion * 4);
+   var view = function (model) {
+      return A2($Graphics$Collage.collage,
+      model.w,
+      model.h)(_L.fromArray([background(model)
+                            ,curve(model)
+                            ,$Graphics$Collage.group(A2($List.map2,
+                            connection,
+                            model.points)(A2($List.drop,
+                            numToDrop,
+                            model.points)))]));
+   };
+   var main = A2($Signal.map,
+   view,
+   modelSignal);
+   var Model = F5(function (a,
+   b,
+   c,
+   d,
+   e) {
+      return {_: {}
+             ,h: c
+             ,mouse: a
+             ,points: e
+             ,targetPoints: d
+             ,w: b};
+   });
+   _elm.Curve.values = {_op: _op
+                       ,init: init
+                       ,modelSignal: modelSignal
+                       ,view: view
+                       ,main: main
+                       ,Model: Model};
+   return _elm.Curve.values;
+};
 Elm.Debug = Elm.Debug || {};
 Elm.Debug.make = function (_elm) {
    "use strict";
@@ -4137,6 +4407,7 @@ Elm.Main.make = function (_elm) {
    _L = _N.List.make(_elm),
    $moduleName = "Main",
    $Basics = Elm.Basics.make(_elm),
+   $Curve = Elm.Curve.make(_elm),
    $Header = Elm.Header.make(_elm),
    $Html = Elm.Html.make(_elm),
    $Html$Attributes = Elm.Html.Attributes.make(_elm),
@@ -4144,34 +4415,32 @@ Elm.Main.make = function (_elm) {
    $Maybe = Elm.Maybe.make(_elm),
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm),
-   $Signal$Extra = Elm.Signal.Extra.make(_elm),
-   $Spiral = Elm.Spiral.make(_elm);
+   $Signal$Extra = Elm.Signal.Extra.make(_elm);
    var update = F2(function (action,
    model) {
       return function () {
          switch (action.ctor)
-         {case "ModifyHeader":
+         {case "Curve":
+            return _U.replace([["curve"
+                               ,action._0]],
+              model);
+            case "ModifyHeader":
             return _U.replace([["header"
                                ,A2($Header.update,
                                action._0,
                                model.header)]],
               model);
-            case "NoOp": return model;
-            case "Spiral":
-            return _U.replace([["spiral"
-                               ,action._0]],
-              model);}
+            case "NoOp": return model;}
          _U.badCase($moduleName,
          "between lines 31 and 34");
       }();
    });
-   var Spiral = function (a) {
-      return {ctor: "Spiral"
-             ,_0: a};
+   var Curve = function (a) {
+      return {ctor: "Curve",_0: a};
    };
-   var spiralSignal = A2($Signal.map,
-   Spiral,
-   $Spiral.modelSignal);
+   var curveSignal = A2($Signal.map,
+   Curve,
+   $Curve.modelSignal);
    var ModifyHeader = function (a) {
       return {ctor: "ModifyHeader"
              ,_0: a};
@@ -4193,14 +4462,14 @@ Elm.Main.make = function (_elm) {
                    model)
                    ,A2($Html.div,
                    _L.fromArray([$Html$Attributes.$class("greeter")]),
-                   _L.fromArray([$Html.fromElement($Spiral.view(model.spiral))]))]));
+                   _L.fromArray([$Html.fromElement($Curve.view(model.curve))]))]));
    });
    var NoOp = {ctor: "NoOp"};
    var actionMailbox = $Signal.mailbox(NoOp);
    var Model = F2(function (a,b) {
       return {_: {}
-             ,header: a
-             ,spiral: b};
+             ,curve: b
+             ,header: a};
    });
    var teasPath = "pages/tea_log.html";
    var statsPath = "http://davidrusu.github.io/mastery/";
@@ -4221,15 +4490,14 @@ Elm.Main.make = function (_elm) {
                  ,_1: teasPath}]),
    -1);
    var init = {_: {}
-              ,header: initHeader
-              ,spiral: $Spiral.init};
+              ,curve: $Curve.init
+              ,header: initHeader};
    var modelSignal = A2($Signal$Extra.foldp$,
    update,
    function (a) {
       return A2(update,a,init);
-   })(A2($Signal.merge,
-   spiralSignal,
-   actionMailbox.signal));
+   })($Signal.mergeMany(_L.fromArray([curveSignal
+                                     ,actionMailbox.signal])));
    var main = A2($Signal.map,
    view(actionMailbox.address),
    modelSignal);
@@ -4243,12 +4511,12 @@ Elm.Main.make = function (_elm) {
                       ,init: init
                       ,NoOp: NoOp
                       ,ModifyHeader: ModifyHeader
-                      ,Spiral: Spiral
+                      ,Curve: Curve
                       ,actionMailbox: actionMailbox
                       ,update: update
                       ,viewHeader: viewHeader
                       ,view: view
-                      ,spiralSignal: spiralSignal
+                      ,curveSignal: curveSignal
                       ,modelSignal: modelSignal
                       ,main: main};
    return _elm.Main.values;
@@ -10033,6 +10301,117 @@ Elm.Native.Text.make = function(localRuntime) {
 	};
 };
 
+Elm.Native.Time = {};
+Elm.Native.Time.make = function(localRuntime)
+{
+
+	localRuntime.Native = localRuntime.Native || {};
+	localRuntime.Native.Time = localRuntime.Native.Time || {};
+	if (localRuntime.Native.Time.values)
+	{
+		return localRuntime.Native.Time.values;
+	}
+
+	var NS = Elm.Native.Signal.make(localRuntime);
+	var Maybe = Elm.Maybe.make(localRuntime);
+
+
+	// FRAMES PER SECOND
+
+	function fpsWhen(desiredFPS, isOn)
+	{
+		var msPerFrame = 1000 / desiredFPS;
+		var ticker = NS.input('fps-' + desiredFPS, null);
+
+		function notifyTicker()
+		{
+			localRuntime.notify(ticker.id, null);
+		}
+
+		function firstArg(x, y)
+		{
+			return x;
+		}
+
+		// input fires either when isOn changes, or when ticker fires.
+		// Its value is a tuple with the current timestamp, and the state of isOn
+		var input = NS.timestamp(A3(NS.map2, F2(firstArg), NS.dropRepeats(isOn), ticker));
+
+		var initialState = {
+			isOn: false,
+			time: localRuntime.timer.programStart,
+			delta: 0
+		};
+
+		var timeoutId;
+
+		function update(input,state)
+		{
+			var currentTime = input._0;
+			var isOn = input._1;
+			var wasOn = state.isOn;
+			var previousTime = state.time;
+
+			if (isOn)
+			{
+				timeoutId = localRuntime.setTimeout(notifyTicker, msPerFrame);
+			}
+			else if (wasOn)
+			{
+				clearTimeout(timeoutId);
+			}
+
+			return {
+				isOn: isOn,
+				time: currentTime,
+				delta: (isOn && !wasOn) ? 0 : currentTime - previousTime
+			};
+		}
+
+		return A2(
+			NS.map,
+			function(state) { return state.delta; },
+			A3(NS.foldp, F2(update), update(input.value,initialState), input)
+		);
+	}
+
+
+	// EVERY
+
+	function every(t)
+	{
+		var ticker = NS.input('every-' + t, null);
+		function tellTime()
+		{
+			localRuntime.notify(ticker.id, null);
+		}
+		var clock = A2( NS.map, fst, NS.timestamp(ticker) );
+		setInterval(tellTime, t);
+		return clock;
+	}
+
+
+	function fst(pair)
+	{
+		return pair._0;
+	}
+
+
+	function read(s)
+	{
+		var t = Date.parse(s);
+		return isNaN(t) ? Maybe.Nothing : Maybe.Just(t);
+	}
+
+	return localRuntime.Native.Time.values = {
+		fpsWhen: F2(fpsWhen),
+		every: every,
+		toDate: function(t) { return new window.Date(t); },
+		read: read
+	};
+
+};
+
 Elm.Native.Transform2D = {};
 Elm.Native.Transform2D.make = function(localRuntime) {
 
@@ -13103,248 +13482,6 @@ Elm.Signal.Extra.make = function (_elm) {
                               ,withPassive: withPassive};
    return _elm.Signal.Extra.values;
 };
-Elm.Spiral = Elm.Spiral || {};
-Elm.Spiral.make = function (_elm) {
-   "use strict";
-   _elm.Spiral = _elm.Spiral || {};
-   if (_elm.Spiral.values)
-   return _elm.Spiral.values;
-   var _op = {},
-   _N = Elm.Native,
-   _U = _N.Utils.make(_elm),
-   _L = _N.List.make(_elm),
-   $moduleName = "Spiral",
-   $Basics = Elm.Basics.make(_elm),
-   $Color = Elm.Color.make(_elm),
-   $Graphics$Collage = Elm.Graphics.Collage.make(_elm),
-   $Graphics$Element = Elm.Graphics.Element.make(_elm),
-   $List = Elm.List.make(_elm),
-   $Maybe = Elm.Maybe.make(_elm),
-   $Mouse = Elm.Mouse.make(_elm),
-   $Result = Elm.Result.make(_elm),
-   $Signal = Elm.Signal.make(_elm),
-   $Signal$Extra = Elm.Signal.Extra.make(_elm),
-   $Window = Elm.Window.make(_elm);
-   var transformMouse = F2(function (model,
-   _v0) {
-      return function () {
-         switch (_v0.ctor)
-         {case "_Tuple2":
-            return {ctor: "_Tuple2"
-                   ,_0: _v0._0 - $Basics.toFloat(model.w) / 2
-                   ,_1: 0 - _v0._1 + $Basics.toFloat(model.h) / 2};}
-         _U.badCase($moduleName,
-         "on line 86, column 4 to 59");
-      }();
-   });
-   var intPair2FloatPair = function (_v4) {
-      return function () {
-         switch (_v4.ctor)
-         {case "_Tuple2":
-            return {ctor: "_Tuple2"
-                   ,_0: $Basics.toFloat(_v4._0)
-                   ,_1: $Basics.toFloat(_v4._1)};}
-         _U.badCase($moduleName,
-         "on line 80, column 29 to 49");
-      }();
-   };
-   var addP = F2(function (_v8,
-   _v9) {
-      return function () {
-         switch (_v9.ctor)
-         {case "_Tuple2":
-            return function () {
-                 switch (_v8.ctor)
-                 {case "_Tuple2":
-                    return {ctor: "_Tuple2"
-                           ,_0: _v8._0 + _v9._0
-                           ,_1: _v8._1 + _v9._1};}
-                 _U.badCase($moduleName,
-                 "on line 58, column 23 to 35");
-              }();}
-         _U.badCase($moduleName,
-         "on line 58, column 23 to 35");
-      }();
-   });
-   var warpDist = function (d) {
-      return -1;
-   };
-   var NoOp = {ctor: "NoOp"};
-   var MouseMove = function (a) {
-      return {ctor: "MouseMove"
-             ,_0: a};
-   };
-   var mousePos = A2($Signal.map,
-   function ($) {
-      return MouseMove(intPair2FloatPair($));
-   },
-   $Mouse.position);
-   var WindowDim = function (a) {
-      return {ctor: "WindowDim"
-             ,_0: a};
-   };
-   var windowDims = A2($Signal.map,
-   WindowDim,
-   $Window.dimensions);
-   var spiral = function (model) {
-      return $Graphics$Collage.traced($Graphics$Collage.solid($Color.black))($Graphics$Collage.path(model.points));
-   };
-   var background = function (model) {
-      return $Graphics$Collage.filled($Color.white)(A2($Graphics$Collage.rect,
-      $Basics.toFloat(model.w),
-      $Basics.toFloat(model.h)));
-   };
-   var view = function (model) {
-      return A2($Graphics$Collage.collage,
-      model.w,
-      model.h)(_L.fromArray([background(model)
-                            ,spiral(model)]));
-   };
-   var init = {_: {}
-              ,h: 0
-              ,mouse: {ctor: "_Tuple2"
-                      ,_0: -1
-                      ,_1: 1}
-              ,points: _L.fromArray([])
-              ,targetPoints: _L.fromArray([])
-              ,w: 0};
-   var distortion = 40;
-   var distortVector = F2(function (_v16,
-   _v17) {
-      return function () {
-         switch (_v17.ctor)
-         {case "_Tuple2":
-            return function () {
-                 switch (_v16.ctor)
-                 {case "_Tuple2":
-                    return function () {
-                         var dy = _v16._1 - _v17._1;
-                         var dx = _v16._0 - _v17._0;
-                         var d = $Basics.max(1)($Basics.sqrt(Math.pow(dx,
-                         2) + Math.pow(dy,2)));
-                         var distortionAmnt = distortion * warpDist(d);
-                         var $ = {ctor: "_Tuple2"
-                                 ,_0: dx / d
-                                 ,_1: dy / d},
-                         nx = $._0,
-                         ny = $._1;
-                         return {ctor: "_Tuple2"
-                                ,_0: nx * distortionAmnt
-                                ,_1: ny * distortionAmnt};
-                      }();}
-                 _U.badCase($moduleName,
-                 "between lines 51 and 56");
-              }();}
-         _U.badCase($moduleName,
-         "between lines 51 and 56");
-      }();
-   });
-   var distortPoint = F2(function (model,
-   point) {
-      return A2(addP,
-      point,
-      A2(distortVector,
-      model.mouse,
-      point));
-   });
-   var distort = F2(function (model,
-   ps) {
-      return A2($List.map,
-      distortPoint(model),
-      ps);
-   });
-   var spirals = 5;
-   var numPoints = 500;
-   var genPoints = function (_v24) {
-      return function () {
-         switch (_v24.ctor)
-         {case "_Tuple2":
-            return function () {
-                 var windowDiag = $Basics.sqrt(Math.pow($Basics.toFloat(_v24._0),
-                 2) + Math.pow($Basics.toFloat(_v24._1),
-                 2)) / 2;
-                 return A2($List.map,
-                 function (n) {
-                    return function () {
-                       var p = n / numPoints;
-                       var r = p * 2 * spirals * $Basics.pi;
-                       var scale = p * windowDiag;
-                       return {ctor: "_Tuple2"
-                              ,_0: scale * $Basics.cos(r)
-                              ,_1: scale * $Basics.sin(r)};
-                    }();
-                 },
-                 _L.range(0,numPoints));
-              }();}
-         _U.badCase($moduleName,
-         "between lines 23 and 27");
-      }();
-   };
-   var update = F2(function (action,
-   model) {
-      return function () {
-         switch (action.ctor)
-         {case "MouseMove":
-            return _U.replace([["mouse"
-                               ,A2(transformMouse,
-                               model,
-                               action._0)]
-                              ,["points"
-                               ,A2(distort,
-                               model,
-                               model.targetPoints)]],
-              model);
-            case "NoOp": return model;
-            case "WindowDim":
-            switch (action._0.ctor)
-              {case "_Tuple2":
-                 return function () {
-                      var ps = genPoints({ctor: "_Tuple2"
-                                         ,_0: action._0._0
-                                         ,_1: action._0._1});
-                      return _U.replace([["w"
-                                         ,action._0._0]
-                                        ,["h",action._0._1]
-                                        ,["targetPoints",ps]
-                                        ,["points"
-                                         ,A2(distort,model,ps)]],
-                      model);
-                   }();}
-              break;}
-         _U.badCase($moduleName,
-         "between lines 68 and 76");
-      }();
-   });
-   var modelSignal = A2($Signal$Extra.foldp$,
-   update,
-   function (a) {
-      return A2(update,a,init);
-   })(A2($Signal.merge,
-   windowDims,
-   mousePos));
-   var main = A2($Signal.map,
-   view,
-   modelSignal);
-   var Model = F5(function (a,
-   b,
-   c,
-   d,
-   e) {
-      return {_: {}
-             ,h: c
-             ,mouse: a
-             ,points: e
-             ,targetPoints: d
-             ,w: b};
-   });
-   _elm.Spiral.values = {_op: _op
-                        ,init: init
-                        ,modelSignal: modelSignal
-                        ,view: view
-                        ,main: main
-                        ,Model: Model};
-   return _elm.Spiral.values;
-};
 Elm.String = Elm.String || {};
 Elm.String.make = function (_elm) {
    "use strict";
@@ -13756,6 +13893,85 @@ Elm.Text.make = function (_elm) {
                       ,Over: Over
                       ,Through: Through};
    return _elm.Text.values;
+};
+Elm.Time = Elm.Time || {};
+Elm.Time.make = function (_elm) {
+   "use strict";
+   _elm.Time = _elm.Time || {};
+   if (_elm.Time.values)
+   return _elm.Time.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Time",
+   $Basics = Elm.Basics.make(_elm),
+   $Native$Signal = Elm.Native.Signal.make(_elm),
+   $Native$Time = Elm.Native.Time.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var delay = $Native$Signal.delay;
+   var since = F2(function (time,
+   signal) {
+      return function () {
+         var stop = A2($Signal.map,
+         $Basics.always(-1),
+         A2(delay,time,signal));
+         var start = A2($Signal.map,
+         $Basics.always(1),
+         signal);
+         var delaydiff = A3($Signal.foldp,
+         F2(function (x,y) {
+            return x + y;
+         }),
+         0,
+         A2($Signal.merge,start,stop));
+         return A2($Signal.map,
+         F2(function (x,y) {
+            return !_U.eq(x,y);
+         })(0),
+         delaydiff);
+      }();
+   });
+   var timestamp = $Native$Signal.timestamp;
+   var every = $Native$Time.every;
+   var fpsWhen = $Native$Time.fpsWhen;
+   var fps = function (targetFrames) {
+      return A2(fpsWhen,
+      targetFrames,
+      $Signal.constant(true));
+   };
+   var inMilliseconds = function (t) {
+      return t;
+   };
+   var millisecond = 1;
+   var second = 1000 * millisecond;
+   var minute = 60 * second;
+   var hour = 60 * minute;
+   var inHours = function (t) {
+      return t / hour;
+   };
+   var inMinutes = function (t) {
+      return t / minute;
+   };
+   var inSeconds = function (t) {
+      return t / second;
+   };
+   _elm.Time.values = {_op: _op
+                      ,millisecond: millisecond
+                      ,second: second
+                      ,minute: minute
+                      ,hour: hour
+                      ,inMilliseconds: inMilliseconds
+                      ,inSeconds: inSeconds
+                      ,inMinutes: inMinutes
+                      ,inHours: inHours
+                      ,fps: fps
+                      ,fpsWhen: fpsWhen
+                      ,every: every
+                      ,timestamp: timestamp
+                      ,delay: delay
+                      ,since: since};
+   return _elm.Time.values;
 };
 Elm.Transform2D = Elm.Transform2D || {};
 Elm.Transform2D.make = function (_elm) {

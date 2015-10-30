@@ -1,10 +1,11 @@
-module Spiral (Model, init, modelSignal, view, main) where
+module Curve (Model, init, modelSignal, view, main) where
 
 import Graphics.Collage exposing (..)
 import Graphics.Element exposing (Element)
 import Color exposing (..)
 import Mouse
 import Window
+import Time
 import Signal.Extra exposing (foldp')
 
 type alias Point = (Float, Float)
@@ -14,21 +15,20 @@ type alias Model = { mouse : Point
                    , targetPoints : List Point
                    , points : List Point }
 
-numPoints = 1000 -- resolution of the spirals
-spirals = 5
+numPoints = 500 -- resolution of points
 distortion = 50 -- the max distortion length in pixels
 
 genPoints : (Int, Int) -> List Point
 genPoints (w, h) =
   let windowDiag = (sqrt <| (toFloat w) ^ 2 + (toFloat h) ^ 2) / 2 in
   List.map (\n -> let p = n/numPoints
-                      r = p * 2 * spirals * pi
                       scale = p*windowDiag
                   in
-                    (scale * cos r, scale * sin r)) [0..numPoints]
+                    (-windowDiag / 2 + scale, 0 ))
+        [0..numPoints]
 
 init : Model
-init = { mouse = (-1, 1)
+init = { mouse = (0, 100)
        , w = 0
        , h = 0
        , targetPoints = []
@@ -37,21 +37,20 @@ init = { mouse = (-1, 1)
 
 background model = filled white <| rect (toFloat model.w) (toFloat model.h)
 
-spiral model = traced (solid black) <| path model.points
+curve model = traced (solid black) <| path model.points
 
 connection a b = traced (solid <| rgba 0 0 0 1) <| segment a b
 
--- numToDrop = floor <| (toFloat numPoints) / (toFloat spirals)
-numToDrop = floor <| (toFloat numPoints) / distortion / 3
+numToDrop = floor <| (toFloat numPoints) / distortion * 4
 view : Model -> Element
 view model = collage model.w model.h <| [ background model
-                                        , spiral model
+                                        , curve model
                                         , group <| List.map2 connection model.points <| List.drop (numToDrop)  model.points
                                         ]
 
 type Action = WindowDim (Int, Int) | MouseMove Point | NoOp
 
-warpDist d = -1  -- logBase 2 d -- is also interesting
+warpDist d = -1 -- logBase 2 d -- is also interesting
 
 distortVector (mx, my) (bx, by) =
   let dx = mx - bx
@@ -62,6 +61,7 @@ distortVector (mx, my) (bx, by) =
   in (nx * distortionAmnt, ny * distortionAmnt)
 
 addP (a, b) (c, d) = (a + c, b + d)
+scaleP s (a, b) = (s * a, s * b)
 
 distortPoint : Model -> Point -> Point
 distortPoint model point = addP point (distortVector model.mouse point)
@@ -78,7 +78,7 @@ update action model =
                                 , h <- h
                                 , targetPoints <- ps
                                 , points <- distort model ps }
-    MouseMove mouse  -> { model | mouse <- transformMouse model mouse
+    MouseMove mouse  -> { model | mouse <-  addP model.mouse <| scaleP 1 <| (transformMouse model mouse) `addP` (scaleP -1 model.mouse)
                                 , points <- distort model model.targetPoints }
 
 windowDims = Signal.map (WindowDim) Window.dimensions
