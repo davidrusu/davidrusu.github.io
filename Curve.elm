@@ -44,7 +44,6 @@ connection a b = traced (solid <| rgba 0 0 0 1) <| segment a b
 numToDrop = floor <| (toFloat numPoints) / distortion * 4
 view : Model -> Element
 view model = collage model.w model.h <| [ background model
-                                        , curve model
                                         , group <| List.map2 connection model.points <| List.drop (numToDrop)  model.points
                                         ]
 

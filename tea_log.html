@@ -1,5 +1,6 @@
-var Elm = Elm || { Native: {} };
-Elm.Array = Elm.Array || {};
+<!DOCTYPE HTML>
+<html><head><meta charset="UTF-8"><title>TeaLog</title><style>html,head,body { padding:0; margin:0; }
+body { font-family: calibri, helvetica, arial, sans-serif; }</style><script type="text/javascript">var Elm = Elm || { Native: {} };Elm.Array = Elm.Array || {};
 Elm.Array.make = function (_elm) {
    "use strict";
    _elm.Array = _elm.Array || {};
@@ -91,8 +92,7 @@ Elm.Array.make = function (_elm) {
                        ,foldl: foldl
                        ,foldr: foldr};
    return _elm.Array.values;
-};
-Elm.Basics = Elm.Basics || {};
+};Elm.Basics = Elm.Basics || {};
 Elm.Basics.make = function (_elm) {
    "use strict";
    _elm.Basics = _elm.Basics || {};
@@ -269,8 +269,7 @@ Elm.Basics.make = function (_elm) {
                         ,EQ: EQ
                         ,GT: GT};
    return _elm.Basics.values;
-};
-Elm.Char = Elm.Char || {};
+};Elm.Char = Elm.Char || {};
 Elm.Char.make = function (_elm) {
    "use strict";
    _elm.Char = _elm.Char || {};
@@ -333,8 +332,7 @@ Elm.Char.make = function (_elm) {
                       ,toCode: toCode
                       ,fromCode: fromCode};
    return _elm.Char.values;
-};
-Elm.Color = Elm.Color || {};
+};Elm.Color = Elm.Color || {};
 Elm.Color.make = function (_elm) {
    "use strict";
    _elm.Color = _elm.Color || {};
@@ -784,278 +782,1792 @@ Elm.Color.make = function (_elm) {
                        ,gray: gray
                        ,darkGray: darkGray};
    return _elm.Color.values;
-};
-Elm.Curve = Elm.Curve || {};
-Elm.Curve.make = function (_elm) {
+};Elm.Css = Elm.Css || {};
+Elm.Css.make = function (_elm) {
    "use strict";
-   _elm.Curve = _elm.Curve || {};
-   if (_elm.Curve.values)
-   return _elm.Curve.values;
+   _elm.Css = _elm.Css || {};
+   if (_elm.Css.values)
+   return _elm.Css.values;
    var _op = {},
    _N = Elm.Native,
    _U = _N.Utils.make(_elm),
    _L = _N.List.make(_elm),
-   $moduleName = "Curve",
+   $moduleName = "Css",
    $Basics = Elm.Basics.make(_elm),
    $Color = Elm.Color.make(_elm),
-   $Graphics$Collage = Elm.Graphics.Collage.make(_elm),
-   $Graphics$Element = Elm.Graphics.Element.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Html$Attributes = Elm.Html.Attributes.make(_elm),
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
-   $Mouse = Elm.Mouse.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var style = F3(function (name,
+   value,
+   styles) {
+      return A2($List.append,
+      styles,
+      _L.fromArray([{ctor: "_Tuple2"
+                    ,_0: name
+                    ,_1: value}]));
+   });
+   var setViewport = A3($Html.node,
+   "meta",
+   _L.fromArray([$Html$Attributes.name("viewport")
+                ,$Html$Attributes.content("width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")]),
+   _L.fromArray([]));
+   var url = function (path) {
+      return A2($Basics._op["++"],
+      "url(\"",
+      A2($Basics._op["++"],
+      path,
+      "\")"));
+   };
+   var px = function (num) {
+      return A2($Basics._op["++"],
+      $Basics.toString(num),
+      "px ");
+   };
+   var colorString = function (color) {
+      return function () {
+         var rgba = $Color.toRgb(color);
+         var r = A2($Basics._op["++"],
+         "rgba(",
+         A2($Basics._op["++"],
+         $Basics.toString(rgba.red),
+         ", "));
+         var g = A2($Basics._op["++"],
+         $Basics.toString(rgba.green),
+         ", ");
+         var b = A2($Basics._op["++"],
+         $Basics.toString(rgba.blue),
+         ", ");
+         var a = A2($Basics._op["++"],
+         $Basics.toString(rgba.alpha),
+         ")");
+         return A2($Basics._op["++"],
+         r,
+         A2($Basics._op["++"],
+         g,
+         A2($Basics._op["++"],b,a)));
+      }();
+   };
+   _elm.Css.values = {_op: _op
+                     ,colorString: colorString
+                     ,px: px
+                     ,url: url
+                     ,setViewport: setViewport
+                     ,style: style};
+   return _elm.Css.values;
+};Elm.Css = Elm.Css || {};
+Elm.Css.Background = Elm.Css.Background || {};
+Elm.Css.Background.make = function (_elm) {
+   "use strict";
+   _elm.Css = _elm.Css || {};
+   _elm.Css.Background = _elm.Css.Background || {};
+   if (_elm.Css.Background.values)
+   return _elm.Css.Background.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Css.Background",
+   $Basics = Elm.Basics.make(_elm),
+   $Color = Elm.Color.make(_elm),
+   $Css = Elm.Css.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var image = F2(function (path,
+   styles) {
+      return A3($Css.style,
+      "background-image",
+      $Css.url(path),
+      styles);
+   });
+   var color = F2(function (c,
+   styles) {
+      return A3($Css.style,
+      "background-color",
+      $Css.colorString(c),
+      styles);
+   });
+   var pointString = F2(function (x,
+   y) {
+      return A2($Basics._op["++"],
+      $Css.px(x),
+      $Css.px(y));
+   });
+   var position = F3(function (x,
+   y,
+   styles) {
+      return A3($Css.style,
+      "background-position",
+      A2(pointString,x,y),
+      styles);
+   });
+   var size = F3(function (width,
+   height,
+   styles) {
+      return A3($Css.style,
+      "background-size",
+      A2(pointString,width,height),
+      styles);
+   });
+   var attachmentString = function (attachment) {
+      return function () {
+         switch (attachment.ctor)
+         {case "Fixed": return "fixed";
+            case "Local": return "local";
+            case "Scroll": return "scroll";}
+         _U.badCase($moduleName,
+         "between lines 94 and 102");
+      }();
+   };
+   var attachment = F2(function (a,
+   styles) {
+      return A3($Css.style,
+      "background-attachment",
+      attachmentString(a),
+      styles);
+   });
+   var repeatString = function (repeat) {
+      return function () {
+         switch (repeat.ctor)
+         {case "NoRepeat":
+            return "no-repeat";
+            case "Repeat": return "repeat";
+            case "RepeatX":
+            return "repeat-x";
+            case "RepeatY":
+            return "repeat-y";}
+         _U.badCase($moduleName,
+         "between lines 72 and 83");
+      }();
+   };
+   var repeat = F2(function (r,
+   styles) {
+      return A3($Css.style,
+      "background-repeat",
+      repeatString(r),
+      styles);
+   });
+   var Local = {ctor: "Local"};
+   var Fixed = {ctor: "Fixed"};
+   var Scroll = {ctor: "Scroll"};
+   var NoRepeat = {ctor: "NoRepeat"};
+   var RepeatY = {ctor: "RepeatY"};
+   var RepeatX = {ctor: "RepeatX"};
+   var Repeat = {ctor: "Repeat"};
+   _elm.Css.Background.values = {_op: _op
+                                ,Repeat: Repeat
+                                ,RepeatX: RepeatX
+                                ,RepeatY: RepeatY
+                                ,NoRepeat: NoRepeat
+                                ,Scroll: Scroll
+                                ,Fixed: Fixed
+                                ,Local: Local
+                                ,repeatString: repeatString
+                                ,attachmentString: attachmentString
+                                ,pointString: pointString
+                                ,color: color
+                                ,image: image
+                                ,position: position
+                                ,size: size
+                                ,repeat: repeat
+                                ,attachment: attachment};
+   return _elm.Css.Background.values;
+};Elm.Css = Elm.Css || {};
+Elm.Css.Border = Elm.Css.Border || {};
+Elm.Css.Border.Style = Elm.Css.Border.Style || {};
+Elm.Css.Border.Style.make = function (_elm) {
+   "use strict";
+   _elm.Css = _elm.Css || {};
+   _elm.Css.Border = _elm.Css.Border || {};
+   _elm.Css.Border.Style = _elm.Css.Border.Style || {};
+   if (_elm.Css.Border.Style.values)
+   return _elm.Css.Border.Style.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Css.Border.Style",
+   $Basics = Elm.Basics.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var string = function (style) {
+      return function () {
+         switch (style.ctor)
+         {case "Dashed": return "dashed";
+            case "Dotted": return "dotted";
+            case "Double": return "double";
+            case "Groove": return "groove";
+            case "Hidden": return "hidden";
+            case "Inset": return "inset";
+            case "None": return "none";
+            case "Outset": return "outset";
+            case "Ridge": return "ridge";
+            case "Solid": return "solid";}
+         _U.badCase($moduleName,
+         "between lines 72 and 101");
+      }();
+   };
+   var Outset = {ctor: "Outset"};
+   var Inset = {ctor: "Inset"};
+   var Ridge = {ctor: "Ridge"};
+   var Groove = {ctor: "Groove"};
+   var Double = {ctor: "Double"};
+   var Solid = {ctor: "Solid"};
+   var Dashed = {ctor: "Dashed"};
+   var Dotted = {ctor: "Dotted"};
+   var Hidden = {ctor: "Hidden"};
+   var None = {ctor: "None"};
+   _elm.Css.Border.Style.values = {_op: _op
+                                  ,None: None
+                                  ,Hidden: Hidden
+                                  ,Dotted: Dotted
+                                  ,Dashed: Dashed
+                                  ,Solid: Solid
+                                  ,Double: Double
+                                  ,Groove: Groove
+                                  ,Ridge: Ridge
+                                  ,Inset: Inset
+                                  ,Outset: Outset
+                                  ,string: string};
+   return _elm.Css.Border.Style.values;
+};Elm.Css = Elm.Css || {};
+Elm.Css.Border = Elm.Css.Border || {};
+Elm.Css.Border.Top = Elm.Css.Border.Top || {};
+Elm.Css.Border.Top.make = function (_elm) {
+   "use strict";
+   _elm.Css = _elm.Css || {};
+   _elm.Css.Border = _elm.Css.Border || {};
+   _elm.Css.Border.Top = _elm.Css.Border.Top || {};
+   if (_elm.Css.Border.Top.values)
+   return _elm.Css.Border.Top.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Css.Border.Top",
+   $Basics = Elm.Basics.make(_elm),
+   $Color = Elm.Color.make(_elm),
+   $Css = Elm.Css.make(_elm),
+   $Css$Border$Style = Elm.Css.Border.Style.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var leftRadius = F2(function (l,
+   styles) {
+      return A3($Css.style,
+      "border-top-left-radius",
+      $Css.px(l),
+      styles);
+   });
+   var rightRadius = F2(function (r,
+   styles) {
+      return A3($Css.style,
+      "border-top-right-radius",
+      $Css.px(r),
+      styles);
+   });
+   var width = F2(function (w,
+   styles) {
+      return A3($Css.style,
+      "border-top-width",
+      $Css.px(w),
+      styles);
+   });
+   var style = F2(function (s,
+   styles) {
+      return A3($Css.style,
+      "border-top-style",
+      $Css$Border$Style.string(s),
+      styles);
+   });
+   var color = F2(function (c,
+   styles) {
+      return A3($Css.style,
+      "border-top-color",
+      $Css.colorString(c),
+      styles);
+   });
+   _elm.Css.Border.Top.values = {_op: _op
+                                ,color: color
+                                ,style: style
+                                ,width: width
+                                ,rightRadius: rightRadius
+                                ,leftRadius: leftRadius};
+   return _elm.Css.Border.Top.values;
+};Elm.Css = Elm.Css || {};
+Elm.Css.Dimension = Elm.Css.Dimension || {};
+Elm.Css.Dimension.make = function (_elm) {
+   "use strict";
+   _elm.Css = _elm.Css || {};
+   _elm.Css.Dimension = _elm.Css.Dimension || {};
+   if (_elm.Css.Dimension.values)
+   return _elm.Css.Dimension.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Css.Dimension",
+   $Basics = Elm.Basics.make(_elm),
+   $Css = Elm.Css.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var width = F2(function (w,
+   styles) {
+      return A3($Css.style,
+      "width",
+      $Css.px(w),
+      styles);
+   });
+   var minWidth = F2(function (w,
+   styles) {
+      return A3($Css.style,
+      "min-width",
+      $Css.px(w),
+      styles);
+   });
+   var minHeight = F2(function (h,
+   styles) {
+      return A3($Css.style,
+      "min-height",
+      $Css.px(h),
+      styles);
+   });
+   var maxWidth = F2(function (w,
+   styles) {
+      return A3($Css.style,
+      "max-width",
+      $Css.px(w),
+      styles);
+   });
+   var maxHeight = F2(function (h,
+   styles) {
+      return A3($Css.style,
+      "max-height",
+      $Css.px(h),
+      styles);
+   });
+   var height = F2(function (h,
+   styles) {
+      return A3($Css.style,
+      "height",
+      $Css.px(h),
+      styles);
+   });
+   _elm.Css.Dimension.values = {_op: _op
+                               ,height: height
+                               ,maxHeight: maxHeight
+                               ,maxWidth: maxWidth
+                               ,minHeight: minHeight
+                               ,minWidth: minWidth
+                               ,width: width};
+   return _elm.Css.Dimension.values;
+};Elm.Css = Elm.Css || {};
+Elm.Css.Display = Elm.Css.Display || {};
+Elm.Css.Display.make = function (_elm) {
+   "use strict";
+   _elm.Css = _elm.Css || {};
+   _elm.Css.Display = _elm.Css.Display || {};
+   if (_elm.Css.Display.values)
+   return _elm.Css.Display.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Css.Display",
+   $Basics = Elm.Basics.make(_elm),
+   $Css = Elm.Css.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm),
-   $Signal$Extra = Elm.Signal.Extra.make(_elm),
-   $Window = Elm.Window.make(_elm);
-   var transformMouse = F2(function (model,
-   _v0) {
+   $Vendor = Elm.Vendor.make(_elm);
+   var string = function (display) {
+      return function () {
+         switch (display.ctor)
+         {case "Block": return "block";
+            case "Flex": return "flex";
+            case "Inline": return "inline";
+            case "InlineBlock":
+            return "inline-block";
+            case "InlineFlex":
+            return "inline-flex";
+            case "InlineTable":
+            return "inline-table";
+            case "ListItem":
+            return "list-item";
+            case "None": return "none";
+            case "RunIn": return "run-in";
+            case "Table": return "table";
+            case "TableCaption":
+            return "table-caption";
+            case "TableCell":
+            return "table-cell";
+            case "TableColumn":
+            return "table-column";
+            case "TableColumnGroup":
+            return "table-column-group";
+            case "TableFooterGroup":
+            return "table-footer-group";
+            case "TableHeaderGroup":
+            return "table-header-group";
+            case "TableRow":
+            return "table-row";
+            case "TableRowGroup":
+            return "table-row-group";}
+         _U.badCase($moduleName,
+         "between lines 109 and 162");
+      }();
+   };
+   var display = F2(function (d,
+   styles) {
+      return function () {
+         var prefix = $Vendor.prefix;
+         return function () {
+            switch (d.ctor)
+            {case "Flex":
+               return _U.eq(prefix,
+                 $Vendor.Webkit) ? A3($Css.style,
+                 "display",
+                 "-webkit-flex",
+                 styles) : _U.eq(prefix,
+                 $Vendor.MS) ? A3($Css.style,
+                 "display",
+                 "-ms-flexbox",
+                 styles) : A3($Css.style,
+                 "display",
+                 "flex",
+                 styles);
+               case "InlineFlex":
+               return _U.eq(prefix,
+                 $Vendor.Webkit) ? A3($Css.style,
+                 "display",
+                 "-webkit-inline-flex",
+                 styles) : _U.eq(prefix,
+                 $Vendor.MS) ? A3($Css.style,
+                 "display",
+                 "-ms-infline-flexbox",
+                 styles) : A3($Css.style,
+                 "display",
+                 "flex",
+                 styles);}
+            return A3($Css.style,
+            "display",
+            string(d),
+            styles);
+         }();
+      }();
+   });
+   var None = {ctor: "None"};
+   var TableRow = {ctor: "TableRow"};
+   var TableColumn = {ctor: "TableColumn"};
+   var TableCell = {ctor: "TableCell"};
+   var TableRowGroup = {ctor: "TableRowGroup"};
+   var TableFooterGroup = {ctor: "TableFooterGroup"};
+   var TableHeaderGroup = {ctor: "TableHeaderGroup"};
+   var TableColumnGroup = {ctor: "TableColumnGroup"};
+   var TableCaption = {ctor: "TableCaption"};
+   var Table = {ctor: "Table"};
+   var RunIn = {ctor: "RunIn"};
+   var ListItem = {ctor: "ListItem"};
+   var InlineTable = {ctor: "InlineTable"};
+   var InlineFlex = {ctor: "InlineFlex"};
+   var InlineBlock = {ctor: "InlineBlock"};
+   var Flex = {ctor: "Flex"};
+   var Block = {ctor: "Block"};
+   var Inline = {ctor: "Inline"};
+   _elm.Css.Display.values = {_op: _op
+                             ,Inline: Inline
+                             ,Block: Block
+                             ,Flex: Flex
+                             ,InlineBlock: InlineBlock
+                             ,InlineFlex: InlineFlex
+                             ,InlineTable: InlineTable
+                             ,ListItem: ListItem
+                             ,RunIn: RunIn
+                             ,Table: Table
+                             ,TableCaption: TableCaption
+                             ,TableColumnGroup: TableColumnGroup
+                             ,TableHeaderGroup: TableHeaderGroup
+                             ,TableFooterGroup: TableFooterGroup
+                             ,TableRowGroup: TableRowGroup
+                             ,TableCell: TableCell
+                             ,TableColumn: TableColumn
+                             ,TableRow: TableRow
+                             ,None: None
+                             ,string: string
+                             ,display: display};
+   return _elm.Css.Display.values;
+};Elm.Css = Elm.Css || {};
+Elm.Css.Flex = Elm.Css.Flex || {};
+Elm.Css.Flex.make = function (_elm) {
+   "use strict";
+   _elm.Css = _elm.Css || {};
+   _elm.Css.Flex = _elm.Css.Flex || {};
+   if (_elm.Css.Flex.values)
+   return _elm.Css.Flex.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Css.Flex",
+   $Basics = Elm.Basics.make(_elm),
+   $Css = Elm.Css.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $Vendor = Elm.Vendor.make(_elm);
+   var basis = F2(function (b,
+   styles) {
+      return function () {
+         var name = "flex-basis";
+         var prefix = $Vendor.prefix;
+         return _U.eq(prefix,
+         $Vendor.Webkit) ? A3($Css.style,
+         A2($Basics._op["++"],
+         "-webkit-",
+         name),
+         $Css.px(b),
+         styles) : _U.eq(prefix,
+         $Vendor.MS) ? A3($Css.style,
+         "-ms-flex-preferred-size",
+         $Css.px(b),
+         styles) : A3($Css.style,
+         name,
+         $Css.px(b),
+         styles);
+      }();
+   });
+   var shrink = F2(function (s,
+   styles) {
+      return function () {
+         var name = "flex-shrink";
+         var prefix = $Vendor.prefix;
+         return _U.eq(prefix,
+         $Vendor.Webkit) ? A3($Css.style,
+         A2($Basics._op["++"],
+         "-webkit-",
+         name),
+         $Basics.toString(s),
+         styles) : _U.eq(prefix,
+         $Vendor.MS) ? A3($Css.style,
+         "-ms-flex-negative",
+         $Basics.toString(s),
+         styles) : A3($Css.style,
+         name,
+         $Basics.toString(s),
+         styles);
+      }();
+   });
+   var grow = F2(function (g,
+   styles) {
+      return function () {
+         var name = "flex-grow";
+         var prefix = $Vendor.prefix;
+         return _U.eq(prefix,
+         $Vendor.Webkit) ? A3($Css.style,
+         A2($Basics._op["++"],
+         "-webkit-",
+         name),
+         $Basics.toString(g),
+         styles) : _U.eq(prefix,
+         $Vendor.MS) ? A3($Css.style,
+         "-ms-flex-positive",
+         $Basics.toString(g),
+         styles) : A3($Css.style,
+         name,
+         $Basics.toString(g),
+         styles);
+      }();
+   });
+   var order = F2(function (o,
+   styles) {
+      return function () {
+         var name = "order";
+         var prefix = $Vendor.prefix;
+         return _U.eq(prefix,
+         $Vendor.Webkit) ? A3($Css.style,
+         A2($Basics._op["++"],
+         "-webkit-",
+         name),
+         $Basics.toString(o),
+         styles) : _U.eq(prefix,
+         $Vendor.MS) ? A3($Css.style,
+         "-ms-flex-order",
+         $Basics.toString(o),
+         styles) : A3($Css.style,
+         name,
+         $Basics.toString(o),
+         styles);
+      }();
+   });
+   var justifyContent = F2(function (j,
+   styles) {
+      return function () {
+         var name = "justify-content";
+         var prefix = $Vendor.prefix;
+         return function () {
+            switch (j.ctor)
+            {case "JCAround":
+               return _U.eq(prefix,
+                 $Vendor.Webkit) ? A3($Css.style,
+                 A2($Basics._op["++"],
+                 "-webkit-",
+                 name),
+                 "space-around",
+                 styles) : _U.eq(prefix,
+                 $Vendor.MS) ? A3($Css.style,
+                 "-ms-flex-pack",
+                 "distribute",
+                 styles) : A3($Css.style,
+                 name,
+                 "space-around",
+                 styles);
+               case "JCBetween":
+               return _U.eq(prefix,
+                 $Vendor.Webkit) ? A3($Css.style,
+                 A2($Basics._op["++"],
+                 "-webkit-",
+                 name),
+                 "space-between",
+                 styles) : _U.eq(prefix,
+                 $Vendor.MS) ? A3($Css.style,
+                 "-ms-flex-pack",
+                 "justify",
+                 styles) : A3($Css.style,
+                 name,
+                 "space-between",
+                 styles);
+               case "JCCenter":
+               return _U.eq(prefix,
+                 $Vendor.Webkit) ? A3($Css.style,
+                 A2($Basics._op["++"],
+                 "-webkit-",
+                 name),
+                 "center",
+                 styles) : _U.eq(prefix,
+                 $Vendor.MS) ? A3($Css.style,
+                 "-ms-flex-pack",
+                 "center",
+                 styles) : A3($Css.style,
+                 name,
+                 "center",
+                 styles);
+               case "JCEnd":
+               return _U.eq(prefix,
+                 $Vendor.Webkit) ? A3($Css.style,
+                 A2($Basics._op["++"],
+                 "-webkit-",
+                 name),
+                 "flex-end",
+                 styles) : _U.eq(prefix,
+                 $Vendor.MS) ? A3($Css.style,
+                 "-ms-flex-pack",
+                 "end",
+                 styles) : A3($Css.style,
+                 name,
+                 "flex-end",
+                 styles);
+               case "JCStart":
+               return _U.eq(prefix,
+                 $Vendor.Webkit) ? A3($Css.style,
+                 A2($Basics._op["++"],
+                 "-webkit-",
+                 name),
+                 "flex-start",
+                 styles) : _U.eq(prefix,
+                 $Vendor.MS) ? A3($Css.style,
+                 "-ms-flex-pack",
+                 "start",
+                 styles) : A3($Css.style,
+                 name,
+                 "flex-start",
+                 styles);}
+            _U.badCase($moduleName,
+            "between lines 349 and 373");
+         }();
+      }();
+   });
+   var direction = F2(function (d,
+   styles) {
+      return function () {
+         var name = "flex-direction";
+         var prefix = $Vendor.prefix;
+         return function () {
+            switch (d.ctor)
+            {case "Column":
+               return _U.eq(prefix,
+                 $Vendor.Webkit) ? A3($Css.style,
+                 A2($Basics._op["++"],
+                 "-webkit-",
+                 name),
+                 "column",
+                 styles) : _U.eq(prefix,
+                 $Vendor.MS) ? A3($Css.style,
+                 A2($Basics._op["++"],
+                 "-ms-",
+                 name),
+                 "column",
+                 styles) : A3($Css.style,
+                 name,
+                 "column",
+                 styles);
+               case "ColumnReverse":
+               return _U.eq(prefix,
+                 $Vendor.Webkit) ? A3($Css.style,
+                 A2($Basics._op["++"],
+                 "-webkit-",
+                 name),
+                 "column-reverse",
+                 styles) : _U.eq(prefix,
+                 $Vendor.MS) ? A3($Css.style,
+                 A2($Basics._op["++"],
+                 "-ms-",
+                 name),
+                 "column-reverse",
+                 styles) : A3($Css.style,
+                 name,
+                 "column-reverse",
+                 styles);
+               case "Row": return _U.eq(prefix,
+                 $Vendor.Webkit) ? A3($Css.style,
+                 A2($Basics._op["++"],
+                 "-webkit-",
+                 name),
+                 "row",
+                 styles) : _U.eq(prefix,
+                 $Vendor.MS) ? A3($Css.style,
+                 A2($Basics._op["++"],
+                 "-ms-",
+                 name),
+                 "row",
+                 styles) : A3($Css.style,
+                 name,
+                 "row",
+                 styles);
+               case "RowReverse":
+               return _U.eq(prefix,
+                 $Vendor.Webkit) ? A3($Css.style,
+                 A2($Basics._op["++"],
+                 "-webkit-",
+                 name),
+                 "row-reverse",
+                 styles) : _U.eq(prefix,
+                 $Vendor.MS) ? A3($Css.style,
+                 A2($Basics._op["++"],
+                 "-ms-",
+                 name),
+                 "row-reverse",
+                 styles) : A3($Css.style,
+                 name,
+                 "row-reverse",
+                 styles);}
+            _U.badCase($moduleName,
+            "between lines 282 and 301");
+         }();
+      }();
+   });
+   var alignContentString = function (align) {
+      return function () {
+         switch (align.ctor)
+         {case "ACAround":
+            return "space-around";
+            case "ACBetween":
+            return "space-between";
+            case "ACCenter":
+            return "center";
+            case "ACEnd": return "flex-end";
+            case "ACStart":
+            return "flex-start";
+            case "ACStretch":
+            return "stretch";}
+         _U.badCase($moduleName,
+         "between lines 249 and 266");
+      }();
+   };
+   var alignContent = F2(function (a,
+   styles) {
+      return function () {
+         var name = "align-content";
+         var prefix = $Vendor.prefix;
+         return function () {
+            switch (a.ctor)
+            {case "ACAround":
+               return _U.eq(prefix,
+                 $Vendor.Webkit) ? A3($Css.style,
+                 A2($Basics._op["++"],
+                 "-webkit-",
+                 name),
+                 "space-around",
+                 styles) : _U.eq(prefix,
+                 $Vendor.MS) ? A3($Css.style,
+                 "-ms-flex-line-pack",
+                 "distribute",
+                 styles) : A3($Css.style,
+                 name,
+                 "space-around",
+                 styles);
+               case "ACBetween":
+               return _U.eq(prefix,
+                 $Vendor.Webkit) ? A3($Css.style,
+                 A2($Basics._op["++"],
+                 "-webkit-",
+                 name),
+                 "space-between",
+                 styles) : _U.eq(prefix,
+                 $Vendor.MS) ? A3($Css.style,
+                 "-ms-flex-line-pack",
+                 "justify",
+                 styles) : A3($Css.style,
+                 name,
+                 "space-between",
+                 styles);
+               case "ACEnd":
+               return _U.eq(prefix,
+                 $Vendor.Webkit) ? A3($Css.style,
+                 A2($Basics._op["++"],
+                 "-webkit-",
+                 name),
+                 "flex-end",
+                 styles) : _U.eq(prefix,
+                 $Vendor.MS) ? A3($Css.style,
+                 "-ms-flex-line-pack",
+                 "end",
+                 styles) : A3($Css.style,
+                 name,
+                 "flex-end",
+                 styles);
+               case "ACStart":
+               return _U.eq(prefix,
+                 $Vendor.Webkit) ? A3($Css.style,
+                 A2($Basics._op["++"],
+                 "-webkit-",
+                 name),
+                 "flex-start",
+                 styles) : _U.eq(prefix,
+                 $Vendor.MS) ? A3($Css.style,
+                 "-ms-flex-line-pack",
+                 "start",
+                 styles) : A3($Css.style,
+                 name,
+                 "flex-start",
+                 styles);}
+            return _U.eq(prefix,
+            $Vendor.Webkit) ? A3($Css.style,
+            A2($Basics._op["++"],
+            "-webkit-",
+            name),
+            alignContentString(a),
+            styles) : _U.eq(prefix,
+            $Vendor.MS) ? A3($Css.style,
+            "-ms-flex-line-pack",
+            alignContentString(a),
+            styles) : A3($Css.style,
+            name,
+            alignContentString(a),
+            styles);
+         }();
+      }();
+   });
+   var alignItemString = function (align) {
+      return function () {
+         switch (align.ctor)
+         {case "AIBaseline":
+            return "baseline";
+            case "AICenter":
+            return "center";
+            case "AIEnd": return "flex-end";
+            case "AIStart":
+            return "flex-start";
+            case "AIStretch":
+            return "stretch";}
+         _U.badCase($moduleName,
+         "between lines 224 and 238");
+      }();
+   };
+   var alignItems = F2(function (a,
+   styles) {
+      return function () {
+         var prefix = $Vendor.prefix;
+         return function () {
+            switch (a.ctor)
+            {case "AIEnd":
+               return _U.eq(prefix,
+                 $Vendor.Webkit) ? A3($Css.style,
+                 "-webkit-align-items",
+                 "flex-end",
+                 styles) : _U.eq(prefix,
+                 $Vendor.MS) ? A3($Css.style,
+                 "-ms-flex-align",
+                 "end",
+                 styles) : A3($Css.style,
+                 "align-items",
+                 alignItemString(a),
+                 styles);
+               case "AIStart":
+               return _U.eq(prefix,
+                 $Vendor.Webkit) ? A3($Css.style,
+                 "-webkit-align-items",
+                 "flex-start",
+                 styles) : _U.eq(prefix,
+                 $Vendor.MS) ? A3($Css.style,
+                 "-ms-flex-align",
+                 "start",
+                 styles) : A3($Css.style,
+                 "align-items",
+                 alignItemString(a),
+                 styles);}
+            return _U.eq(prefix,
+            $Vendor.Webkit) ? A3($Css.style,
+            "-webkit-align-items",
+            alignItemString(a),
+            styles) : _U.eq(prefix,
+            $Vendor.MS) ? A3($Css.style,
+            "-ms-flex-align",
+            alignItemString(a),
+            styles) : A3($Css.style,
+            "align-items",
+            alignItemString(a),
+            styles);
+         }();
+      }();
+   });
+   var alignSelf = F2(function (a,
+   styles) {
+      return function () {
+         var name = "align-self";
+         var prefix = $Vendor.prefix;
+         return function () {
+            switch (a.ctor)
+            {case "AIEnd":
+               return _U.eq(prefix,
+                 $Vendor.Webkit) ? A3($Css.style,
+                 A2($Basics._op["++"],
+                 "-webkit-",
+                 name),
+                 "flex-end",
+                 styles) : _U.eq(prefix,
+                 $Vendor.MS) ? A3($Css.style,
+                 "-ms-flex-item-align",
+                 "end",
+                 styles) : A3($Css.style,
+                 name,
+                 "flex-end",
+                 styles);
+               case "AIStart":
+               return _U.eq(prefix,
+                 $Vendor.Webkit) ? A3($Css.style,
+                 A2($Basics._op["++"],
+                 "-webkit-",
+                 name),
+                 "flex-start",
+                 styles) : _U.eq(prefix,
+                 $Vendor.MS) ? A3($Css.style,
+                 "-ms-flex-item-align",
+                 "start",
+                 styles) : A3($Css.style,
+                 name,
+                 "flex-start",
+                 styles);}
+            return _U.eq(prefix,
+            $Vendor.Webkit) ? A3($Css.style,
+            A2($Basics._op["++"],
+            "-webkit-",
+            name),
+            alignItemString(a),
+            styles) : _U.eq(prefix,
+            $Vendor.MS) ? A3($Css.style,
+            "-ms-flex-item-align",
+            alignItemString(a),
+            styles) : A3($Css.style,
+            name,
+            alignItemString(a),
+            styles);
+         }();
+      }();
+   });
+   var justifyContentString = function (justify) {
+      return function () {
+         switch (justify.ctor)
+         {case "JCAround":
+            return "space-around";
+            case "JCBetween":
+            return "space-between";
+            case "JCCenter":
+            return "center";
+            case "JCEnd": return "flex-end";
+            case "JCStart":
+            return "flex-start";}
+         _U.badCase($moduleName,
+         "between lines 199 and 213");
+      }();
+   };
+   var wrapString = function (wrap) {
+      return function () {
+         switch (wrap.ctor)
+         {case "NoWrap": return "nowrap";
+            case "Wrap": return "wrap";
+            case "WrapReverse":
+            return "wrap-reverse";}
+         _U.badCase($moduleName,
+         "between lines 180 and 188");
+      }();
+   };
+   var wrap = F2(function (w,
+   styles) {
+      return function () {
+         var name = "flex-wrap";
+         var prefix = $Vendor.prefix;
+         return _U.eq(prefix,
+         $Vendor.Webkit) ? A3($Css.style,
+         A2($Basics._op["++"],
+         "-webkit-",
+         name),
+         wrapString(w),
+         styles) : _U.eq(prefix,
+         $Vendor.MS) ? A3($Css.style,
+         A2($Basics._op["++"],
+         "-ms-",
+         name),
+         wrapString(w),
+         styles) : A3($Css.style,
+         name,
+         wrapString(w),
+         styles);
+      }();
+   });
+   var flow = F3(function (d,
+   w,
+   styles) {
+      return wrap(w)(direction(d)(styles));
+   });
+   var directionString = function (direction) {
+      return function () {
+         switch (direction.ctor)
+         {case "Column": return "column";
+            case "ColumnReverse":
+            return "column-reverse";
+            case "Row": return "row";
+            case "RowReverse":
+            return "row-reverse";}
+         _U.badCase($moduleName,
+         "between lines 158 and 169");
+      }();
+   };
+   var ACAround = {ctor: "ACAround"};
+   var ACBetween = {ctor: "ACBetween"};
+   var ACStretch = {ctor: "ACStretch"};
+   var ACCenter = {ctor: "ACCenter"};
+   var ACEnd = {ctor: "ACEnd"};
+   var ACStart = {ctor: "ACStart"};
+   var AIBaseline = {ctor: "AIBaseline"};
+   var AIStretch = {ctor: "AIStretch"};
+   var AICenter = {ctor: "AICenter"};
+   var AIEnd = {ctor: "AIEnd"};
+   var AIStart = {ctor: "AIStart"};
+   var JCAround = {ctor: "JCAround"};
+   var JCBetween = {ctor: "JCBetween"};
+   var JCCenter = {ctor: "JCCenter"};
+   var JCEnd = {ctor: "JCEnd"};
+   var JCStart = {ctor: "JCStart"};
+   var WrapReverse = {ctor: "WrapReverse"};
+   var Wrap = {ctor: "Wrap"};
+   var NoWrap = {ctor: "NoWrap"};
+   var ColumnReverse = {ctor: "ColumnReverse"};
+   var Column = {ctor: "Column"};
+   var RowReverse = {ctor: "RowReverse"};
+   var Row = {ctor: "Row"};
+   _elm.Css.Flex.values = {_op: _op
+                          ,Row: Row
+                          ,RowReverse: RowReverse
+                          ,Column: Column
+                          ,ColumnReverse: ColumnReverse
+                          ,NoWrap: NoWrap
+                          ,Wrap: Wrap
+                          ,WrapReverse: WrapReverse
+                          ,JCStart: JCStart
+                          ,JCEnd: JCEnd
+                          ,JCCenter: JCCenter
+                          ,JCBetween: JCBetween
+                          ,JCAround: JCAround
+                          ,AIStart: AIStart
+                          ,AIEnd: AIEnd
+                          ,AICenter: AICenter
+                          ,AIStretch: AIStretch
+                          ,AIBaseline: AIBaseline
+                          ,ACStart: ACStart
+                          ,ACEnd: ACEnd
+                          ,ACCenter: ACCenter
+                          ,ACStretch: ACStretch
+                          ,ACBetween: ACBetween
+                          ,ACAround: ACAround
+                          ,directionString: directionString
+                          ,wrapString: wrapString
+                          ,justifyContentString: justifyContentString
+                          ,alignItemString: alignItemString
+                          ,alignContentString: alignContentString
+                          ,direction: direction
+                          ,wrap: wrap
+                          ,flow: flow
+                          ,justifyContent: justifyContent
+                          ,alignItems: alignItems
+                          ,alignContent: alignContent
+                          ,order: order
+                          ,grow: grow
+                          ,shrink: shrink
+                          ,basis: basis
+                          ,alignSelf: alignSelf};
+   return _elm.Css.Flex.values;
+};Elm.Css = Elm.Css || {};
+Elm.Css.Font = Elm.Css.Font || {};
+Elm.Css.Font.make = function (_elm) {
+   "use strict";
+   _elm.Css = _elm.Css || {};
+   _elm.Css.Font = _elm.Css.Font || {};
+   if (_elm.Css.Font.values)
+   return _elm.Css.Font.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Css.Font",
+   $Basics = Elm.Basics.make(_elm),
+   $Css = Elm.Css.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var weight = F2(function (w,
+   styles) {
+      return function () {
+         var ub = _U.cmp(w,
+         9) > 0 ? 9 : w;
+         var lb = _U.cmp(ub,
+         1) < 0 ? 1 : ub;
+         return A3($Css.style,
+         "font-weight",
+         $Basics.toString(lb * 100),
+         styles);
+      }();
+   });
+   var size = F2(function (length,
+   styles) {
+      return A3($Css.style,
+      "font-size",
+      $Css.px(length),
+      styles);
+   });
+   var family = F2(function (f,
+   styles) {
+      return A3($Css.style,
+      "font-family",
+      f,
+      styles);
+   });
+   var variantString = function (v) {
+      return function () {
+         switch (v.ctor)
+         {case "NormalVariant":
+            return "normal";
+            case "SmallCaps":
+            return "small-caps";}
+         _U.badCase($moduleName,
+         "between lines 88 and 93");
+      }();
+   };
+   var variant = F2(function (v,
+   styles) {
+      return A3($Css.style,
+      "font-variant",
+      variantString(v),
+      styles);
+   });
+   var styleString = function (style) {
+      return function () {
+         switch (style.ctor)
+         {case "Italic": return "italic";
+            case "NormalStyle":
+            return "normal";
+            case "Oblique":
+            return "oblique";}
+         _U.badCase($moduleName,
+         "between lines 69 and 77");
+      }();
+   };
+   var style = F2(function (s,
+   styles) {
+      return A3($Css.style,
+      "font-style",
+      styleString(s),
+      styles);
+   });
+   var SmallCaps = {ctor: "SmallCaps"};
+   var NormalVariant = {ctor: "NormalVariant"};
+   var Oblique = {ctor: "Oblique"};
+   var Italic = {ctor: "Italic"};
+   var NormalStyle = {ctor: "NormalStyle"};
+   _elm.Css.Font.values = {_op: _op
+                          ,NormalStyle: NormalStyle
+                          ,Italic: Italic
+                          ,Oblique: Oblique
+                          ,NormalVariant: NormalVariant
+                          ,SmallCaps: SmallCaps
+                          ,styleString: styleString
+                          ,variantString: variantString
+                          ,family: family
+                          ,size: size
+                          ,style: style
+                          ,variant: variant
+                          ,weight: weight};
+   return _elm.Css.Font.values;
+};Elm.Css = Elm.Css || {};
+Elm.Css.Margin = Elm.Css.Margin || {};
+Elm.Css.Margin.make = function (_elm) {
+   "use strict";
+   _elm.Css = _elm.Css || {};
+   _elm.Css.Margin = _elm.Css.Margin || {};
+   if (_elm.Css.Margin.values)
+   return _elm.Css.Margin.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Css.Margin",
+   $Basics = Elm.Basics.make(_elm),
+   $Css = Elm.Css.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var top = F2(function (t,
+   styles) {
+      return A3($Css.style,
+      "margin-top",
+      $Css.px(t),
+      styles);
+   });
+   var right = F2(function (r,
+   styles) {
+      return A3($Css.style,
+      "margin-right",
+      $Css.px(r),
+      styles);
+   });
+   var left = F2(function (l,
+   styles) {
+      return A3($Css.style,
+      "margin-left",
+      $Css.px(l),
+      styles);
+   });
+   var bottom = F2(function (b,
+   styles) {
+      return A3($Css.style,
+      "margin-bottom",
+      $Css.px(b),
+      styles);
+   });
+   var all = F5(function (t,
+   r,
+   b,
+   l,
+   styles) {
+      return left(l)(bottom(b)(right(r)(top(t)(styles))));
+   });
+   _elm.Css.Margin.values = {_op: _op
+                            ,bottom: bottom
+                            ,left: left
+                            ,right: right
+                            ,top: top
+                            ,all: all};
+   return _elm.Css.Margin.values;
+};Elm.Css = Elm.Css || {};
+Elm.Css.Padding = Elm.Css.Padding || {};
+Elm.Css.Padding.make = function (_elm) {
+   "use strict";
+   _elm.Css = _elm.Css || {};
+   _elm.Css.Padding = _elm.Css.Padding || {};
+   if (_elm.Css.Padding.values)
+   return _elm.Css.Padding.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Css.Padding",
+   $Basics = Elm.Basics.make(_elm),
+   $Css = Elm.Css.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var top = F2(function (t,
+   styles) {
+      return A3($Css.style,
+      "padding-top",
+      $Css.px(t),
+      styles);
+   });
+   var right = F2(function (r,
+   styles) {
+      return A3($Css.style,
+      "padding-right",
+      $Css.px(r),
+      styles);
+   });
+   var left = F2(function (l,
+   styles) {
+      return A3($Css.style,
+      "padding-left",
+      $Css.px(l),
+      styles);
+   });
+   var bottom = F2(function (b,
+   styles) {
+      return A3($Css.style,
+      "padding-bottom",
+      $Css.px(b),
+      styles);
+   });
+   var all = F5(function (t,
+   r,
+   b,
+   l,
+   styles) {
+      return left(l)(bottom(b)(right(r)(top(t)(styles))));
+   });
+   _elm.Css.Padding.values = {_op: _op
+                             ,bottom: bottom
+                             ,left: left
+                             ,right: right
+                             ,top: top
+                             ,all: all};
+   return _elm.Css.Padding.values;
+};Elm.Css = Elm.Css || {};
+Elm.Css.Shadow = Elm.Css.Shadow || {};
+Elm.Css.Shadow.make = function (_elm) {
+   "use strict";
+   _elm.Css = _elm.Css || {};
+   _elm.Css.Shadow = _elm.Css.Shadow || {};
+   if (_elm.Css.Shadow.values)
+   return _elm.Css.Shadow.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Css.Shadow",
+   $Basics = Elm.Basics.make(_elm),
+   $Color = Elm.Color.make(_elm),
+   $Css = Elm.Css.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var boxString = function (_v0) {
       return function () {
          switch (_v0.ctor)
-         {case "_Tuple2":
-            return {ctor: "_Tuple2"
-                   ,_0: _v0._0 - $Basics.toFloat(model.w) / 2
-                   ,_1: 0 - _v0._1 + $Basics.toFloat(model.h) / 2};}
-         _U.badCase($moduleName,
-         "on line 92, column 4 to 59");
-      }();
-   });
-   var intPair2FloatPair = function (_v4) {
-      return function () {
-         switch (_v4.ctor)
-         {case "_Tuple2":
-            return {ctor: "_Tuple2"
-                   ,_0: $Basics.toFloat(_v4._0)
-                   ,_1: $Basics.toFloat(_v4._1)};}
-         _U.badCase($moduleName,
-         "on line 86, column 29 to 49");
-      }();
-   };
-   var scaleP = F2(function (s,
-   _v8) {
-      return function () {
-         switch (_v8.ctor)
-         {case "_Tuple2":
-            return {ctor: "_Tuple2"
-                   ,_0: s * _v8._0
-                   ,_1: s * _v8._1};}
-         _U.badCase($moduleName,
-         "on line 64, column 20 to 32");
-      }();
-   });
-   var addP = F2(function (_v12,
-   _v13) {
-      return function () {
-         switch (_v13.ctor)
-         {case "_Tuple2":
+         {case "_Tuple6":
             return function () {
-                 switch (_v12.ctor)
-                 {case "_Tuple2":
-                    return {ctor: "_Tuple2"
-                           ,_0: _v12._0 + _v13._0
-                           ,_1: _v12._1 + _v13._1};}
-                 _U.badCase($moduleName,
-                 "on line 63, column 23 to 35");
+                 var i = _v0._5 ? " inset" : "";
+                 var c = $Css.colorString(_v0._4);
+                 var s = $Css.px(_v0._3);
+                 var b = $Css.px(_v0._2);
+                 var v = $Css.px(_v0._1);
+                 var h = $Css.px(_v0._0);
+                 return A2($Basics._op["++"],
+                 h,
+                 A2($Basics._op["++"],
+                 v,
+                 A2($Basics._op["++"],
+                 b,
+                 A2($Basics._op["++"],
+                 s,
+                 A2($Basics._op["++"],c,i)))));
               }();}
          _U.badCase($moduleName,
-         "on line 63, column 23 to 35");
+         "between lines 104 and 111");
       }();
-   });
-   var warpDist = function (d) {
-      return -1;
    };
-   var NoOp = {ctor: "NoOp"};
-   var MouseMove = function (a) {
-      return {ctor: "MouseMove"
-             ,_0: a};
-   };
-   var mousePos = A2($Signal.map,
-   function ($) {
-      return MouseMove(intPair2FloatPair($));
-   },
-   $Mouse.position);
-   var WindowDim = function (a) {
-      return {ctor: "WindowDim"
-             ,_0: a};
-   };
-   var windowDims = A2($Signal.map,
-   WindowDim,
-   $Window.dimensions);
-   var connection = F2(function (a,
-   b) {
-      return $Graphics$Collage.traced($Graphics$Collage.solid(A4($Color.rgba,
-      0,
-      0,
-      0,
-      1)))(A2($Graphics$Collage.segment,
-      a,
-      b));
-   });
-   var curve = function (model) {
-      return $Graphics$Collage.traced($Graphics$Collage.solid($Color.black))($Graphics$Collage.path(model.points));
-   };
-   var background = function (model) {
-      return $Graphics$Collage.filled($Color.white)(A2($Graphics$Collage.rect,
-      $Basics.toFloat(model.w),
-      $Basics.toFloat(model.h)));
-   };
-   var init = {_: {}
-              ,h: 0
-              ,mouse: {ctor: "_Tuple2"
-                      ,_0: 0
-                      ,_1: 100}
-              ,points: _L.fromArray([])
-              ,targetPoints: _L.fromArray([])
-              ,w: 0};
-   var distortion = 50;
-   var distortVector = F2(function (_v20,
-   _v21) {
+   var listBoxString = F2(function (accumulator,
+   boxShadows) {
       return function () {
-         switch (_v21.ctor)
-         {case "_Tuple2":
-            return function () {
-                 switch (_v20.ctor)
-                 {case "_Tuple2":
-                    return function () {
-                         var dy = _v20._1 - _v21._1;
-                         var dx = _v20._0 - _v21._0;
-                         var d = $Basics.max(1)($Basics.sqrt(Math.pow(dx,
-                         2) + Math.pow(dy,2)));
-                         var distortionAmnt = distortion * warpDist(d);
-                         var $ = {ctor: "_Tuple2"
-                                 ,_0: dx / d
-                                 ,_1: dy / d},
-                         nx = $._0,
-                         ny = $._1;
-                         return {ctor: "_Tuple2"
-                                ,_0: nx * distortionAmnt
-                                ,_1: ny * distortionAmnt};
-                      }();}
-                 _U.badCase($moduleName,
-                 "between lines 56 and 61");
-              }();}
+         switch (boxShadows.ctor)
+         {case "::":
+            switch (boxShadows._1.ctor)
+              {case "[]":
+                 return A2(listBoxString,
+                   A2($Basics._op["++"],
+                   accumulator,
+                   boxString(boxShadows._0)),
+                   _L.fromArray([]));}
+              return A2(listBoxString,
+              A2($Basics._op["++"],
+              accumulator,
+              A2($Basics._op["++"],
+              boxString(boxShadows._0),
+              ", ")),
+              boxShadows._1);
+            case "[]": return accumulator;}
          _U.badCase($moduleName,
-         "between lines 56 and 61");
+         "between lines 123 and 126");
       }();
    });
-   var distortPoint = F2(function (model,
-   point) {
-      return A2(addP,
-      point,
-      A2(distortVector,
-      model.mouse,
-      point));
+   var box = F2(function (boxShadows,
+   styles) {
+      return A3($Css.style,
+      "box-shadow",
+      A2(listBoxString,"",boxShadows),
+      styles);
    });
-   var distort = F2(function (model,
-   ps) {
-      return A2($List.map,
-      distortPoint(model),
-      ps);
-   });
-   var numPoints = 500;
-   var genPoints = function (_v28) {
+   var textString = function (_v11) {
       return function () {
-         switch (_v28.ctor)
-         {case "_Tuple2":
-            return function () {
-                 var windowDiag = $Basics.sqrt(Math.pow($Basics.toFloat(_v28._0),
-                 2) + Math.pow($Basics.toFloat(_v28._1),
-                 2)) / 2;
-                 return A2($List.map,
-                 function (n) {
-                    return function () {
-                       var p = n / numPoints;
-                       var scale = p * windowDiag;
-                       return {ctor: "_Tuple2"
-                              ,_0: (0 - windowDiag) / 2 + scale
-                              ,_1: 0};
-                    }();
-                 },
-                 _L.range(0,numPoints));
-              }();}
+         switch (_v11.ctor)
+         {case "_Tuple4":
+            return A2($Basics._op["++"],
+              $Css.px(_v11._0),
+              A2($Basics._op["++"],
+              $Css.px(_v11._1),
+              A2($Basics._op["++"],
+              $Css.px(_v11._2),
+              $Css.colorString(_v11._3))));}
          _U.badCase($moduleName,
-         "between lines 23 and 28");
+         "on line 77, column 4 to 70");
       }();
    };
-   var update = F2(function (action,
-   model) {
+   var listTextString = F2(function (accumulator,
+   textShadows) {
       return function () {
-         switch (action.ctor)
-         {case "MouseMove":
-            return _U.replace([["mouse"
-                               ,addP(model.mouse)(scaleP(1)(A2(addP,
-                               A2(transformMouse,
-                               model,
-                               action._0),
-                               A2(scaleP,-1,model.mouse))))]
-                              ,["points"
-                               ,A2(distort,
-                               model,
-                               model.targetPoints)]],
-              model);
-            case "NoOp": return model;
-            case "WindowDim":
-            switch (action._0.ctor)
-              {case "_Tuple2":
-                 return function () {
-                      var ps = genPoints({ctor: "_Tuple2"
-                                         ,_0: action._0._0
-                                         ,_1: action._0._1});
-                      return _U.replace([["w"
-                                         ,action._0._0]
-                                        ,["h",action._0._1]
-                                        ,["targetPoints",ps]
-                                        ,["points"
-                                         ,A2(distort,model,ps)]],
-                      model);
-                   }();}
-              break;}
+         switch (textShadows.ctor)
+         {case "::":
+            switch (textShadows._1.ctor)
+              {case "[]":
+                 return A2(listTextString,
+                   A2($Basics._op["++"],
+                   accumulator,
+                   textString(textShadows._0)),
+                   _L.fromArray([]));}
+              return A2(listTextString,
+              A2($Basics._op["++"],
+              accumulator,
+              A2($Basics._op["++"],
+              textString(textShadows._0),
+              ", ")),
+              textShadows._1);
+            case "[]": return accumulator;}
          _U.badCase($moduleName,
-         "between lines 74 and 82");
+         "between lines 89 and 92");
       }();
    });
-   var modelSignal = A2($Signal$Extra.foldp$,
-   update,
-   function (a) {
-      return A2(update,a,init);
-   })(A2($Signal.merge,
-   windowDims,
-   mousePos));
-   var numToDrop = $Basics.floor($Basics.toFloat(numPoints) / distortion * 4);
-   var view = function (model) {
-      return A2($Graphics$Collage.collage,
-      model.w,
-      model.h)(_L.fromArray([background(model)
-                            ,curve(model)
-                            ,$Graphics$Collage.group(A2($List.map2,
-                            connection,
-                            model.points)(A2($List.drop,
-                            numToDrop,
-                            model.points)))]));
-   };
-   var main = A2($Signal.map,
-   view,
-   modelSignal);
-   var Model = F5(function (a,
-   b,
-   c,
-   d,
-   e) {
-      return {_: {}
-             ,h: c
-             ,mouse: a
-             ,points: e
-             ,targetPoints: d
-             ,w: b};
+   var text = F2(function (textShadows,
+   styles) {
+      return A3($Css.style,
+      "text-shadow",
+      A2(listTextString,
+      "",
+      textShadows),
+      styles);
    });
-   _elm.Curve.values = {_op: _op
-                       ,init: init
-                       ,modelSignal: modelSignal
-                       ,view: view
-                       ,main: main
-                       ,Model: Model};
-   return _elm.Curve.values;
-};
-Elm.Debug = Elm.Debug || {};
+   _elm.Css.Shadow.values = {_op: _op
+                            ,textString: textString
+                            ,listTextString: listTextString
+                            ,boxString: boxString
+                            ,listBoxString: listBoxString
+                            ,box: box
+                            ,text: text};
+   return _elm.Css.Shadow.values;
+};Elm.Css = Elm.Css || {};
+Elm.Css.Text = Elm.Css.Text || {};
+Elm.Css.Text.make = function (_elm) {
+   "use strict";
+   _elm.Css = _elm.Css || {};
+   _elm.Css.Text = _elm.Css.Text || {};
+   if (_elm.Css.Text.values)
+   return _elm.Css.Text.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Css.Text",
+   $Basics = Elm.Basics.make(_elm),
+   $Color = Elm.Color.make(_elm),
+   $Css = Elm.Css.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var wordSpacing = F2(function (length,
+   styles) {
+      return A3($Css.style,
+      "word-spacing",
+      $Css.px(length),
+      styles);
+   });
+   var indent = F2(function (length,
+   styles) {
+      return A3($Css.style,
+      "text-indent",
+      $Css.px(length),
+      styles);
+   });
+   var lineHeight = F2(function (length,
+   styles) {
+      return A3($Css.style,
+      "line-height",
+      $Css.px(length),
+      styles);
+   });
+   var letterSpacing = F2(function (length,
+   styles) {
+      return A3($Css.style,
+      "letter-spacing",
+      $Css.px(length),
+      styles);
+   });
+   var color = F2(function (c,
+   styles) {
+      return A3($Css.style,
+      "color",
+      $Css.colorString(c),
+      styles);
+   });
+   var whiteSpaceString = function (whiteSpace) {
+      return function () {
+         switch (whiteSpace.ctor)
+         {case "NoWrap": return "nowrap";
+            case "NormalWhiteSpace":
+            return "normal";
+            case "Pre": return "pre";
+            case "PreLine":
+            return "pre-line";
+            case "PreWrap":
+            return "pre-wrap";}
+         _U.badCase($moduleName,
+         "between lines 215 and 229");
+      }();
+   };
+   var whiteSpace = F2(function (ws,
+   styles) {
+      return A3($Css.style,
+      "white-space",
+      whiteSpaceString(ws),
+      styles);
+   });
+   var unicodeBidiString = function (unicodeBidi) {
+      return function () {
+         switch (unicodeBidi.ctor)
+         {case "BidiOverride":
+            return "bidi-override";
+            case "Embed": return "embed";
+            case "NormalUnicodeBidi":
+            return "normal";}
+         _U.badCase($moduleName,
+         "between lines 197 and 205");
+      }();
+   };
+   var unicodeBidi = F2(function (u,
+   styles) {
+      return A3($Css.style,
+      "unicode-bidi",
+      unicodeBidiString(u),
+      styles);
+   });
+   var decorationString = function (decoration) {
+      return function () {
+         switch (decoration.ctor)
+         {case "LineThrough":
+            return "line-through";
+            case "NoDecoration":
+            return "none";
+            case "Overline":
+            return "overline";
+            case "Underline":
+            return "underline";}
+         _U.badCase($moduleName,
+         "between lines 175 and 186");
+      }();
+   };
+   var decoration = F2(function (d,
+   styles) {
+      return A3($Css.style,
+      "text-decoration",
+      decorationString(d),
+      styles);
+   });
+   var alignString = function (align) {
+      return function () {
+         switch (align.ctor)
+         {case "Center": return "center";
+            case "Justify":
+            return "justify";
+            case "Left": return "left";
+            case "Right": return "right";}
+         _U.badCase($moduleName,
+         "between lines 153 and 164");
+      }();
+   };
+   var align = F2(function (a,
+   styles) {
+      return A3($Css.style,
+      "text-align",
+      alignString(a),
+      styles);
+   });
+   var directionString = function (direction) {
+      return function () {
+         switch (direction.ctor)
+         {case "Ltr": return "ltr";
+            case "Rtl": return "Rtl";}
+         _U.badCase($moduleName,
+         "between lines 137 and 142");
+      }();
+   };
+   var direction = F2(function (d,
+   styles) {
+      return A3($Css.style,
+      "direction",
+      directionString(d),
+      styles);
+   });
+   var PreWrap = {ctor: "PreWrap"};
+   var PreLine = {ctor: "PreLine"};
+   var Pre = {ctor: "Pre"};
+   var NoWrap = {ctor: "NoWrap"};
+   var NormalWhiteSpace = {ctor: "NormalWhiteSpace"};
+   var BidiOverride = {ctor: "BidiOverride"};
+   var Embed = {ctor: "Embed"};
+   var NormalUnicodeBidi = {ctor: "NormalUnicodeBidi"};
+   var LineThrough = {ctor: "LineThrough"};
+   var Overline = {ctor: "Overline"};
+   var Underline = {ctor: "Underline"};
+   var NoDecoration = {ctor: "NoDecoration"};
+   var Justify = {ctor: "Justify"};
+   var Center = {ctor: "Center"};
+   var Right = {ctor: "Right"};
+   var Left = {ctor: "Left"};
+   var Rtl = {ctor: "Rtl"};
+   var Ltr = {ctor: "Ltr"};
+   _elm.Css.Text.values = {_op: _op
+                          ,Ltr: Ltr
+                          ,Rtl: Rtl
+                          ,Left: Left
+                          ,Right: Right
+                          ,Center: Center
+                          ,Justify: Justify
+                          ,NoDecoration: NoDecoration
+                          ,Underline: Underline
+                          ,Overline: Overline
+                          ,LineThrough: LineThrough
+                          ,NormalUnicodeBidi: NormalUnicodeBidi
+                          ,Embed: Embed
+                          ,BidiOverride: BidiOverride
+                          ,NormalWhiteSpace: NormalWhiteSpace
+                          ,NoWrap: NoWrap
+                          ,Pre: Pre
+                          ,PreLine: PreLine
+                          ,PreWrap: PreWrap
+                          ,directionString: directionString
+                          ,alignString: alignString
+                          ,decorationString: decorationString
+                          ,unicodeBidiString: unicodeBidiString
+                          ,whiteSpaceString: whiteSpaceString
+                          ,color: color
+                          ,direction: direction
+                          ,letterSpacing: letterSpacing
+                          ,lineHeight: lineHeight
+                          ,align: align
+                          ,decoration: decoration
+                          ,indent: indent
+                          ,unicodeBidi: unicodeBidi
+                          ,whiteSpace: whiteSpace
+                          ,wordSpacing: wordSpacing};
+   return _elm.Css.Text.values;
+};Elm.Date = Elm.Date || {};
+Elm.Date.make = function (_elm) {
+   "use strict";
+   _elm.Date = _elm.Date || {};
+   if (_elm.Date.values)
+   return _elm.Date.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Date",
+   $Native$Date = Elm.Native.Date.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Time = Elm.Time.make(_elm);
+   var millisecond = $Native$Date.millisecond;
+   var second = $Native$Date.second;
+   var minute = $Native$Date.minute;
+   var hour = $Native$Date.hour;
+   var dayOfWeek = $Native$Date.dayOfWeek;
+   var day = $Native$Date.day;
+   var month = $Native$Date.month;
+   var year = $Native$Date.year;
+   var fromTime = $Native$Date.fromTime;
+   var toTime = $Native$Date.toTime;
+   var fromString = $Native$Date.read;
+   var Dec = {ctor: "Dec"};
+   var Nov = {ctor: "Nov"};
+   var Oct = {ctor: "Oct"};
+   var Sep = {ctor: "Sep"};
+   var Aug = {ctor: "Aug"};
+   var Jul = {ctor: "Jul"};
+   var Jun = {ctor: "Jun"};
+   var May = {ctor: "May"};
+   var Apr = {ctor: "Apr"};
+   var Mar = {ctor: "Mar"};
+   var Feb = {ctor: "Feb"};
+   var Jan = {ctor: "Jan"};
+   var Sun = {ctor: "Sun"};
+   var Sat = {ctor: "Sat"};
+   var Fri = {ctor: "Fri"};
+   var Thu = {ctor: "Thu"};
+   var Wed = {ctor: "Wed"};
+   var Tue = {ctor: "Tue"};
+   var Mon = {ctor: "Mon"};
+   var Date = {ctor: "Date"};
+   _elm.Date.values = {_op: _op
+                      ,fromString: fromString
+                      ,toTime: toTime
+                      ,fromTime: fromTime
+                      ,year: year
+                      ,month: month
+                      ,day: day
+                      ,dayOfWeek: dayOfWeek
+                      ,hour: hour
+                      ,minute: minute
+                      ,second: second
+                      ,millisecond: millisecond
+                      ,Jan: Jan
+                      ,Feb: Feb
+                      ,Mar: Mar
+                      ,Apr: Apr
+                      ,May: May
+                      ,Jun: Jun
+                      ,Jul: Jul
+                      ,Aug: Aug
+                      ,Sep: Sep
+                      ,Oct: Oct
+                      ,Nov: Nov
+                      ,Dec: Dec
+                      ,Mon: Mon
+                      ,Tue: Tue
+                      ,Wed: Wed
+                      ,Thu: Thu
+                      ,Fri: Fri
+                      ,Sat: Sat
+                      ,Sun: Sun};
+   return _elm.Date.values;
+};Elm.Debug = Elm.Debug || {};
 Elm.Debug.make = function (_elm) {
    "use strict";
    _elm.Debug = _elm.Debug || {};
@@ -1080,8 +2592,7 @@ Elm.Debug.make = function (_elm) {
                        ,watchSummary: watchSummary
                        ,trace: trace};
    return _elm.Debug.values;
-};
-Elm.Dict = Elm.Dict || {};
+};Elm.Dict = Elm.Dict || {};
 Elm.Dict.make = function (_elm) {
    "use strict";
    _elm.Dict = _elm.Dict || {};
@@ -2069,8 +3580,7 @@ Elm.Dict.make = function (_elm) {
                       ,toList: toList
                       ,fromList: fromList};
    return _elm.Dict.values;
-};
-Elm.Graphics = Elm.Graphics || {};
+};Elm.Graphics = Elm.Graphics || {};
 Elm.Graphics.Collage = Elm.Graphics.Collage || {};
 Elm.Graphics.Collage.make = function (_elm) {
    "use strict";
@@ -2423,8 +3933,7 @@ Elm.Graphics.Collage.make = function (_elm) {
                                   ,Sharp: Sharp
                                   ,Clipped: Clipped};
    return _elm.Graphics.Collage.values;
-};
-Elm.Graphics = Elm.Graphics || {};
+};Elm.Graphics = Elm.Graphics || {};
 Elm.Graphics.Element = Elm.Graphics.Element || {};
 Elm.Graphics.Element.make = function (_elm) {
    "use strict";
@@ -2957,8 +4466,7 @@ Elm.Graphics.Element.make = function (_elm) {
                                   ,Element: Element
                                   ,Position: Position};
    return _elm.Graphics.Element.values;
-};
-Elm.Header = Elm.Header || {};
+};Elm.Header = Elm.Header || {};
 Elm.Header.make = function (_elm) {
    "use strict";
    _elm.Header = _elm.Header || {};
@@ -2982,7 +4490,7 @@ Elm.Header.make = function (_elm) {
          switch (action.ctor)
          {case "NoOp": return model;}
          _U.badCase($moduleName,
-         "between lines 37 and 38");
+         "between lines 49 and 50");
       }();
    });
    var navButton = function (_v1) {
@@ -2995,7 +4503,7 @@ Elm.Header.make = function (_elm) {
               _L.fromArray([$Html$Attributes.href(_v1._1)]),
               _L.fromArray([$Html.text(_v1._0)]))]));}
          _U.badCase($moduleName,
-         "between lines 21 and 23");
+         "between lines 33 and 35");
       }();
    };
    var viewNav = function (model) {
@@ -3013,7 +4521,7 @@ Elm.Header.make = function (_elm) {
                    viewNav(model))]));
    });
    var NoOp = {ctor: "NoOp"};
-   var init = F3(function (home,
+   var create = F3(function (home,
    nav,
    selected) {
       return {_: {}
@@ -3021,6 +4529,24 @@ Elm.Header.make = function (_elm) {
              ,nav: nav
              ,selected: selected};
    });
+   var teasPath = "pages/tea_log.html";
+   var statsPath = "http://davidrusu.github.io/mastery/";
+   var projectsPath = "https://github.com/davidrusu";
+   var basePath = "https://davidrusu.github.io";
+   var init = A3(create,
+   {ctor: "_Tuple2"
+   ,_0: "David Rusu"
+   ,_1: basePath},
+   _L.fromArray([{ctor: "_Tuple2"
+                 ,_0: "Projects"
+                 ,_1: projectsPath}
+                ,{ctor: "_Tuple2"
+                 ,_0: "Stats"
+                 ,_1: statsPath}
+                ,{ctor: "_Tuple2"
+                 ,_0: "Tea Log"
+                 ,_1: teasPath}]),
+   -1);
    var Model = F3(function (a,
    b,
    c) {
@@ -3035,8 +4561,7 @@ Elm.Header.make = function (_elm) {
                         ,view: view
                         ,Model: Model};
    return _elm.Header.values;
-};
-Elm.Html = Elm.Html || {};
+};Elm.Html = Elm.Html || {};
 Elm.Html.make = function (_elm) {
    "use strict";
    _elm.Html = _elm.Html || {};
@@ -3262,8 +4787,7 @@ Elm.Html.make = function (_elm) {
                       ,menuitem: menuitem
                       ,menu: menu};
    return _elm.Html.values;
-};
-Elm.Html = Elm.Html || {};
+};Elm.Html = Elm.Html || {};
 Elm.Html.Attributes = Elm.Html.Attributes || {};
 Elm.Html.Attributes.make = function (_elm) {
    "use strict";
@@ -3891,8 +5415,7 @@ Elm.Html.Attributes.make = function (_elm) {
                                  ,property: property
                                  ,attribute: attribute};
    return _elm.Html.Attributes.values;
-};
-Elm.Json = Elm.Json || {};
+};Elm.Json = Elm.Json || {};
 Elm.Json.Decode = Elm.Json.Decode || {};
 Elm.Json.Decode.make = function (_elm) {
    "use strict";
@@ -4001,8 +5524,7 @@ Elm.Json.Decode.make = function (_elm) {
                              ,customDecoder: customDecoder
                              ,Decoder: Decoder};
    return _elm.Json.Decode.values;
-};
-Elm.Json = Elm.Json || {};
+};Elm.Json = Elm.Json || {};
 Elm.Json.Encode = Elm.Json.Encode || {};
 Elm.Json.Encode.make = function (_elm) {
    "use strict";
@@ -4039,8 +5561,7 @@ Elm.Json.Encode.make = function (_elm) {
                              ,object: object
                              ,Value: Value};
    return _elm.Json.Encode.values;
-};
-Elm.List = Elm.List || {};
+};Elm.List = Elm.List || {};
 Elm.List.make = function (_elm) {
    "use strict";
    _elm.List = _elm.List || {};
@@ -4394,134 +5915,60 @@ Elm.List.make = function (_elm) {
                       ,sortBy: sortBy
                       ,sortWith: sortWith};
    return _elm.List.values;
-};
-Elm.Main = Elm.Main || {};
-Elm.Main.make = function (_elm) {
+};Elm.Markdown = Elm.Markdown || {};
+Elm.Markdown.make = function (_elm) {
    "use strict";
-   _elm.Main = _elm.Main || {};
-   if (_elm.Main.values)
-   return _elm.Main.values;
+   _elm.Markdown = _elm.Markdown || {};
+   if (_elm.Markdown.values)
+   return _elm.Markdown.values;
    var _op = {},
    _N = Elm.Native,
    _U = _N.Utils.make(_elm),
    _L = _N.List.make(_elm),
-   $moduleName = "Main",
+   $moduleName = "Markdown",
    $Basics = Elm.Basics.make(_elm),
-   $Curve = Elm.Curve.make(_elm),
-   $Header = Elm.Header.make(_elm),
+   $Graphics$Element = Elm.Graphics.Element.make(_elm),
    $Html = Elm.Html.make(_elm),
-   $Html$Attributes = Elm.Html.Attributes.make(_elm),
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
+   $Native$Markdown = Elm.Native.Markdown.make(_elm),
    $Result = Elm.Result.make(_elm),
-   $Signal = Elm.Signal.make(_elm),
-   $Signal$Extra = Elm.Signal.Extra.make(_elm);
-   var update = F2(function (action,
-   model) {
-      return function () {
-         switch (action.ctor)
-         {case "Curve":
-            return _U.replace([["curve"
-                               ,action._0]],
-              model);
-            case "ModifyHeader":
-            return _U.replace([["header"
-                               ,A2($Header.update,
-                               action._0,
-                               model.header)]],
-              model);
-            case "NoOp": return model;}
-         _U.badCase($moduleName,
-         "between lines 31 and 34");
-      }();
-   });
-   var Curve = function (a) {
-      return {ctor: "Curve",_0: a};
-   };
-   var curveSignal = A2($Signal.map,
-   Curve,
-   $Curve.modelSignal);
-   var ModifyHeader = function (a) {
-      return {ctor: "ModifyHeader"
-             ,_0: a};
-   };
-   var viewHeader = F2(function (a,
-   m) {
-      return A2($Header.view,
-      A2($Signal.forwardTo,
-      a,
-      ModifyHeader),
-      m.header);
-   });
-   var view = F2(function (address,
-   model) {
-      return A2($Html.div,
-      _L.fromArray([$Html$Attributes.$class("content")]),
-      _L.fromArray([A2(viewHeader,
-                   address,
-                   model)
-                   ,A2($Html.div,
-                   _L.fromArray([$Html$Attributes.$class("greeter")]),
-                   _L.fromArray([$Html.fromElement($Curve.view(model.curve))]))]));
-   });
-   var NoOp = {ctor: "NoOp"};
-   var actionMailbox = $Signal.mailbox(NoOp);
-   var Model = F2(function (a,b) {
+   $Signal = Elm.Signal.make(_elm);
+   var toElementWith = $Native$Markdown.toElementWith;
+   var toHtmlWith = $Native$Markdown.toHtmlWith;
+   var defaultOptions = {_: {}
+                        ,githubFlavored: $Maybe.Just({_: {}
+                                                     ,breaks: false
+                                                     ,tables: false})
+                        ,sanitize: false
+                        ,smartypants: false};
+   var Options = F3(function (a,
+   b,
+   c) {
       return {_: {}
-             ,curve: b
-             ,header: a};
+             ,githubFlavored: a
+             ,sanitize: b
+             ,smartypants: c};
    });
-   var teasPath = "pages/tea_log.html";
-   var statsPath = "http://davidrusu.github.io/mastery/";
-   var projectsPath = "https://github.com/davidrusu";
-   var basePath = "https://davidrusu.github.io";
-   var initHeader = A3($Header.init,
-   {ctor: "_Tuple2"
-   ,_0: "David Rusu"
-   ,_1: basePath},
-   _L.fromArray([{ctor: "_Tuple2"
-                 ,_0: "Projects"
-                 ,_1: projectsPath}
-                ,{ctor: "_Tuple2"
-                 ,_0: "Stats"
-                 ,_1: statsPath}
-                ,{ctor: "_Tuple2"
-                 ,_0: "Tea Log"
-                 ,_1: teasPath}]),
-   -1);
-   var init = {_: {}
-              ,curve: $Curve.init
-              ,header: initHeader};
-   var modelSignal = A2($Signal$Extra.foldp$,
-   update,
-   function (a) {
-      return A2(update,a,init);
-   })($Signal.mergeMany(_L.fromArray([curveSignal
-                                     ,actionMailbox.signal])));
-   var main = A2($Signal.map,
-   view(actionMailbox.address),
-   modelSignal);
-   _elm.Main.values = {_op: _op
-                      ,basePath: basePath
-                      ,projectsPath: projectsPath
-                      ,statsPath: statsPath
-                      ,teasPath: teasPath
-                      ,Model: Model
-                      ,initHeader: initHeader
-                      ,init: init
-                      ,NoOp: NoOp
-                      ,ModifyHeader: ModifyHeader
-                      ,Curve: Curve
-                      ,actionMailbox: actionMailbox
-                      ,update: update
-                      ,viewHeader: viewHeader
-                      ,view: view
-                      ,curveSignal: curveSignal
-                      ,modelSignal: modelSignal
-                      ,main: main};
-   return _elm.Main.values;
-};
-Elm.Maybe = Elm.Maybe || {};
+   var toElement = function (string) {
+      return A2($Native$Markdown.toElementWith,
+      defaultOptions,
+      string);
+   };
+   var toHtml = function (string) {
+      return A2($Native$Markdown.toHtmlWith,
+      defaultOptions,
+      string);
+   };
+   _elm.Markdown.values = {_op: _op
+                          ,toHtml: toHtml
+                          ,toElement: toElement
+                          ,Options: Options
+                          ,defaultOptions: defaultOptions
+                          ,toHtmlWith: toHtmlWith
+                          ,toElementWith: toElementWith};
+   return _elm.Markdown.values;
+};Elm.Maybe = Elm.Maybe || {};
 Elm.Maybe.make = function (_elm) {
    "use strict";
    _elm.Maybe = _elm.Maybe || {};
@@ -4593,39 +6040,7 @@ Elm.Maybe.make = function (_elm) {
                        ,Just: Just
                        ,Nothing: Nothing};
    return _elm.Maybe.values;
-};
-Elm.Mouse = Elm.Mouse || {};
-Elm.Mouse.make = function (_elm) {
-   "use strict";
-   _elm.Mouse = _elm.Mouse || {};
-   if (_elm.Mouse.values)
-   return _elm.Mouse.values;
-   var _op = {},
-   _N = Elm.Native,
-   _U = _N.Utils.make(_elm),
-   _L = _N.List.make(_elm),
-   $moduleName = "Mouse",
-   $Basics = Elm.Basics.make(_elm),
-   $Native$Mouse = Elm.Native.Mouse.make(_elm),
-   $Signal = Elm.Signal.make(_elm);
-   var clicks = $Native$Mouse.clicks;
-   var isDown = $Native$Mouse.isDown;
-   var position = $Native$Mouse.position;
-   var x = A2($Signal.map,
-   $Basics.fst,
-   position);
-   var y = A2($Signal.map,
-   $Basics.snd,
-   position);
-   _elm.Mouse.values = {_op: _op
-                       ,position: position
-                       ,x: x
-                       ,y: y
-                       ,isDown: isDown
-                       ,clicks: clicks};
-   return _elm.Mouse.values;
-};
-Elm.Native.Array = {};
+};Elm.Native.Array = {};
 Elm.Native.Array.make = function(localRuntime) {
 
 	localRuntime.Native = localRuntime.Native || {};
@@ -5606,7 +7021,6 @@ Elm.Native.Array.make = function(localRuntime) {
 	return localRuntime.Native.Array.values = Elm.Native.Array.values;
 
 }
-
 Elm.Native.Basics = {};
 Elm.Native.Basics.make = function(localRuntime) {
 
@@ -5744,7 +7158,6 @@ Elm.Native.Basics.make = function(localRuntime) {
 		isInfinite: isInfinite
 	};
 };
-
 Elm.Native.Char = {};
 Elm.Native.Char.make = function(localRuntime) {
 	localRuntime.Native = localRuntime.Native || {};
@@ -5765,7 +7178,6 @@ Elm.Native.Char.make = function(localRuntime) {
 		toLocaleLower : function(c) { return Utils.chr(c.toLocaleLowerCase()); },
 	};
 };
-
 Elm.Native.Color = {};
 Elm.Native.Color.make = function(localRuntime) {
 	localRuntime.Native = localRuntime.Native || {};
@@ -5806,7 +7218,51 @@ Elm.Native.Color.make = function(localRuntime) {
 	};
 
 };
+Elm.Native.Date = {};
+Elm.Native.Date.make = function(localRuntime) {
+	localRuntime.Native = localRuntime.Native || {};
+	localRuntime.Native.Date = localRuntime.Native.Date || {};
+	if (localRuntime.Native.Date.values)
+	{
+		return localRuntime.Native.Date.values;
+	}
 
+	var Result = Elm.Result.make(localRuntime);
+
+	function dateNow()
+	{
+		return new window.Date;
+	}
+
+	function readDate(str)
+	{
+		var date = new window.Date(str);
+		return isNaN(date.getTime())
+			? Result.Err("unable to parse '" + str + "' as a date")
+			: Result.Ok(date);
+	}
+
+	var dayTable = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+	var monthTable =
+		["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+		 "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+
+	return localRuntime.Native.Date.values = {
+		read    : readDate,
+		year    : function(d) { return d.getFullYear(); },
+		month   : function(d) { return { ctor:monthTable[d.getMonth()] }; },
+		day     : function(d) { return d.getDate(); },
+		hour    : function(d) { return d.getHours(); },
+		minute  : function(d) { return d.getMinutes(); },
+		second  : function(d) { return d.getSeconds(); },
+		millisecond: function (d) { return d.getMilliseconds(); },
+		toTime  : function(d) { return d.getTime(); },
+		fromTime: function(t) { return new window.Date(t); },
+		dayOfWeek : function(d) { return { ctor:dayTable[d.getDay()] }; }
+	};
+
+};
 Elm.Native.Debug = {};
 Elm.Native.Debug.make = function(localRuntime) {
 	localRuntime.Native = localRuntime.Native || {};
@@ -5873,7 +7329,6 @@ Elm.Native.Debug.make = function(localRuntime) {
 		watchSummary:F3(watchSummary),
 	};
 };
-
 
 // setup
 Elm.Native = Elm.Native || {};
@@ -6534,7 +7989,6 @@ Elm.Native.Graphics.Collage.make = function(localRuntime) {
 	};
 
 };
-
 
 // setup
 Elm.Native = Elm.Native || {};
@@ -7250,7 +8704,6 @@ Elm.Native.Graphics.Element.make = function(localRuntime) {
 	};
 
 };
-
 Elm.Native.Json = {};
 Elm.Native.Json.make = function(localRuntime) {
 
@@ -7737,7 +9190,6 @@ Elm.Native.Json.make = function(localRuntime) {
 	};
 
 };
-
 Elm.Native.List = {};
 Elm.Native.List.make = function(localRuntime) {
 	localRuntime.Native = localRuntime.Native || {};
@@ -7964,51 +9416,107 @@ Elm.Native.List.make = function(localRuntime) {
 
 };
 
+// setup
 Elm.Native = Elm.Native || {};
-Elm.Native.Mouse = {};
-Elm.Native.Mouse.make = function(localRuntime) {
+Elm.Native.Markdown = Elm.Native.Markdown || {};
 
-	localRuntime.Native = localRuntime.Native || {};
-	localRuntime.Native.Mouse = localRuntime.Native.Mouse || {};
-	if (localRuntime.Native.Mouse.values)
+// definition
+Elm.Native.Markdown.make = function(localRuntime) {
+	'use strict';
+
+	// attempt to short-circuit
+	if ('values' in Elm.Native.Markdown)
 	{
-		return localRuntime.Native.Mouse.values;
+		return Elm.Native.Markdown.values;
 	}
 
-	var NS = Elm.Native.Signal.make(localRuntime);
-	var Utils = Elm.Native.Utils.make(localRuntime);
+	var Element = Elm.Native.Graphics.Element.make(localRuntime);
 
-	var position = NS.input('Mouse.position', Utils.Tuple2(0,0));
+	/**
+	 * marked - a markdown parser
+	 * Copyright (c) 2011-2014, Christopher Jeffrey. (MIT Licensed)
+	 * https://github.com/chjj/marked
+	 */
+	(function(){var block={newline:/^\n+/,code:/^( {4}[^\n]+\n*)+/,fences:noop,hr:/^( *[-*_]){3,} *(?:\n+|$)/,heading:/^ *(#{1,6}) *([^\n]+?) *#* *(?:\n+|$)/,nptable:noop,lheading:/^([^\n]+)\n *(=|-){2,} *(?:\n+|$)/,blockquote:/^( *>[^\n]+(\n(?!def)[^\n]+)*\n*)+/,list:/^( *)(bull) [\s\S]+?(?:hr|def|\n{2,}(?! )(?!\1bull )\n*|\s*$)/,html:/^ *(?:comment|closed|closing) *(?:\n{2,}|\s*$)/,def:/^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +["(]([^\n]+)[")])? *(?:\n+|$)/,table:noop,paragraph:/^((?:[^\n]+\n?(?!hr|heading|lheading|blockquote|tag|def))+)\n*/,text:/^[^\n]+/};block.bullet=/(?:[*+-]|\d+\.)/;block.item=/^( *)(bull) [^\n]*(?:\n(?!\1bull )[^\n]*)*/;block.item=replace(block.item,"gm")(/bull/g,block.bullet)();block.list=replace(block.list)(/bull/g,block.bullet)("hr","\\n+(?=\\1?(?:[-*_] *){3,}(?:\\n+|$))")("def","\\n+(?="+block.def.source+")")();block.blockquote=replace(block.blockquote)("def",block.def)();block._tag="(?!(?:"+"a|em|strong|small|s|cite|q|dfn|abbr|data|time|code"+"|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo"+"|span|br|wbr|ins|del|img)\\b)\\w+(?!:/|[^\\w\\s@]*@)\\b";block.html=replace(block.html)("comment",/<!--[\s\S]*?-->/)("closed",/<(tag)[\s\S]+?<\/\1>/)("closing",/<tag(?:"[^"]*"|'[^']*'|[^'">])*?>/)(/tag/g,block._tag)();block.paragraph=replace(block.paragraph)("hr",block.hr)("heading",block.heading)("lheading",block.lheading)("blockquote",block.blockquote)("tag","<"+block._tag)("def",block.def)();block.normal=merge({},block);block.gfm=merge({},block.normal,{fences:/^ *(`{3,}|~{3,}) *(\S+)? *\n([\s\S]+?)\s*\1 *(?:\n+|$)/,paragraph:/^/});block.gfm.paragraph=replace(block.paragraph)("(?!","(?!"+block.gfm.fences.source.replace("\\1","\\2")+"|"+block.list.source.replace("\\1","\\3")+"|")();block.tables=merge({},block.gfm,{nptable:/^ *(\S.*\|.*)\n *([-:]+ *\|[-| :]*)\n((?:.*\|.*(?:\n|$))*)\n*/,table:/^ *\|(.+)\n *\|( *[-:]+[-| :]*)\n((?: *\|.*(?:\n|$))*)\n*/});function Lexer(options){this.tokens=[];this.tokens.links={};this.options=options||marked.defaults;this.rules=block.normal;if(this.options.gfm){if(this.options.tables){this.rules=block.tables}else{this.rules=block.gfm}}}Lexer.rules=block;Lexer.lex=function(src,options){var lexer=new Lexer(options);return lexer.lex(src)};Lexer.prototype.lex=function(src){src=src.replace(/\r\n|\r/g,"\n").replace(/\t/g,"    ").replace(/\u00a0/g," ").replace(/\u2424/g,"\n");return this.token(src,true)};Lexer.prototype.token=function(src,top,bq){var src=src.replace(/^ +$/gm,""),next,loose,cap,bull,b,item,space,i,l;while(src){if(cap=this.rules.newline.exec(src)){src=src.substring(cap[0].length);if(cap[0].length>1){this.tokens.push({type:"space"})}}if(cap=this.rules.code.exec(src)){src=src.substring(cap[0].length);cap=cap[0].replace(/^ {4}/gm,"");this.tokens.push({type:"code",text:!this.options.pedantic?cap.replace(/\n+$/,""):cap});continue}if(cap=this.rules.fences.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"code",lang:cap[2],text:cap[3]});continue}if(cap=this.rules.heading.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"heading",depth:cap[1].length,text:cap[2]});continue}if(top&&(cap=this.rules.nptable.exec(src))){src=src.substring(cap[0].length);item={type:"table",header:cap[1].replace(/^ *| *\| *$/g,"").split(/ *\| */),align:cap[2].replace(/^ *|\| *$/g,"").split(/ *\| */),cells:cap[3].replace(/\n$/,"").split("\n")};for(i=0;i<item.align.length;i++){if(/^ *-+: *$/.test(item.align[i])){item.align[i]="right"}else if(/^ *:-+: *$/.test(item.align[i])){item.align[i]="center"}else if(/^ *:-+ *$/.test(item.align[i])){item.align[i]="left"}else{item.align[i]=null}}for(i=0;i<item.cells.length;i++){item.cells[i]=item.cells[i].split(/ *\| */)}this.tokens.push(item);continue}if(cap=this.rules.lheading.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"heading",depth:cap[2]==="="?1:2,text:cap[1]});continue}if(cap=this.rules.hr.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"hr"});continue}if(cap=this.rules.blockquote.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"blockquote_start"});cap=cap[0].replace(/^ *> ?/gm,"");this.token(cap,top,true);this.tokens.push({type:"blockquote_end"});continue}if(cap=this.rules.list.exec(src)){src=src.substring(cap[0].length);bull=cap[2];this.tokens.push({type:"list_start",ordered:bull.length>1});cap=cap[0].match(this.rules.item);next=false;l=cap.length;i=0;for(;i<l;i++){item=cap[i];space=item.length;item=item.replace(/^ *([*+-]|\d+\.) +/,"");if(~item.indexOf("\n ")){space-=item.length;item=!this.options.pedantic?item.replace(new RegExp("^ {1,"+space+"}","gm"),""):item.replace(/^ {1,4}/gm,"")}if(this.options.smartLists&&i!==l-1){b=block.bullet.exec(cap[i+1])[0];if(bull!==b&&!(bull.length>1&&b.length>1)){src=cap.slice(i+1).join("\n")+src;i=l-1}}loose=next||/\n\n(?!\s*$)/.test(item);if(i!==l-1){next=item.charAt(item.length-1)==="\n";if(!loose)loose=next}this.tokens.push({type:loose?"loose_item_start":"list_item_start"});this.token(item,false,bq);this.tokens.push({type:"list_item_end"})}this.tokens.push({type:"list_end"});continue}if(cap=this.rules.html.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:this.options.sanitize?"paragraph":"html",pre:cap[1]==="pre"||cap[1]==="script"||cap[1]==="style",text:cap[0]});continue}if(!bq&&top&&(cap=this.rules.def.exec(src))){src=src.substring(cap[0].length);this.tokens.links[cap[1].toLowerCase()]={href:cap[2],title:cap[3]};continue}if(top&&(cap=this.rules.table.exec(src))){src=src.substring(cap[0].length);item={type:"table",header:cap[1].replace(/^ *| *\| *$/g,"").split(/ *\| */),align:cap[2].replace(/^ *|\| *$/g,"").split(/ *\| */),cells:cap[3].replace(/(?: *\| *)?\n$/,"").split("\n")};for(i=0;i<item.align.length;i++){if(/^ *-+: *$/.test(item.align[i])){item.align[i]="right"}else if(/^ *:-+: *$/.test(item.align[i])){item.align[i]="center"}else if(/^ *:-+ *$/.test(item.align[i])){item.align[i]="left"}else{item.align[i]=null}}for(i=0;i<item.cells.length;i++){item.cells[i]=item.cells[i].replace(/^ *\| *| *\| *$/g,"").split(/ *\| */)}this.tokens.push(item);continue}if(top&&(cap=this.rules.paragraph.exec(src))){src=src.substring(cap[0].length);this.tokens.push({type:"paragraph",text:cap[1].charAt(cap[1].length-1)==="\n"?cap[1].slice(0,-1):cap[1]});continue}if(cap=this.rules.text.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"text",text:cap[0]});continue}if(src){throw new Error("Infinite loop on byte: "+src.charCodeAt(0))}}return this.tokens};var inline={escape:/^\\([\\`*{}\[\]()#+\-.!_>])/,autolink:/^<([^ >]+(@|:\/)[^ >]+)>/,url:noop,tag:/^<!--[\s\S]*?-->|^<\/?\w+(?:"[^"]*"|'[^']*'|[^'">])*?>/,link:/^!?\[(inside)\]\(href\)/,reflink:/^!?\[(inside)\]\s*\[([^\]]*)\]/,nolink:/^!?\[((?:\[[^\]]*\]|[^\[\]])*)\]/,strong:/^__([\s\S]+?)__(?!_)|^\*\*([\s\S]+?)\*\*(?!\*)/,em:/^\b_((?:__|[\s\S])+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,code:/^(`+)\s*([\s\S]*?[^`])\s*\1(?!`)/,br:/^ {2,}\n(?!\s*$)/,del:noop,text:/^[\s\S]+?(?=[\\<!\[_*`]| {2,}\n|$)/};inline._inside=/(?:\[[^\]]*\]|[^\[\]]|\](?=[^\[]*\]))*/;inline._href=/\s*<?([\s\S]*?)>?(?:\s+['"]([\s\S]*?)['"])?\s*/;inline.link=replace(inline.link)("inside",inline._inside)("href",inline._href)();inline.reflink=replace(inline.reflink)("inside",inline._inside)();inline.normal=merge({},inline);inline.pedantic=merge({},inline.normal,{strong:/^__(?=\S)([\s\S]*?\S)__(?!_)|^\*\*(?=\S)([\s\S]*?\S)\*\*(?!\*)/,em:/^_(?=\S)([\s\S]*?\S)_(?!_)|^\*(?=\S)([\s\S]*?\S)\*(?!\*)/});inline.gfm=merge({},inline.normal,{escape:replace(inline.escape)("])","~|])")(),url:/^(https?:\/\/[^\s<]+[^<.,:;"')\]\s])/,del:/^~~(?=\S)([\s\S]*?\S)~~/,text:replace(inline.text)("]|","~]|")("|","|https?://|")()});inline.breaks=merge({},inline.gfm,{br:replace(inline.br)("{2,}","*")(),text:replace(inline.gfm.text)("{2,}","*")()});function InlineLexer(links,options){this.options=options||marked.defaults;this.links=links;this.rules=inline.normal;this.renderer=this.options.renderer||new Renderer;this.renderer.options=this.options;if(!this.links){throw new Error("Tokens array requires a `links` property.")}if(this.options.gfm){if(this.options.breaks){this.rules=inline.breaks}else{this.rules=inline.gfm}}else if(this.options.pedantic){this.rules=inline.pedantic}}InlineLexer.rules=inline;InlineLexer.output=function(src,links,options){var inline=new InlineLexer(links,options);return inline.output(src)};InlineLexer.prototype.output=function(src){var out="",link,text,href,cap;while(src){if(cap=this.rules.escape.exec(src)){src=src.substring(cap[0].length);out+=cap[1];continue}if(cap=this.rules.autolink.exec(src)){src=src.substring(cap[0].length);if(cap[2]==="@"){text=cap[1].charAt(6)===":"?this.mangle(cap[1].substring(7)):this.mangle(cap[1]);href=this.mangle("mailto:")+text}else{text=escape(cap[1]);href=text}out+=this.renderer.link(href,null,text);continue}if(!this.inLink&&(cap=this.rules.url.exec(src))){src=src.substring(cap[0].length);text=escape(cap[1]);href=text;out+=this.renderer.link(href,null,text);continue}if(cap=this.rules.tag.exec(src)){if(!this.inLink&&/^<a /i.test(cap[0])){this.inLink=true}else if(this.inLink&&/^<\/a>/i.test(cap[0])){this.inLink=false}src=src.substring(cap[0].length);out+=this.options.sanitize?escape(cap[0]):cap[0];continue}if(cap=this.rules.link.exec(src)){src=src.substring(cap[0].length);this.inLink=true;out+=this.outputLink(cap,{href:cap[2],title:cap[3]});this.inLink=false;continue}if((cap=this.rules.reflink.exec(src))||(cap=this.rules.nolink.exec(src))){src=src.substring(cap[0].length);link=(cap[2]||cap[1]).replace(/\s+/g," ");link=this.links[link.toLowerCase()];if(!link||!link.href){out+=cap[0].charAt(0);src=cap[0].substring(1)+src;continue}this.inLink=true;out+=this.outputLink(cap,link);this.inLink=false;continue}if(cap=this.rules.strong.exec(src)){src=src.substring(cap[0].length);out+=this.renderer.strong(this.output(cap[2]||cap[1]));continue}if(cap=this.rules.em.exec(src)){src=src.substring(cap[0].length);out+=this.renderer.em(this.output(cap[2]||cap[1]));continue}if(cap=this.rules.code.exec(src)){src=src.substring(cap[0].length);out+=this.renderer.codespan(escape(cap[2],true));continue}if(cap=this.rules.br.exec(src)){src=src.substring(cap[0].length);out+=this.renderer.br();continue}if(cap=this.rules.del.exec(src)){src=src.substring(cap[0].length);out+=this.renderer.del(this.output(cap[1]));continue}if(cap=this.rules.text.exec(src)){src=src.substring(cap[0].length);out+=escape(this.smartypants(cap[0]));continue}if(src){throw new Error("Infinite loop on byte: "+src.charCodeAt(0))}}return out};InlineLexer.prototype.outputLink=function(cap,link){var href=escape(link.href),title=link.title?escape(link.title):null;return cap[0].charAt(0)!=="!"?this.renderer.link(href,title,this.output(cap[1])):this.renderer.image(href,title,escape(cap[1]))};InlineLexer.prototype.smartypants=function(text){if(!this.options.smartypants)return text;return text.replace(/--/g,"—").replace(/(^|[-\u2014/(\[{"\s])'/g,"$1‘").replace(/'/g,"’").replace(/(^|[-\u2014/(\[{\u2018\s])"/g,"$1“").replace(/"/g,"”").replace(/\.{3}/g,"…")};InlineLexer.prototype.mangle=function(text){var out="",l=text.length,i=0,ch;for(;i<l;i++){ch=text.charCodeAt(i);if(Math.random()>.5){ch="x"+ch.toString(16)}out+="&#"+ch+";"}return out};function Renderer(options){this.options=options||{}}Renderer.prototype.code=function(code,lang,escaped){if(this.options.highlight){var out=this.options.highlight(code,lang);if(out!=null&&out!==code){escaped=true;code=out}}if(!lang){return"<pre><code>"+(escaped?code:escape(code,true))+"\n</code></pre>"}return'<pre><code class="'+this.options.langPrefix+escape(lang,true)+'">'+(escaped?code:escape(code,true))+"\n</code></pre>\n"};Renderer.prototype.blockquote=function(quote){return"<blockquote>\n"+quote+"</blockquote>\n"};Renderer.prototype.html=function(html){return html};Renderer.prototype.heading=function(text,level,raw){return"<h"+level+' id="'+this.options.headerPrefix+raw.toLowerCase().replace(/[^\w]+/g,"-")+'">'+text+"</h"+level+">\n"};Renderer.prototype.hr=function(){return this.options.xhtml?"<hr/>\n":"<hr>\n"};Renderer.prototype.list=function(body,ordered){var type=ordered?"ol":"ul";return"<"+type+">\n"+body+"</"+type+">\n"};Renderer.prototype.listitem=function(text){return"<li>"+text+"</li>\n"};Renderer.prototype.paragraph=function(text){return"<p>"+text+"</p>\n"};Renderer.prototype.table=function(header,body){return"<table>\n"+"<thead>\n"+header+"</thead>\n"+"<tbody>\n"+body+"</tbody>\n"+"</table>\n"};Renderer.prototype.tablerow=function(content){return"<tr>\n"+content+"</tr>\n"};Renderer.prototype.tablecell=function(content,flags){var type=flags.header?"th":"td";var tag=flags.align?"<"+type+' style="text-align:'+flags.align+'">':"<"+type+">";return tag+content+"</"+type+">\n"};Renderer.prototype.strong=function(text){return"<strong>"+text+"</strong>"};Renderer.prototype.em=function(text){return"<em>"+text+"</em>"};Renderer.prototype.codespan=function(text){return"<code>"+text+"</code>"};Renderer.prototype.br=function(){return this.options.xhtml?"<br/>":"<br>"};Renderer.prototype.del=function(text){return"<del>"+text+"</del>"};Renderer.prototype.link=function(href,title,text){if(this.options.sanitize){try{var prot=decodeURIComponent(unescape(href)).replace(/[^\w:]/g,"").toLowerCase()}catch(e){return""}if(prot.indexOf("javascript:")===0){return""}}var out='<a href="'+href+'"';if(title){out+=' title="'+title+'"'}out+=">"+text+"</a>";return out};Renderer.prototype.image=function(href,title,text){var out='<img src="'+href+'" alt="'+text+'"';if(title){out+=' title="'+title+'"'}out+=this.options.xhtml?"/>":">";return out};function Parser(options){this.tokens=[];this.token=null;this.options=options||marked.defaults;this.options.renderer=this.options.renderer||new Renderer;this.renderer=this.options.renderer;this.renderer.options=this.options}Parser.parse=function(src,options,renderer){var parser=new Parser(options,renderer);return parser.parse(src)};Parser.prototype.parse=function(src){this.inline=new InlineLexer(src.links,this.options,this.renderer);this.tokens=src.reverse();var out="";while(this.next()){out+=this.tok()}return out};Parser.prototype.next=function(){return this.token=this.tokens.pop()};Parser.prototype.peek=function(){return this.tokens[this.tokens.length-1]||0};Parser.prototype.parseText=function(){var body=this.token.text;while(this.peek().type==="text"){body+="\n"+this.next().text}return this.inline.output(body)};Parser.prototype.tok=function(){switch(this.token.type){case"space":{return""}case"hr":{return this.renderer.hr()}case"heading":{return this.renderer.heading(this.inline.output(this.token.text),this.token.depth,this.token.text)}case"code":{return this.renderer.code(this.token.text,this.token.lang,this.token.escaped)}case"table":{var header="",body="",i,row,cell,flags,j;cell="";for(i=0;i<this.token.header.length;i++){flags={header:true,align:this.token.align[i]};cell+=this.renderer.tablecell(this.inline.output(this.token.header[i]),{header:true,align:this.token.align[i]})}header+=this.renderer.tablerow(cell);for(i=0;i<this.token.cells.length;i++){row=this.token.cells[i];cell="";for(j=0;j<row.length;j++){cell+=this.renderer.tablecell(this.inline.output(row[j]),{header:false,align:this.token.align[j]})}body+=this.renderer.tablerow(cell)}return this.renderer.table(header,body)}case"blockquote_start":{var body="";while(this.next().type!=="blockquote_end"){body+=this.tok()}return this.renderer.blockquote(body)}case"list_start":{var body="",ordered=this.token.ordered;while(this.next().type!=="list_end"){body+=this.tok()}return this.renderer.list(body,ordered)}case"list_item_start":{var body="";while(this.next().type!=="list_item_end"){body+=this.token.type==="text"?this.parseText():this.tok()}return this.renderer.listitem(body)}case"loose_item_start":{var body="";while(this.next().type!=="list_item_end"){body+=this.tok()}return this.renderer.listitem(body)}case"html":{var html=!this.token.pre&&!this.options.pedantic?this.inline.output(this.token.text):this.token.text;return this.renderer.html(html)}case"paragraph":{return this.renderer.paragraph(this.inline.output(this.token.text))}case"text":{return this.renderer.paragraph(this.parseText())}}};function escape(html,encode){return html.replace(!encode?/&(?!#?\w+;)/g:/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}function unescape(html){return html.replace(/&([#\w]+);/g,function(_,n){n=n.toLowerCase();if(n==="colon")return":";if(n.charAt(0)==="#"){return n.charAt(1)==="x"?String.fromCharCode(parseInt(n.substring(2),16)):String.fromCharCode(+n.substring(1))}return""})}function replace(regex,opt){regex=regex.source;opt=opt||"";return function self(name,val){if(!name)return new RegExp(regex,opt);val=val.source||val;val=val.replace(/(^|[^\[])\^/g,"$1");regex=regex.replace(name,val);return self}}function noop(){}noop.exec=noop;function merge(obj){var i=1,target,key;for(;i<arguments.length;i++){target=arguments[i];for(key in target){if(Object.prototype.hasOwnProperty.call(target,key)){obj[key]=target[key]}}}return obj}function marked(src,opt,callback){if(callback||typeof opt==="function"){if(!callback){callback=opt;opt=null}opt=merge({},marked.defaults,opt||{});var highlight=opt.highlight,tokens,pending,i=0;try{tokens=Lexer.lex(src,opt)}catch(e){return callback(e)}pending=tokens.length;var done=function(err){if(err){opt.highlight=highlight;return callback(err)}var out;try{out=Parser.parse(tokens,opt)}catch(e){err=e}opt.highlight=highlight;return err?callback(err):callback(null,out)};if(!highlight||highlight.length<3){return done()}delete opt.highlight;if(!pending)return done();for(;i<tokens.length;i++){(function(token){if(token.type!=="code"){return--pending||done()}return highlight(token.text,token.lang,function(err,code){if(err)return done(err);if(code==null||code===token.text){return--pending||done()}token.text=code;token.escaped=true;--pending||done()})})(tokens[i])}return}try{if(opt)opt=merge({},marked.defaults,opt);return Parser.parse(Lexer.lex(src,opt),opt)}catch(e){e.message+="\nPlease report this to https://github.com/chjj/marked.";if((opt||marked.defaults).silent){return"<p>An error occured:</p><pre>"+escape(e.message+"",true)+"</pre>"}throw e}}marked.options=marked.setOptions=function(opt){merge(marked.defaults,opt);return marked};marked.defaults={gfm:true,tables:true,breaks:false,pedantic:false,sanitize:false,smartLists:false,silent:false,highlight:null,langPrefix:"lang-",smartypants:false,headerPrefix:"",renderer:new Renderer,xhtml:false};marked.Parser=Parser;marked.parser=Parser.parse;marked.Renderer=Renderer;marked.Lexer=Lexer;marked.lexer=Lexer.lex;marked.InlineLexer=InlineLexer;marked.inlineLexer=InlineLexer.output;marked.parse=marked;if(typeof module!=="undefined"&&typeof exports==="object"){module.exports=marked}else if(typeof define==="function"&&define.amd){define(function(){return marked})}else{this.marked=marked}}).call(function(){return this||(typeof window!=="undefined"?window:global)}());
 
-	var isDown = NS.input('Mouse.isDown', false);
-
-	var clicks = NS.input('Mouse.clicks', Utils.Tuple0);
-
-	var node = localRuntime.isFullscreen()
-		? document
-		: localRuntime.node;
-
-	localRuntime.addListener([clicks.id], node, 'click', function click() {
-		localRuntime.notify(clicks.id, Utils.Tuple0);
-	});
-	localRuntime.addListener([isDown.id], node, 'mousedown', function down() {
-		localRuntime.notify(isDown.id, true);
-	});
-	localRuntime.addListener([isDown.id], node, 'mouseup', function up() {
-		localRuntime.notify(isDown.id, false);
-	});
-	localRuntime.addListener([position.id], node, 'mousemove', function move(e) {
-		localRuntime.notify(position.id, Utils.getXY(e));
+	marked.setOptions({
+		highlight: function (code, lang) {
+			if (typeof hljs !== 'undefined'
+				&& lang
+				&& hljs.listLanguages().indexOf(lang) >= 0)
+			{
+				return hljs.highlight(lang, code, true).value;
+			}
+			return code;
+		}
 	});
 
-	return localRuntime.Native.Mouse.values = {
-		position: position,
-		isDown: isDown,
-		clicks: clicks
+	function formatOptions(options) {
+		var gfm = options.githubFlavored;
+		if (gfm.ctor === 'Just')
+		{
+			return {
+				gfm: true,
+				tables: gfm.tables,
+				breaks: gfm.breaks,
+				sanitize: options.sanitize,
+				smartypants: options.smartypants
+			};
+		}
+		else
+		{
+			return {
+				gfm: false,
+				tables: false,
+				breaks: false,
+				sanitize: options.sanitize,
+				smartypants: options.smartypants
+			};
+		}
+	}
+
+	function toHtmlWith(options, rawMarkdown)
+	{
+		return new MarkdownWidget(options, rawMarkdown);
+	}
+
+	function MarkdownWidget(options, rawMarkdown)
+	{
+		this.options = options;
+		this.markdown = rawMarkdown;
+	}
+
+	MarkdownWidget.prototype.type = "Widget";
+
+	MarkdownWidget.prototype.init = function init()
+	{
+		var html = marked(this.markdown, formatOptions(this.options));
+		var div = document.createElement('div');
+		div.innerHTML = html;
+		return div;
 	};
-};
 
-Elm.Native.Port = {};
+	MarkdownWidget.prototype.update = function update(previous, node)
+	{
+		if (this.markdown !== previous.markdown || this.options != previous.options)
+		{
+			var html = marked(this.markdown, formatOptions(this.options));
+			node.innerHTML = html;
+		}
+		return node;
+	};
+
+
+	function toElementWith(options, rawMarkdown)
+	{
+		return Element.markdown(marked(rawMarkdown, formatOptions(options)));
+	}
+
+	return Elm.Native.Markdown.values = {
+		toHtmlWith: F2(toHtmlWith),
+		toElementWith: F2(toElementWith)
+	};
+};Elm.Native.Port = {};
 Elm.Native.Port.make = function(localRuntime) {
 
 	localRuntime.Native = localRuntime.Native || {};
@@ -8141,7 +9649,6 @@ Elm.Native.Port.make = function(localRuntime) {
 		outboundSignal: outboundSignal
 	};
 };
-
 
 if (!Elm.fullscreen) {
 
@@ -8780,7 +10287,6 @@ if (!Elm.fullscreen) {
 			: fun(a)(b)(c)(d)(e)(f)(g)(h)(i);
 	}
 }
-
 Elm.Native.Show = {};
 Elm.Native.Show.make = function(localRuntime) {
 	localRuntime.Native = localRuntime.Native || {};
@@ -8972,7 +10478,6 @@ Elm.Native.Show.make = function(localRuntime) {
 		toString: toString
 	};
 };
-
 Elm.Native.Signal = {};
 Elm.Native.Signal.make = function(localRuntime) {
 
@@ -9445,7 +10950,6 @@ Elm.Native.Signal.make = function(localRuntime) {
 		delay: F2(delay)
 	};
 };
-
 Elm.Native.String = {};
 Elm.Native.String.make = function(localRuntime) {
 
@@ -9788,7 +11292,6 @@ Elm.Native.String.make = function(localRuntime) {
 		fromList: fromList
 	};
 };
-
 Elm.Native.Task = {};
 Elm.Native.Task.make = function(localRuntime) {
 
@@ -10012,7 +11515,6 @@ Elm.Native.Task.make = function(localRuntime) {
 		sleep: sleep
 	};
 };
-
 Elm.Native.Text = {};
 Elm.Native.Text.make = function(localRuntime) {
 	localRuntime.Native = localRuntime.Native || {};
@@ -10300,7 +11802,6 @@ Elm.Native.Text.make = function(localRuntime) {
 		renderHtml: renderHtml
 	};
 };
-
 Elm.Native.Time = {};
 Elm.Native.Time.make = function(localRuntime)
 {
@@ -10411,7 +11912,6 @@ Elm.Native.Time.make = function(localRuntime)
 	};
 
 };
-
 Elm.Native.Transform2D = {};
 Elm.Native.Transform2D.make = function(localRuntime) {
 
@@ -10524,7 +12024,6 @@ Elm.Native.Transform2D.make = function(localRuntime) {
 	};
 
 };
-
 Elm.Native = Elm.Native || {};
 Elm.Native.Utils = {};
 Elm.Native.Utils.make = function(localRuntime) {
@@ -10887,7 +12386,22 @@ Elm.Native.Utils.make = function(localRuntime) {
 		badPort: badPort
 	};
 };
+Elm.Native.Vendor = Elm.Native.Vendor || {};
+Elm.Native.Vendor.make = function(elm) {
+    elm.Native = elm.Native || {};
+    elm.Native.Vendor = elm.Native.Vendor || {};
+    if (elm.Native.Vendor.values) return elm.Native.Vendor.values;
 
+    // thanks to -- https://github.com/daniel-lundin/snabbt.js/blob/master/snabbt.js
+    var styles = window.getComputedStyle(document.documentElement, '');
+    var vendorPrefix = (Array.prototype.slice
+        .call(styles)
+        .join('')
+        .match(/-(moz|webkit|ms)-/) || (styles.OLink === '' && ['', 'o'])
+    )[1];
+
+    return elm.Native.Vendor.values = { prefix: vendorPrefix };
+};
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 },{}],2:[function(require,module,exports){
@@ -12482,76 +13996,6 @@ Elm.Native.VirtualDom.make = function(elm)
 };
 
 },{"virtual-dom/vdom/create-element":6,"virtual-dom/vdom/patch":9,"virtual-dom/vnode/is-vhook":13,"virtual-dom/vnode/vnode":18,"virtual-dom/vnode/vtext":20,"virtual-dom/vtree/diff":22}]},{},[23]);
-
-Elm.Native = Elm.Native || {};
-Elm.Native.Window = {};
-Elm.Native.Window.make = function(localRuntime) {
-
-	localRuntime.Native = localRuntime.Native || {};
-	localRuntime.Native.Window = localRuntime.Native.Window || {};
-	if (localRuntime.Native.Window.values)
-	{
-		return localRuntime.Native.Window.values;
-	}
-
-	var NS = Elm.Native.Signal.make(localRuntime);
-	var Tuple2 = Elm.Native.Utils.make(localRuntime).Tuple2;
-
-
-	function getWidth()
-	{
-		return localRuntime.node.clientWidth;
-	}
-
-
-	function getHeight()
-	{
-		if (localRuntime.isFullscreen())
-		{
-			return window.innerHeight;
-		}
-		return localRuntime.node.clientHeight;
-	}
-
-
-	var dimensions = NS.input('Window.dimensions', Tuple2(getWidth(), getHeight()));
-
-
-	function resizeIfNeeded()
-	{
-		// Do not trigger event if the dimensions have not changed.
-		// This should be most of the time.
-		var w = getWidth();
-		var h = getHeight();
-		if (dimensions.value._0 === w && dimensions.value._1 === h)
-		{
-			return;
-		}
-
-		setTimeout(function () {
-			// Check again to see if the dimensions have changed.
-			// It is conceivable that the dimensions have changed
-			// again while some other event was being processed.
-			var w = getWidth();
-			var h = getHeight();
-			if (dimensions.value._0 === w && dimensions.value._1 === h)
-			{
-				return;
-			}
-			localRuntime.notify(dimensions.id, Tuple2(w,h));
-		}, 0);
-	}
-
-
-	localRuntime.addListener([dimensions.id], window, 'resize', resizeIfNeeded);
-
-
-	return localRuntime.Native.Window.values = {
-		dimensions: dimensions,
-		resizeIfNeeded: resizeIfNeeded
-	};
-};
-
 Elm.Result = Elm.Result || {};
 Elm.Result.make = function (_elm) {
    "use strict";
@@ -12795,8 +14239,7 @@ Elm.Result.make = function (_elm) {
                         ,Ok: Ok
                         ,Err: Err};
    return _elm.Result.values;
-};
-Elm.Signal = Elm.Signal || {};
+};Elm.Signal = Elm.Signal || {};
 Elm.Signal.make = function (_elm) {
    "use strict";
    _elm.Signal = _elm.Signal || {};
@@ -12939,550 +14382,7 @@ Elm.Signal.make = function (_elm) {
                         ,forwardTo: forwardTo
                         ,Mailbox: Mailbox};
    return _elm.Signal.values;
-};
-Elm.Signal = Elm.Signal || {};
-Elm.Signal.Extra = Elm.Signal.Extra || {};
-Elm.Signal.Extra.make = function (_elm) {
-   "use strict";
-   _elm.Signal = _elm.Signal || {};
-   _elm.Signal.Extra = _elm.Signal.Extra || {};
-   if (_elm.Signal.Extra.values)
-   return _elm.Signal.Extra.values;
-   var _op = {},
-   _N = Elm.Native,
-   _U = _N.Utils.make(_elm),
-   _L = _N.List.make(_elm),
-   $moduleName = "Signal.Extra",
-   $Basics = Elm.Basics.make(_elm),
-   $List = Elm.List.make(_elm),
-   $Maybe = Elm.Maybe.make(_elm),
-   $Result = Elm.Result.make(_elm),
-   $Signal = Elm.Signal.make(_elm);
-   var passiveMap2 = F2(function (func,
-   a) {
-      return function ($) {
-         return A2($Signal.map2,
-         func,
-         a)($Signal.sampleOn(a)($));
-      };
-   });
-   var withPassive = passiveMap2(F2(function (x,
-   y) {
-      return x(y);
-   }));
-   var combine = A2($List.foldr,
-   $Signal.map2(F2(function (x,y) {
-      return A2($List._op["::"],
-      x,
-      y);
-   })),
-   $Signal.constant(_L.fromArray([])));
-   var mapMany = F2(function (f,
-   l) {
-      return A2($Signal._op["<~"],
-      f,
-      combine(l));
-   });
-   var applyMany = F2(function (fs,
-   l) {
-      return A2($Signal._op["~"],
-      fs,
-      combine(l));
-   });
-   var mergeMany = F2(function (original,
-   others) {
-      return A3($List.foldl,
-      $Signal.merge,
-      original,
-      others);
-   });
-   var filter = function (initial) {
-      return A2($Signal.filterMap,
-      $Basics.identity,
-      initial);
-   };
-   var keepIf = $Signal.filter;
-   var runBuffer$ = F3(function (l,
-   n,
-   input) {
-      return function () {
-         var f = F2(function (inp,
-         prev) {
-            return function () {
-               var l = $List.length(prev);
-               return _U.cmp(l,
-               n) < 0 ? A2($Basics._op["++"],
-               prev,
-               _L.fromArray([inp])) : A2($Basics._op["++"],
-               A2($List.drop,l - n + 1,prev),
-               _L.fromArray([inp]));
-            }();
-         });
-         return A3($Signal.foldp,
-         f,
-         l,
-         input);
-      }();
-   });
-   var runBuffer = runBuffer$(_L.fromArray([]));
-   var foldps = F3(function (f,
-   bs,
-   aS) {
-      return A2($Signal._op["<~"],
-      $Basics.fst,
-      A3($Signal.foldp,
-      F2(function (a,_v0) {
-         return function () {
-            switch (_v0.ctor)
-            {case "_Tuple2": return A2(f,
-                 a,
-                 _v0._1);}
-            _U.badCase($moduleName,
-            "on line 174, column 29 to 34");
-         }();
-      }),
-      bs,
-      aS));
-   });
-   var delayRound = F2(function (b,
-   bS) {
-      return A3(foldps,
-      F2(function ($new,old) {
-         return {ctor: "_Tuple2"
-                ,_0: old
-                ,_1: $new};
-      }),
-      {ctor: "_Tuple2",_0: b,_1: b},
-      bS);
-   });
-   var filterFold = F2(function (f,
-   initial) {
-      return function () {
-         var f$ = F2(function (a,s) {
-            return function () {
-               var res = A2(f,a,s);
-               return {ctor: "_Tuple2"
-                      ,_0: res
-                      ,_1: A2($Maybe.withDefault,
-                      s,
-                      res)};
-            }();
-         });
-         return function ($) {
-            return filter(initial)(A2(foldps,
-            f$,
-            {ctor: "_Tuple2"
-            ,_0: $Maybe.Just(initial)
-            ,_1: initial})($));
-         };
-      }();
-   });
-   var initSignal = function (s) {
-      return A2($Signal.sampleOn,
-      $Signal.constant({ctor: "_Tuple0"}),
-      s);
-   };
-   var switchHelper = F4(function (filter,
-   b,
-   l,
-   r) {
-      return function () {
-         var fromJust = function (_v4) {
-            return function () {
-               switch (_v4.ctor)
-               {case "Just": return _v4._0;}
-               _U.badCase($moduleName,
-               "on line 285, column 25 to 26");
-            }();
-         };
-         var lAndR = A2($Signal.merge,
-         A3(filter,
-         b,
-         $Maybe.Nothing,
-         A2($Signal._op["<~"],
-         $Maybe.Just,
-         l)),
-         A3(filter,
-         A2($Signal._op["<~"],
-         $Basics.not,
-         b),
-         $Maybe.Nothing,
-         A2($Signal._op["<~"],
-         $Maybe.Just,
-         r)));
-         var base = A2($Signal._op["~"],
-         A2($Signal._op["~"],
-         A2($Signal._op["<~"],
-         F3(function (bi,li,ri) {
-            return $Maybe.Just(bi ? li : ri);
-         }),
-         initSignal(b)),
-         initSignal(l)),
-         initSignal(r));
-         return A2($Signal._op["<~"],
-         fromJust,
-         A2($Signal.merge,base,lAndR));
-      }();
-   });
-   var unzip4 = function (pairS) {
-      return {ctor: "_Tuple4"
-             ,_0: A2($Signal._op["<~"],
-             function (_v7) {
-                return function () {
-                   switch (_v7.ctor)
-                   {case "_Tuple4": return _v7._0;}
-                   _U.badCase($moduleName,
-                   "on line 134, column 19 to 20");
-                }();
-             },
-             pairS)
-             ,_1: A2($Signal._op["<~"],
-             function (_v13) {
-                return function () {
-                   switch (_v13.ctor)
-                   {case "_Tuple4":
-                      return _v13._1;}
-                   _U.badCase($moduleName,
-                   "on line 134, column 47 to 48");
-                }();
-             },
-             pairS)
-             ,_2: A2($Signal._op["<~"],
-             function (_v19) {
-                return function () {
-                   switch (_v19.ctor)
-                   {case "_Tuple4":
-                      return _v19._2;}
-                   _U.badCase($moduleName,
-                   "on line 134, column 75 to 76");
-                }();
-             },
-             pairS)
-             ,_3: A2($Signal._op["<~"],
-             function (_v25) {
-                return function () {
-                   switch (_v25.ctor)
-                   {case "_Tuple4":
-                      return _v25._3;}
-                   _U.badCase($moduleName,
-                   "on line 134, column 103 to 104");
-                }();
-             },
-             pairS)};
-   };
-   var unzip3 = function (pairS) {
-      return {ctor: "_Tuple3"
-             ,_0: A2($Signal._op["<~"],
-             function (_v31) {
-                return function () {
-                   switch (_v31.ctor)
-                   {case "_Tuple3":
-                      return _v31._0;}
-                   _U.badCase($moduleName,
-                   "on line 128, column 17 to 18");
-                }();
-             },
-             pairS)
-             ,_1: A2($Signal._op["<~"],
-             function (_v36) {
-                return function () {
-                   switch (_v36.ctor)
-                   {case "_Tuple3":
-                      return _v36._1;}
-                   _U.badCase($moduleName,
-                   "on line 128, column 43 to 44");
-                }();
-             },
-             pairS)
-             ,_2: A2($Signal._op["<~"],
-             function (_v41) {
-                return function () {
-                   switch (_v41.ctor)
-                   {case "_Tuple3":
-                      return _v41._2;}
-                   _U.badCase($moduleName,
-                   "on line 128, column 69 to 70");
-                }();
-             },
-             pairS)};
-   };
-   var unzip = function (pairS) {
-      return {ctor: "_Tuple2"
-             ,_0: A2($Signal._op["<~"],
-             $Basics.fst,
-             pairS)
-             ,_1: A2($Signal._op["<~"],
-             $Basics.snd,
-             pairS)};
-   };
-   var zip4 = $Signal.map4(F4(function (v0,
-   v1,
-   v2,
-   v3) {
-      return {ctor: "_Tuple4"
-             ,_0: v0
-             ,_1: v1
-             ,_2: v2
-             ,_3: v3};
-   }));
-   var zip3 = $Signal.map3(F3(function (v0,
-   v1,
-   v2) {
-      return {ctor: "_Tuple3"
-             ,_0: v0
-             ,_1: v1
-             ,_2: v2};
-   }));
-   var zip = $Signal.map2(F2(function (v0,
-   v1) {
-      return {ctor: "_Tuple2"
-             ,_0: v0
-             ,_1: v1};
-   }));
-   var keepWhen = F3(function (boolSig,
-   a,
-   aSig) {
-      return $Signal.map($Basics.snd)(A2(keepIf,
-      $Basics.fst,
-      {ctor: "_Tuple2"
-      ,_0: true
-      ,_1: a})($Signal.sampleOn(aSig)(A2(zip,
-      boolSig,
-      aSig))));
-   });
-   var switchWhen = F3(function (b,
-   l,
-   r) {
-      return A4(switchHelper,
-      keepWhen,
-      b,
-      l,
-      r);
-   });
-   var sampleWhen = F3(function (bs,
-   def,
-   sig) {
-      return $Signal.map($Basics.snd)(A2(keepIf,
-      $Basics.fst,
-      {ctor: "_Tuple2"
-      ,_0: true
-      ,_1: def})(A2(zip,bs,sig)));
-   });
-   var switchSample = F3(function (b,
-   l,
-   r) {
-      return A4(switchHelper,
-      sampleWhen,
-      b,
-      l,
-      r);
-   });
-   var keepThen = F3(function (choice,
-   base,
-   signal) {
-      return A2(switchSample,
-      choice,
-      signal)($Signal.constant(base));
-   });
-   var andMap = F2(function (x,y) {
-      return A2($Signal._op["~"],
-      x,
-      y);
-   });
-   _op["~>"] = $Basics.flip($Signal.map);
-   var foldp$ = F3(function (fun,
-   initFun,
-   input) {
-      return function () {
-         var fromJust = function (_v46) {
-            return function () {
-               switch (_v46.ctor)
-               {case "Just": return _v46._0;}
-               _U.badCase($moduleName,
-               "on line 161, column 25 to 26");
-            }();
-         };
-         var fun$ = F2(function (_v49,
-         mb) {
-            return function () {
-               switch (_v49.ctor)
-               {case "_Tuple2":
-                  return $Maybe.Just(fun(_v49._0)(A2($Maybe.withDefault,
-                    _v49._1,
-                    mb)));}
-               _U.badCase($moduleName,
-               "between lines 158 and 159");
-            }();
-         });
-         var initial = A2(_op["~>"],
-         initSignal(input),
-         initFun);
-         var rest = A3($Signal.foldp,
-         fun$,
-         $Maybe.Nothing,
-         A2(zip,input,initial));
-         return A2($Signal._op["<~"],
-         fromJust,
-         A2($Signal.merge,
-         A2($Signal._op["<~"],
-         $Maybe.Just,
-         initial),
-         rest));
-      }();
-   });
-   var foldps$ = F3(function (f,
-   iF,
-   aS) {
-      return A2($Signal._op["<~"],
-      $Basics.fst,
-      A3(foldp$,
-      F2(function (a,_v53) {
-         return function () {
-            switch (_v53.ctor)
-            {case "_Tuple2": return A2(f,
-                 a,
-                 _v53._1);}
-            _U.badCase($moduleName,
-            "on line 180, column 46 to 51");
-         }();
-      }),
-      iF,
-      aS));
-   });
-   var deltas = function (signal) {
-      return function () {
-         var initial = function (value) {
-            return {ctor: "_Tuple2"
-                   ,_0: value
-                   ,_1: value};
-         };
-         var step = F2(function (value,
-         delta) {
-            return {ctor: "_Tuple2"
-                   ,_0: $Basics.snd(delta)
-                   ,_1: value};
-         });
-         return A3(foldp$,
-         step,
-         initial,
-         signal);
-      }();
-   };
-   var foldpWith = F4(function (unpack,
-   step,
-   init,
-   input) {
-      return function () {
-         var step$ = F2(function (a,
-         _v57) {
-            return function () {
-               switch (_v57.ctor)
-               {case "_Tuple2":
-                  return unpack(A2(step,
-                    a,
-                    _v57._1));}
-               _U.badCase($moduleName,
-               "on line 194, column 7 to 25");
-            }();
-         });
-         return A2(_op["~>"],
-         A3($Signal.foldp,
-         step$,
-         init,
-         input),
-         $Basics.fst);
-      }();
-   });
-   var keepWhenI = F2(function (fs,
-   s) {
-      return function () {
-         var fromJust = function (_v61) {
-            return function () {
-               switch (_v61.ctor)
-               {case "Just": return _v61._0;}
-               _U.badCase($moduleName,
-               "on line 331, column 25 to 26");
-            }();
-         };
-         return A2(_op["~>"],
-         A3(keepWhen,
-         A2($Signal.merge,
-         $Signal.constant(true),
-         fs),
-         $Maybe.Nothing,
-         A2($Signal._op["<~"],
-         $Maybe.Just,
-         s)),
-         fromJust);
-      }();
-   });
-   var fairMerge = F3(function (resolve,
-   left,
-   right) {
-      return function () {
-         var merged = A2($Signal.merge,
-         left,
-         right);
-         var boolRight = A2($Signal._op["<~"],
-         $Basics.always(false),
-         right);
-         var boolLeft = A2($Signal._op["<~"],
-         $Basics.always(true),
-         left);
-         var bothUpdated = A2($Signal._op["~"],
-         A2($Signal._op["<~"],
-         F2(function (x,y) {
-            return !_U.eq(x,y);
-         }),
-         A2($Signal.merge,
-         boolLeft,
-         boolRight)),
-         A2($Signal.merge,
-         boolRight,
-         boolLeft));
-         var keep = keepWhenI(bothUpdated);
-         var resolved = A2($Signal._op["~"],
-         A2($Signal._op["<~"],
-         resolve,
-         keep(left)),
-         keep(right));
-         return $Signal.merge(resolved)(merged);
-      }();
-   });
-   _elm.Signal.Extra.values = {_op: _op
-                              ,andMap: andMap
-                              ,zip: zip
-                              ,zip3: zip3
-                              ,zip4: zip4
-                              ,unzip: unzip
-                              ,unzip3: unzip3
-                              ,unzip4: unzip4
-                              ,foldp$: foldp$
-                              ,foldps: foldps
-                              ,foldps$: foldps$
-                              ,runBuffer: runBuffer
-                              ,runBuffer$: runBuffer$
-                              ,deltas: deltas
-                              ,delayRound: delayRound
-                              ,keepIf: keepIf
-                              ,keepWhen: keepWhen
-                              ,sampleWhen: sampleWhen
-                              ,switchWhen: switchWhen
-                              ,keepWhenI: keepWhenI
-                              ,switchSample: switchSample
-                              ,keepThen: keepThen
-                              ,filter: filter
-                              ,filterFold: filterFold
-                              ,fairMerge: fairMerge
-                              ,mergeMany: mergeMany
-                              ,combine: combine
-                              ,mapMany: mapMany
-                              ,applyMany: applyMany
-                              ,passiveMap2: passiveMap2
-                              ,withPassive: withPassive};
-   return _elm.Signal.Extra.values;
-};
-Elm.String = Elm.String || {};
+};Elm.String = Elm.String || {};
 Elm.String.make = function (_elm) {
    "use strict";
    _elm.String = _elm.String || {};
@@ -13582,8 +14482,7 @@ Elm.String.make = function (_elm) {
                         ,any: any
                         ,all: all};
    return _elm.String.values;
-};
-Elm.Task = Elm.Task || {};
+};Elm.Task = Elm.Task || {};
 Elm.Task.make = function (_elm) {
    "use strict";
    _elm.Task = _elm.Task || {};
@@ -13807,8 +14706,200 @@ Elm.Task.make = function (_elm) {
                       ,spawn: spawn
                       ,sleep: sleep};
    return _elm.Task.values;
-};
-Elm.Text = Elm.Text || {};
+};Elm.TeaLog = Elm.TeaLog || {};
+Elm.TeaLog.make = function (_elm) {
+   "use strict";
+   _elm.TeaLog = _elm.TeaLog || {};
+   if (_elm.TeaLog.values)
+   return _elm.TeaLog.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "TeaLog",
+   $Basics = Elm.Basics.make(_elm),
+   $Css$Border$Style = Elm.Css.Border.Style.make(_elm),
+   $Css$Border$Top = Elm.Css.Border.Top.make(_elm),
+   $Css$Display = Elm.Css.Display.make(_elm),
+   $Css$Flex = Elm.Css.Flex.make(_elm),
+   $Css$Font = Elm.Css.Font.make(_elm),
+   $Css$Margin = Elm.Css.Margin.make(_elm),
+   $Css$Padding = Elm.Css.Padding.make(_elm),
+   $Header = Elm.Header.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Html$Attributes = Elm.Html.Attributes.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Markdown = Elm.Markdown.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var viewTea = F2(function (address,
+   tea) {
+      return A2($Html.div,
+      _L.fromArray([]),
+      _L.fromArray([$Html.text(tea.name)
+                   ,A2($Html.br,
+                   _L.fromArray([]),
+                   _L.fromArray([]))
+                   ,$Html.text($Basics.toString(tea.category))
+                   ,$Html.text($Basics.toString(tea.region))]));
+   });
+   var viewLogEntry = F2(function (address,
+   log) {
+      return function () {
+         var styles = $Css$Border$Top.style($Css$Border$Style.Solid)(A4($Css$Margin.all,
+         10,
+         10,
+         10,
+         10)(A4($Css$Padding.all,
+         10,
+         0,
+         10,
+         0)($Css$Font.size(12)(_L.fromArray([])))));
+         return A2($Html.div,
+         _L.fromArray([$Html$Attributes.style(styles)]),
+         _L.fromArray([A2($Html.div,
+                      _L.fromArray([]),
+                      _L.fromArray([$Html.text(log.date)]))
+                      ,$Html.text($Basics.toString(log.vendor))
+                      ,$Html.text($Basics.toString(log.rating))
+                      ,$Html.text($Basics.toString(log.price))
+                      ,A2(viewTea,address,log.tea)
+                      ,$Markdown.toHtml(log.review)]));
+      }();
+   });
+   var centered = function (styles) {
+      return $Css$Flex.alignItems($Css$Flex.AICenter)($Css$Flex.justifyContent($Css$Flex.JCCenter)($Css$Display.display($Css$Display.Flex)(styles)));
+   };
+   var view = F2(function (address,
+   model) {
+      return function () {
+         var styles = centered(_L.fromArray([]));
+         return A2($Html.div,
+         _L.fromArray([$Html$Attributes.style(styles)]),
+         _L.fromArray([$Html.div(_L.fromArray([]))(A2($List.map,
+         viewLogEntry(address),
+         model.log))]));
+      }();
+   });
+   var update = F2(function (action,
+   model) {
+      return function () {
+         switch (action.ctor)
+         {case "NoOp": return model;}
+         _U.badCase($moduleName,
+         "between lines 98 and 99");
+      }();
+   });
+   var NoOp = {ctor: "NoOp"};
+   var actionMailbox = $Signal.mailbox(NoOp);
+   var Model = F2(function (a,b) {
+      return {_: {}
+             ,header: b
+             ,log: a};
+   });
+   var LogEntry = F6(function (a,
+   b,
+   c,
+   d,
+   e,
+   f) {
+      return {_: {}
+             ,date: a
+             ,price: f
+             ,rating: e
+             ,review: d
+             ,tea: b
+             ,vendor: c};
+   });
+   var YunnanSourcing = {ctor: "YunnanSourcing"};
+   var DistinctlyTea = {ctor: "DistinctlyTea"};
+   var Tea = F3(function (a,b,c) {
+      return {_: {}
+             ,category: b
+             ,name: a
+             ,region: c};
+   });
+   var Blend = function (a) {
+      return {ctor: "Blend",_0: a};
+   };
+   var Herbal = {ctor: "Herbal"};
+   var Darjeeling = function (a) {
+      return {ctor: "Darjeeling"
+             ,_0: a};
+   };
+   var PuErh = function (a) {
+      return {ctor: "PuErh",_0: a};
+   };
+   var Black = {ctor: "Black"};
+   var Oolong = {ctor: "Oolong"};
+   var Green = {ctor: "Green"};
+   var Yellow = {ctor: "Yellow"};
+   var White = {ctor: "White"};
+   var AgedRaw = {ctor: "AgedRaw"};
+   var Ripened = {ctor: "Ripened"};
+   var Raw = {ctor: "Raw"};
+   var Maocha = {ctor: "Maocha"};
+   var UnknownRegion = {ctor: "UnknownRegion"};
+   var Nepal = {ctor: "Nepal"};
+   var Java = {ctor: "Java"};
+   var Kenya = {ctor: "Kenya"};
+   var Sumatra = {ctor: "Sumatra"};
+   var Ceylon = {ctor: "Ceylon"};
+   var Nilgiri = {ctor: "Nilgiri"};
+   var DarjeelingDistrict = {ctor: "DarjeelingDistrict"};
+   var Assam = {ctor: "Assam"};
+   var LapsangSouchong = {ctor: "LapsangSouchong"};
+   var Yunnan = {ctor: "Yunnan"};
+   var Keemum = {ctor: "Keemum"};
+   var UnknownSeason = {ctor: "UnknownSeason"};
+   var AutumnFlush = {ctor: "AutumnFlush"};
+   var SpringFlush = {ctor: "SpringFlush"};
+   var EasterFlush = {ctor: "EasterFlush"};
+   var log = _L.fromArray([{_: {}
+                           ,date: "2015-10-26"
+                           ,price: 2
+                           ,rating: 3
+                           ,review: "Not very memorable, tries to do to much, it\'s even got curry leaves"
+                           ,tea: {_: {}
+                                 ,category: Blend(_L.fromArray([White
+                                                               ,Green
+                                                               ,Darjeeling(UnknownSeason)
+                                                               ,Herbal]))
+                                 ,name: "himalayan"
+                                 ,region: UnknownRegion}
+                           ,vendor: DistinctlyTea}
+                          ,{_: {}
+                           ,date: "2015-10-26"
+                           ,price: 2
+                           ,rating: 3
+                           ,review: "Not very memorable, tries to do to much, it\'s even got curry leaves"
+                           ,tea: {_: {}
+                                 ,category: Blend(_L.fromArray([White
+                                                               ,Green
+                                                               ,Darjeeling(UnknownSeason)
+                                                               ,Herbal]))
+                                 ,name: "himalayan"
+                                 ,region: UnknownRegion}
+                           ,vendor: DistinctlyTea}]);
+   var init = {_: {}
+              ,header: $Header.init
+              ,log: log};
+   var models = A3($Signal.foldp,
+   update,
+   init,
+   actionMailbox.signal);
+   var main = A2($Signal.map,
+   view(actionMailbox.address),
+   models);
+   _elm.TeaLog.values = {_op: _op
+                        ,init: init
+                        ,update: update
+                        ,view: view
+                        ,main: main
+                        ,Model: Model};
+   return _elm.TeaLog.values;
+};Elm.Text = Elm.Text || {};
 Elm.Text.make = function (_elm) {
    "use strict";
    _elm.Text = _elm.Text || {};
@@ -13893,8 +14984,7 @@ Elm.Text.make = function (_elm) {
                       ,Over: Over
                       ,Through: Through};
    return _elm.Text.values;
-};
-Elm.Time = Elm.Time || {};
+};Elm.Time = Elm.Time || {};
 Elm.Time.make = function (_elm) {
    "use strict";
    _elm.Time = _elm.Time || {};
@@ -13972,8 +15062,7 @@ Elm.Time.make = function (_elm) {
                       ,delay: delay
                       ,since: since};
    return _elm.Time.values;
-};
-Elm.Transform2D = Elm.Transform2D || {};
+};Elm.Transform2D = Elm.Transform2D || {};
 Elm.Transform2D.make = function (_elm) {
    "use strict";
    _elm.Transform2D = _elm.Transform2D || {};
@@ -14037,8 +15126,45 @@ Elm.Transform2D.make = function (_elm) {
                              ,scaleX: scaleX
                              ,scaleY: scaleY};
    return _elm.Transform2D.values;
-};
-Elm.VirtualDom = Elm.VirtualDom || {};
+};Elm.Vendor = Elm.Vendor || {};
+Elm.Vendor.make = function (_elm) {
+   "use strict";
+   _elm.Vendor = _elm.Vendor || {};
+   if (_elm.Vendor.values)
+   return _elm.Vendor.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Vendor",
+   $Basics = Elm.Basics.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Native$Vendor = Elm.Native.Vendor.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var O = {ctor: "O"};
+   var MS = {ctor: "MS"};
+   var Webkit = {ctor: "Webkit"};
+   var Moz = {ctor: "Moz"};
+   var prefix = function () {
+      var _v0 = $Native$Vendor.prefix;
+      switch (_v0)
+      {case "moz": return Moz;
+         case "ms": return MS;
+         case "o": return O;
+         case "webkit": return Webkit;}
+      _U.badCase($moduleName,
+      "between lines 27 and 31");
+   }();
+   _elm.Vendor.values = {_op: _op
+                        ,prefix: prefix
+                        ,Moz: Moz
+                        ,Webkit: Webkit
+                        ,MS: MS
+                        ,O: O};
+   return _elm.Vendor.values;
+};Elm.VirtualDom = Elm.VirtualDom || {};
 Elm.VirtualDom.make = function (_elm) {
    "use strict";
    _elm.VirtualDom = _elm.VirtualDom || {};
@@ -14104,31 +15230,4 @@ Elm.VirtualDom.make = function (_elm) {
                             ,lazy3: lazy3
                             ,Options: Options};
    return _elm.VirtualDom.values;
-};
-Elm.Window = Elm.Window || {};
-Elm.Window.make = function (_elm) {
-   "use strict";
-   _elm.Window = _elm.Window || {};
-   if (_elm.Window.values)
-   return _elm.Window.values;
-   var _op = {},
-   _N = Elm.Native,
-   _U = _N.Utils.make(_elm),
-   _L = _N.List.make(_elm),
-   $moduleName = "Window",
-   $Basics = Elm.Basics.make(_elm),
-   $Native$Window = Elm.Native.Window.make(_elm),
-   $Signal = Elm.Signal.make(_elm);
-   var dimensions = $Native$Window.dimensions;
-   var width = A2($Signal.map,
-   $Basics.fst,
-   dimensions);
-   var height = A2($Signal.map,
-   $Basics.snd,
-   dimensions);
-   _elm.Window.values = {_op: _op
-                        ,dimensions: dimensions
-                        ,width: width
-                        ,height: height};
-   return _elm.Window.values;
-};
+};</script></head><body><script type="text/javascript">Elm.fullscreen(Elm.TeaLog)</script></body></html>

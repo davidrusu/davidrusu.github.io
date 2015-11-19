@@ -10,8 +10,20 @@ type alias Model = { home : (String, Path)
                    , nav : List (String, Path)
                    , selected : Int }
 
-init : (String, Path) -> List (String, Path) -> Int -> Model
-init home nav selected = { home = home
+basePath = "https://davidrusu.github.io"
+projectsPath = "https://github.com/davidrusu" -- basePath ++ "/projects.html"
+statsPath = "http://davidrusu.github.io/mastery/" -- basePath ++ "/stats.html"
+teasPath = basePath ++ "/pages/tea_log.html"
+
+init = create 
+         ("David Rusu", basePath)
+         [ ("Projects", projectsPath)
+         , ("Stats", statsPath)
+         , ("Tea Log", teasPath) ] -1
+
+                 
+create : (String, Path) -> List (String, Path) -> Int -> Model
+create home nav selected = { home = home
                          , nav = nav
                          , selected = selected }
 
@@ -24,7 +36,7 @@ navButton (label, url) = div
 
 viewNav : Model -> List Html
 viewNav model = List.map navButton model.nav
-
+          
 view : Signal.Address Action -> Model -> Html
 view address model =
   div
