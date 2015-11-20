@@ -15032,11 +15032,23 @@ Elm.TeaLog.make = function (_elm) {
    $Utils = Elm.Utils.make(_elm);
    var viewVender = F2(function (address,
    vender) {
-      return A2($Html.div,
-      _L.fromArray([]),
-      _L.fromArray([$Html.text(A2($Basics._op["++"],
-      "I got this tea from ",
-      $Basics.toString(vender)))]));
+      return function () {
+         var url = function () {
+            switch (vender.ctor)
+            {case "DistinctlyTea":
+               return "http://distinctlytea.com/";
+               case "YunnanSourcing":
+               return "https://yunnansourcing.com/";}
+            _U.badCase($moduleName,
+            "between lines 165 and 168");
+         }();
+         return A2($Html.div,
+         _L.fromArray([]),
+         _L.fromArray([$Html.text("I got this tea from ")
+                      ,A2($Html.a,
+                      _L.fromArray([$Html$Attributes.href(url)]),
+                      _L.fromArray([$Html.text($Basics.toString(vender))]))]));
+      }();
    });
    var viewStar = A2($Html.div,
    _L.fromArray([$Html$Attributes.style(_L.fromArray([{ctor: "_Tuple2"
@@ -15057,7 +15069,7 @@ Elm.TeaLog.make = function (_elm) {
       return function () {
          switch (region.ctor)
          {case "UnknownRegion":
-            return ", I don\'t know where this tea is from :(";}
+            return ", I don\'t know which region this tea is from";}
          return A2($Basics._op["++"],
          " from the ",
          A2($Basics._op["++"],
@@ -15075,7 +15087,7 @@ Elm.TeaLog.make = function (_elm) {
             case "[]":
             return $Maybe.Nothing;}
          _U.badCase($moduleName,
-         "between lines 116 and 119");
+         "between lines 132 and 135");
       }();
    };
    var viewTeaCategory = function (category) {
@@ -15092,7 +15104,7 @@ Elm.TeaLog.make = function (_elm) {
                          viewTeaCategory(_v7._0));
                        case "Nothing": return "";}
                     _U.badCase($moduleName,
-                    "between lines 129 and 132");
+                    "between lines 144 and 147");
                  }();
                  var listPart = $String.join(", ")($List.map(viewTeaCategory)(A2($List.take,
                  $List.length(category._0) - 1,
@@ -15102,12 +15114,7 @@ Elm.TeaLog.make = function (_elm) {
                  A2($Basics._op["++"],
                  listPart,
                  lastPart));
-              }();
-            case "Darjeeling":
-            switch (category._0.ctor)
-              {case "UnknownSeason":
-                 return "Darjeeling";}
-              break;}
+              }();}
          return $Basics.toString(category);
       }();
    };
@@ -15122,12 +15129,10 @@ Elm.TeaLog.make = function (_elm) {
                    _L.fromArray([]),
                    _L.fromArray([]))
                    ,$Html.text(A2($Basics._op["++"],
-                   "A ",
-                   A2($Basics._op["++"],
                    viewTeaCategory(tea.category),
                    A2($Basics._op["++"],
                    " tea ",
-                   viewRegion(tea.region)))))]));
+                   viewRegion(tea.region))))]));
    });
    var viewLogEntry = F2(function (address,
    log) {
@@ -15171,7 +15176,7 @@ Elm.TeaLog.make = function (_elm) {
          switch (action.ctor)
          {case "NoOp": return model;}
          _U.badCase($moduleName,
-         "between lines 106 and 107");
+         "between lines 122 and 123");
       }();
    });
    var ModifyHeader = function (a) {
@@ -15220,24 +15225,23 @@ Elm.TeaLog.make = function (_elm) {
    });
    var YunnanSourcing = {ctor: "YunnanSourcing"};
    var DistinctlyTea = {ctor: "DistinctlyTea"};
-   var Tea = F4(function (a,
+   var Tea = F5(function (a,
    b,
    c,
-   d) {
+   d,
+   e) {
       return {_: {}
              ,category: b
              ,flavours: d
              ,name: a
-             ,region: c};
+             ,region: c
+             ,season: e};
    });
    var Blend = function (a) {
       return {ctor: "Blend",_0: a};
    };
    var Herbal = {ctor: "Herbal"};
-   var Darjeeling = function (a) {
-      return {ctor: "Darjeeling"
-             ,_0: a};
-   };
+   var Darjeeling = {ctor: "Darjeeling"};
    var PuErh = function (a) {
       return {ctor: "PuErh",_0: a};
    };
@@ -15272,15 +15276,28 @@ Elm.TeaLog.make = function (_elm) {
    var Grenadine = {ctor: "Grenadine"};
    var Vanilla = {ctor: "Vanilla"};
    var log = _L.fromArray([{_: {}
+                           ,date: "2015-11-19"
+                           ,rating: 7
+                           ,review: "The first oolong i\'ve tried and it\'s totally got me hooked, will try more oolongs to see if they are all like this"
+                           ,tea: {_: {}
+                                 ,category: Oolong
+                                 ,flavours: _L.fromArray([])
+                                 ,name: "Iron Goddess of Mercy"
+                                 ,region: UnknownRegion
+                                 ,season: UnknownSeason}
+                           ,url: $Maybe.Nothing
+                           ,vendor: DistinctlyTea}
+                          ,{_: {}
                            ,date: "2015-11-03"
                            ,rating: 7
-                           ,review: "One of the first teas I really got into, the latest batch isn\'t as good as the what it was a year ago, it\'s a bit more bitter now"
+                           ,review: "One of the first teas that made me start to appreciate teas, the latest batch isn\'t as good as the what it was a year \nago"
                            ,tea: {_: {}
                                  ,category: Black
                                  ,flavours: _L.fromArray([Vanilla
                                                          ,Grenadine])
                                  ,name: "Monks Blend"
-                                 ,region: Ceylon}
+                                 ,region: Ceylon
+                                 ,season: UnknownSeason}
                            ,url: $Maybe.Nothing
                            ,vendor: DistinctlyTea}
                           ,{_: {}
@@ -15290,13 +15307,14 @@ Elm.TeaLog.make = function (_elm) {
                            ,tea: {_: {}
                                  ,category: Blend(_L.fromArray([White
                                                                ,Green
-                                                               ,Darjeeling(UnknownSeason)
+                                                               ,Darjeeling
                                                                ,Herbal]))
                                  ,flavours: _L.fromArray([Corn
                                                          ,Curry
                                                          ,Pineapple])
                                  ,name: "Himalayan"
-                                 ,region: UnknownRegion}
+                                 ,region: UnknownRegion
+                                 ,season: UnknownSeason}
                            ,url: $Maybe.Nothing
                            ,vendor: DistinctlyTea}]);
    var init = {_: {}

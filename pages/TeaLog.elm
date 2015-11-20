@@ -24,21 +24,36 @@ import Css.Border.Bottom as BorderBottom
 import Css.Position as Position
 import Color exposing (..)
 
-log = [ { tea = { name = "Monks Blend"
+log = [ { tea = { name = "Iron Goddess of Mercy"
+                , category = Oolong
+                , region = UnknownRegion
+                , flavours = []
+                , season = UnknownSeason
+                }
+        , date = "2015-11-19"
+        , vendor = DistinctlyTea
+        , url = Nothing
+        , rating = 7
+        , review = "The first oolong i've tried and it's totally got me hooked, will try more oolongs to see if they are all like this"
+      }
+      , { tea = { name = "Monks Blend"
                 , category = Black
                 , region = Ceylon
                 , flavours = [ Vanilla, Grenadine ]
+                , season = UnknownSeason
                 }
         , date = "2015-11-03"
         , vendor = DistinctlyTea
         , url = Nothing
         , rating = 7
-        , review = "One of the first teas I really got into, the latest batch isn't as good as the what it was a year ago, it's a bit more bitter now"
-        }
+        , review = "One of the first teas that made me start to appreciate teas, the latest batch isn't as good as the what it was a year 
+ago"
+      }
       , { tea = { name = "Himalayan"
-                , category = Blend [ White, Green, Darjeeling UnknownSeason, Herbal ]
+                , category = Blend [ White, Green, Darjeeling, Herbal ]
                 , region = UnknownRegion
                 , flavours = [ Corn, Curry, Pineapple ]
+                , season = UnknownSeason
                 }
         , date = "2015-10-26"
         , vendor = DistinctlyTea
@@ -73,7 +88,7 @@ type Category = White
               | Oolong
               | Black
               | PuErh PuErhCategory
-              | Darjeeling Season
+              | Darjeeling
               | Herbal
               | Blend (List Category)
               
@@ -81,6 +96,7 @@ type alias Tea = { name : String
                  , category : Category
                  , region : Region
                  , flavours : List Flavour
+                 , season : Season
                  }
 
 type Vendor = DistinctlyTea | YunnanSourcing
@@ -118,11 +134,10 @@ last xs = case xs of
             [x] -> Just x
             _::rest -> last rest
 viewRegion region = case region of
-                      UnknownRegion -> ", I don't know where this tea is from :("
+                      UnknownRegion -> ", I don't know which region this tea is from"
                       _             -> " from the " ++ toString region ++ " region"
 
 viewTeaCategory category = case category of
-                             Darjeeling UnknownSeason -> "Darjeeling"
                              Blend blends ->
                                let
                                  listPart = String.join ", " <| List.map viewTeaCategory <| List.take (List.length blends - 1) blends
@@ -136,7 +151,7 @@ viewTeaCategory category = case category of
 viewTea : Signal.Address Action -> Tea -> Html
 viewTea address tea = div [  ] [ u [] [text tea.name]
                                , br [] []
-                               , text <| "A " ++ viewTeaCategory tea.category ++ " tea " ++ viewRegion tea.region
+                               , text <| viewTeaCategory tea.category ++ " tea " ++ viewRegion tea.region
                                ]
 inline = Display.display Display.InlineBlock
 
@@ -145,7 +160,15 @@ viewStar = div [ style [ ("margin", "2px")
          
 viewRating : Signal.Address Action -> Int -> Html
 viewRating address rating = div [] <| List.repeat rating viewStar
-viewVender address vender = div [] [text <| "I got this tea from " ++ toString vender]
+viewVender address vender =
+  let
+    url = case vender of
+            DistinctlyTea -> "http://distinctlytea.com/"
+            YunnanSourcing -> "https://yunnansourcing.com/"
+  in
+    div [] [ text <| "I got this tea from "
+           , a [href url] [text <| toString vender]
+           ]
                             
 viewLogEntry : Signal.Address Action -> LogEntry -> Html
 viewLogEntry address log =
