@@ -1,4 +1,4 @@
-module TeaLog (Model, init, Action, update, view, main) where
+module Projects (Model, init, Action, update, view, main) where
 import String
 import Header
 import Utils exposing (..)
@@ -7,24 +7,8 @@ import Html.Attributes exposing (..)
 import Signal exposing (..)
 import Date exposing (..)
 import Markdown exposing (..)
-import Css
-import Css.Flex as Flex
-import Css.Float as Float
-import Css.Display as Display
-import Css.Background as Background
-import Css.Shadow as Shadow
-import Css.Text as Text
-import Css.Font as Font
-import Css.Padding as Padding
-import Css.Margin as Margin
-import Css.Dimension as Dim
-import Css.Border.Style as BorderStyle
-import Css.Border.Top as BorderTop
-import Css.Border.Bottom as BorderBottom
-import Css.Position as Position
-import Color exposing (..)
 
-log = [ { tea = { name = "Wild Tree Purple Varietal Black Tea of Dehong"
+projects = [ { project = { name = "Wild Tree Purple Varietal Black Tea of Dehong"
                 , category = Black
                 , region = Yunnan
                 , flavours = []
