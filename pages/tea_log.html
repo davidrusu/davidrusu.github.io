@@ -15040,7 +15040,7 @@ Elm.TeaLog.make = function (_elm) {
                case "YunnanSourcing":
                return "https://yunnansourcing.com/";}
             _U.badCase($moduleName,
-            "between lines 165 and 168");
+            "between lines 196 and 199");
          }();
          return A2($Html.div,
          _L.fromArray([]),
@@ -15087,7 +15087,7 @@ Elm.TeaLog.make = function (_elm) {
             case "[]":
             return $Maybe.Nothing;}
          _U.badCase($moduleName,
-         "between lines 132 and 135");
+         "between lines 157 and 160");
       }();
    };
    var viewTeaCategory = function (category) {
@@ -15104,7 +15104,7 @@ Elm.TeaLog.make = function (_elm) {
                          viewTeaCategory(_v7._0));
                        case "Nothing": return "";}
                     _U.badCase($moduleName,
-                    "between lines 144 and 147");
+                    "between lines 169 and 172");
                  }();
                  var listPart = $String.join(", ")($List.map(viewTeaCategory)(A2($List.take,
                  $List.length(category._0) - 1,
@@ -15120,19 +15120,32 @@ Elm.TeaLog.make = function (_elm) {
    };
    var viewTea = F2(function (address,
    tea) {
-      return A2($Html.div,
-      _L.fromArray([]),
-      _L.fromArray([A2($Html.u,
-                   _L.fromArray([]),
-                   _L.fromArray([$Html.text(tea.name)]))
-                   ,A2($Html.br,
-                   _L.fromArray([]),
-                   _L.fromArray([]))
-                   ,$Html.text(A2($Basics._op["++"],
-                   viewTeaCategory(tea.category),
-                   A2($Basics._op["++"],
-                   " tea ",
-                   viewRegion(tea.region))))]));
+      return function () {
+         var teaName = function () {
+            var _v9 = tea.url;
+            switch (_v9.ctor)
+            {case "Just": return A2($Html.a,
+                 _L.fromArray([$Html$Attributes.href(_v9._0)]),
+                 _L.fromArray([$Html.text(tea.name)]));
+               case "Nothing":
+               return $Html.text(tea.name);}
+            _U.badCase($moduleName,
+            "between lines 179 and 182");
+         }();
+         return A2($Html.div,
+         _L.fromArray([]),
+         _L.fromArray([A2($Html.u,
+                      _L.fromArray([]),
+                      _L.fromArray([teaName]))
+                      ,A2($Html.br,
+                      _L.fromArray([]),
+                      _L.fromArray([]))
+                      ,$Html.text(A2($Basics._op["++"],
+                      viewTeaCategory(tea.category),
+                      A2($Basics._op["++"],
+                      " tea ",
+                      viewRegion(tea.region))))]));
+      }();
    });
    var viewLogEntry = F2(function (address,
    log) {
@@ -15176,7 +15189,7 @@ Elm.TeaLog.make = function (_elm) {
          switch (action.ctor)
          {case "NoOp": return model;}
          _U.badCase($moduleName,
-         "between lines 122 and 123");
+         "between lines 147 and 148");
       }();
    });
    var ModifyHeader = function (a) {
@@ -15209,33 +15222,35 @@ Elm.TeaLog.make = function (_elm) {
              ,header: b
              ,log: a};
    });
-   var LogEntry = F6(function (a,
-   b,
-   c,
-   d,
-   e,
-   f) {
-      return {_: {}
-             ,date: a
-             ,rating: e
-             ,review: d
-             ,tea: b
-             ,url: f
-             ,vendor: c};
-   });
-   var YunnanSourcing = {ctor: "YunnanSourcing"};
-   var DistinctlyTea = {ctor: "DistinctlyTea"};
-   var Tea = F5(function (a,
+   var LogEntry = F5(function (a,
    b,
    c,
    d,
    e) {
       return {_: {}
+             ,date: a
+             ,rating: e
+             ,review: d
+             ,tea: b
+             ,vendor: c};
+   });
+   var YunnanSourcing = {ctor: "YunnanSourcing"};
+   var DistinctlyTea = {ctor: "DistinctlyTea"};
+   var Tea = F7(function (a,
+   b,
+   c,
+   d,
+   e,
+   f,
+   g) {
+      return {_: {}
              ,category: b
              ,flavours: d
              ,name: a
              ,region: c
-             ,season: e};
+             ,season: e
+             ,url: g
+             ,year: f};
    });
    var Blend = function (a) {
       return {ctor: "Blend",_0: a};
@@ -15255,6 +15270,7 @@ Elm.TeaLog.make = function (_elm) {
    var Raw = {ctor: "Raw"};
    var Maocha = {ctor: "Maocha"};
    var UnknownRegion = {ctor: "UnknownRegion"};
+   var WuyiMountains = {ctor: "WuyiMountains"};
    var Nepal = {ctor: "Nepal"};
    var Java = {ctor: "Java"};
    var Kenya = {ctor: "Kenya"};
@@ -15267,26 +15283,41 @@ Elm.TeaLog.make = function (_elm) {
    var Yunnan = {ctor: "Yunnan"};
    var Keemum = {ctor: "Keemum"};
    var UnknownSeason = {ctor: "UnknownSeason"};
-   var AutumnFlush = {ctor: "AutumnFlush"};
-   var SpringFlush = {ctor: "SpringFlush"};
-   var EasterFlush = {ctor: "EasterFlush"};
+   var Winter = {ctor: "Winter"};
+   var Autumn = {ctor: "Autumn"};
+   var Summer = {ctor: "Summer"};
+   var Spring = {ctor: "Spring"};
    var Pineapple = {ctor: "Pineapple"};
    var Curry = {ctor: "Curry"};
    var Corn = {ctor: "Corn"};
    var Grenadine = {ctor: "Grenadine"};
    var Vanilla = {ctor: "Vanilla"};
    var log = _L.fromArray([{_: {}
-                           ,date: "2015-11-19"
-                           ,rating: 7
-                           ,review: "The first oolong i\'ve tried and it\'s totally got me hooked, will try more oolongs to see if they are all like this"
+                           ,date: "2015-12-14"
+                           ,rating: 9
+                           ,review: "\nThis was one of two oolongs that came in Octobers batch of the Yunnan Sourcing dark tea club. It was a great first batch for me from this tea club, I\'m really happy with the teas I got but it\'s a little expensive so I\'ll probably stop after next months batch\n\nThis tea had some really nice leafs, long, matte black with a musky aroma. The tea itself is very mellow with no bitterness what so ever, it has a slightly rocky taste and leaves a bit of a tacky texture in the mouth. I can get about 5 brews out this tea before it\'s lost it\'s character.\n\n*I love oolongs!*\n"
                            ,tea: {_: {}
                                  ,category: Oolong
                                  ,flavours: _L.fromArray([])
-                                 ,name: "Iron Goddess of Mercy"
-                                 ,region: UnknownRegion
-                                 ,season: UnknownSeason}
-                           ,url: $Maybe.Nothing
-                           ,vendor: DistinctlyTea}
+                                 ,name: "Tieluohan \'Iron Arhat\' Premium Wu Yi Shan Rock"
+                                 ,region: WuyiMountains
+                                 ,season: Spring
+                                 ,url: $Maybe.Just("http://yunnansourcing.com/en/wuyimountainrockoolongs/3625-tie-luo-han-iron-arhat-premium-wu-yi-shan-rock-oolong-tea.html")
+                                 ,year: $Maybe.Just(2015)}
+                           ,vendor: YunnanSourcing}
+                          ,{_: {}
+                           ,date: "2015-11-19"
+                           ,rating: 9
+                           ,review: "This is a good flavoured black tea, it has a slightly flowery taste but not too much, one of my favourite  black teas so far"
+                           ,tea: {_: {}
+                                 ,category: Black
+                                 ,flavours: _L.fromArray([])
+                                 ,name: "Wild Tree Purple Varietal Black Tea of Dehong"
+                                 ,region: Yunnan
+                                 ,season: Spring
+                                 ,url: $Maybe.Just("http://yunnansourcing.com/en/yunnan-black-teas/2384-light-roast-wild-tree-purple-varietal-black-tea-of-dehong-spring-2013.html")
+                                 ,year: $Maybe.Just(2013)}
+                           ,vendor: YunnanSourcing}
                           ,{_: {}
                            ,date: "2015-11-03"
                            ,rating: 7
@@ -15297,13 +15328,14 @@ Elm.TeaLog.make = function (_elm) {
                                                          ,Grenadine])
                                  ,name: "Monks Blend"
                                  ,region: Ceylon
-                                 ,season: UnknownSeason}
-                           ,url: $Maybe.Nothing
+                                 ,season: UnknownSeason
+                                 ,url: $Maybe.Nothing
+                                 ,year: $Maybe.Nothing}
                            ,vendor: DistinctlyTea}
                           ,{_: {}
                            ,date: "2015-10-26"
                            ,rating: 3
-                           ,review: "Not very good, also not a very good aftertaste, I blame the big ingredients list "
+                           ,review: "Not very interesting, and the after taste isn\'t that great either "
                            ,tea: {_: {}
                                  ,category: Blend(_L.fromArray([White
                                                                ,Green
@@ -15314,8 +15346,9 @@ Elm.TeaLog.make = function (_elm) {
                                                          ,Pineapple])
                                  ,name: "Himalayan"
                                  ,region: UnknownRegion
-                                 ,season: UnknownSeason}
-                           ,url: $Maybe.Nothing
+                                 ,season: UnknownSeason
+                                 ,url: $Maybe.Nothing
+                                 ,year: $Maybe.Nothing}
                            ,vendor: DistinctlyTea}]);
    var init = {_: {}
               ,header: $Header.init

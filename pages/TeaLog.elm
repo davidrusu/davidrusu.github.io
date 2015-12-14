@@ -1,3 +1,4 @@
+
 module TeaLog (Model, init, Action, update, view, main) where
 import String
 import Header
@@ -24,7 +25,26 @@ import Css.Border.Bottom as BorderBottom
 import Css.Position as Position
 import Color exposing (..)
 
-log = [ { tea = { name = "Wild Tree Purple Varietal Black Tea of Dehong"
+log = [ { tea = { name = "Tieluohan 'Iron Arhat' Premium Wu Yi Shan Rock"
+                , category = Oolong
+                , region = WuyiMountains
+                , flavours = []
+                , season = Spring
+                , year = Just 2015
+                , url = Just "http://yunnansourcing.com/en/wuyimountainrockoolongs/3625-tie-luo-han-iron-arhat-premium-wu-yi-shan-rock-oolong-tea.html"
+                }
+        , date = "2015-12-14"
+        , vendor = YunnanSourcing
+        , rating = 9
+        , review = """
+This was one of two oolongs that came in Octobers batch of the Yunnan Sourcing dark tea club. It was a great first batch for me from this tea club, I'm really happy with the teas I got but it's a little expensive so I'll probably stop after next months batch
+
+This tea had some really nice leafs, long, matte black with a musky aroma. The tea itself is very mellow with no bitterness what so ever, it has a slightly rocky taste and leaves a bit of a tacky texture in the mouth. I can get about 5 brews out this tea before it's lost it's character.
+
+*I love oolongs!*
+"""
+      },
+      { tea = { name = "Wild Tree Purple Varietal Black Tea of Dehong"
                 , category = Black
                 , region = Yunnan
                 , flavours = []
@@ -35,7 +55,7 @@ log = [ { tea = { name = "Wild Tree Purple Varietal Black Tea of Dehong"
         , date = "2015-11-19"
         , vendor = YunnanSourcing
         , rating = 9
-        , review = "This is a good flavoured black tea, it has a slightly flowery taste but it's not overpowering, one of my favouritex black teas so far"
+        , review = "This is a good flavoured black tea, it has a slightly flowery taste but not too much, one of my favourite  black teas so far"
       }
       , { tea = { name = "Monks Blend"
                 , category = Black
@@ -81,6 +101,7 @@ type Region = Keemum
             | Kenya
             | Java
             | Nepal
+            | WuyiMountains
             | UnknownRegion
 
 type PuErhCategory = Maocha | Raw | Ripened | AgedRaw
