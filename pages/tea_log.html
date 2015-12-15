@@ -15012,8 +15012,6 @@ Elm.TeaLog.make = function (_elm) {
    _L = _N.List.make(_elm),
    $moduleName = "TeaLog",
    $Basics = Elm.Basics.make(_elm),
-   $Color = Elm.Color.make(_elm),
-   $Css$Border$Bottom = Elm.Css.Border.Bottom.make(_elm),
    $Css$Display = Elm.Css.Display.make(_elm),
    $Css$Flex = Elm.Css.Flex.make(_elm),
    $Css$Float = Elm.Css.Float.make(_elm),
@@ -15040,7 +15038,7 @@ Elm.TeaLog.make = function (_elm) {
                case "YunnanSourcing":
                return "https://yunnansourcing.com/";}
             _U.badCase($moduleName,
-            "between lines 216 and 219");
+            "between lines 250 and 253");
          }();
          return A2($Html.div,
          _L.fromArray([]),
@@ -15052,12 +15050,12 @@ Elm.TeaLog.make = function (_elm) {
    });
    var viewStar = A2($Html.div,
    _L.fromArray([$Html$Attributes.style(_L.fromArray([{ctor: "_Tuple2"
-                                                      ,_0: "margin"
+                                                      ,_0: "margin-right"
                                                       ,_1: "2px"}
                                                      ,{ctor: "_Tuple2"
                                                       ,_0: "display"
                                                       ,_1: "inline-block"}]))]),
-   _L.fromArray([$Html.text("☆")]));
+   _L.fromArray([$Html.text("★")]));
    var viewRating = F2(function (address,
    rating) {
       return $Html.div(_L.fromArray([]))(A2($List.repeat,
@@ -15068,13 +15066,15 @@ Elm.TeaLog.make = function (_elm) {
    var viewRegion = function (region) {
       return function () {
          switch (region.ctor)
-         {case "UnknownRegion":
-            return ", I don\'t know which region this tea is from";}
-         return A2($Basics._op["++"],
-         " from the ",
-         A2($Basics._op["++"],
-         $Basics.toString(region),
-         " region"));
+         {case "DarjeelingDistrict":
+            return "Darjeeling District";
+            case "LapsangSouchong":
+            return "Lapsang souchong";
+            case "UnknownRegion":
+            return "I don\'t know which region this tea is from";
+            case "WuyiMountains":
+            return "Wuyi Mountains";}
+         return $Basics.toString(region);
       }();
    };
    var last = function (xs) {
@@ -15087,7 +15087,7 @@ Elm.TeaLog.make = function (_elm) {
             case "[]":
             return $Maybe.Nothing;}
          _U.badCase($moduleName,
-         "between lines 177 and 180");
+         "between lines 196 and 199");
       }();
    };
    var viewTeaCategory = function (category) {
@@ -15096,15 +15096,15 @@ Elm.TeaLog.make = function (_elm) {
          {case "Blend":
             return function () {
                  var lastPart = function () {
-                    var _v7 = last(category._0);
-                    switch (_v7.ctor)
+                    var _v8 = last(category._0);
+                    switch (_v8.ctor)
                     {case "Just":
                        return A2($Basics._op["++"],
                          " and ",
-                         viewTeaCategory(_v7._0));
+                         viewTeaCategory(_v8._0));
                        case "Nothing": return "";}
                     _U.badCase($moduleName,
-                    "between lines 189 and 192");
+                    "between lines 221 and 224");
                  }();
                  var listPart = $String.join(", ")($List.map(viewTeaCategory)(A2($List.take,
                  $List.length(category._0) - 1,
@@ -15114,6 +15114,18 @@ Elm.TeaLog.make = function (_elm) {
                  A2($Basics._op["++"],
                  listPart,
                  lastPart));
+              }();
+            case "PuErh":
+            return function () {
+                 switch (category._0.ctor)
+                 {case "AgedRaw":
+                    return "Aged Raw Pu-erh";
+                    case "Maocha": return "Maocha";
+                    case "Raw": return "Raw Pu-erh";
+                    case "Ripe":
+                    return "Ripe Pu-erh";}
+                 _U.badCase($moduleName,
+                 "between lines 210 and 215");
               }();}
          return $Basics.toString(category);
       }();
@@ -15122,18 +15134,18 @@ Elm.TeaLog.make = function (_elm) {
    tea) {
       return function () {
          var teaName = function () {
-            var _v9 = tea.url;
-            switch (_v9.ctor)
+            var _v11 = tea.url;
+            switch (_v11.ctor)
             {case "Just": return A2($Html.a,
-                 _L.fromArray([$Html$Attributes.href(_v9._0)]),
+                 _L.fromArray([$Html$Attributes.href(_v11._0)]),
                  _L.fromArray([$Html.text(tea.name)]));
                case "Nothing":
                return $Html.text(tea.name);}
             _U.badCase($moduleName,
-            "between lines 199 and 202");
+            "between lines 231 and 234");
          }();
          return A2($Html.div,
-         _L.fromArray([]),
+         _L.fromArray([$Html$Attributes.$class("tea_description")]),
          _L.fromArray([A2($Html.u,
                       _L.fromArray([]),
                       _L.fromArray([teaName]))
@@ -15143,7 +15155,7 @@ Elm.TeaLog.make = function (_elm) {
                       ,$Html.text(A2($Basics._op["++"],
                       viewTeaCategory(tea.category),
                       A2($Basics._op["++"],
-                      " tea ",
+                      ", ",
                       viewRegion(tea.region))))]));
       }();
    });
@@ -15164,7 +15176,7 @@ Elm.TeaLog.make = function (_elm) {
          return A2($Html.div,
          _L.fromArray([$Html$Attributes.style(styles)]),
          _L.fromArray([A2($Html.div,
-                      _L.fromArray([$Html$Attributes.style($Css$Border$Bottom.color($Color.black)($Css$Border$Bottom.width(1)(_L.fromArray([]))))]),
+                      _L.fromArray([$Html$Attributes.$class("log_entry_header")]),
                       _L.fromArray([A2($Html.div,
                                    _L.fromArray([$Html$Attributes.style(inline(_L.fromArray([])))]),
                                    _L.fromArray([$Html.text(log.date)]))
@@ -15180,6 +15192,12 @@ Elm.TeaLog.make = function (_elm) {
                       log.vendor)]));
       }();
    });
+   var viewTeaLog = F2(function (address,
+   model) {
+      return $Html.div(_L.fromArray([$Html$Attributes.$class("list")]))(A2($List.map,
+      viewLogEntry(address),
+      model.log));
+   });
    var centered = function (styles) {
       return $Css$Flex.alignItems($Css$Flex.AICenter)($Css$Flex.justifyContent($Css$Flex.JCCenter)($Css$Display.display($Css$Display.Flex)(styles)));
    };
@@ -15189,7 +15207,7 @@ Elm.TeaLog.make = function (_elm) {
          switch (action.ctor)
          {case "NoOp": return model;}
          _U.badCase($moduleName,
-         "between lines 167 and 168");
+         "between lines 186 and 187");
       }();
    });
    var ModifyHeader = function (a) {
@@ -15198,22 +15216,19 @@ Elm.TeaLog.make = function (_elm) {
    };
    var view = F2(function (address,
    model) {
-      return function () {
-         var styles = centered(_L.fromArray([]));
-         return A2($Html.div,
-         _L.fromArray([]),
-         _L.fromArray([$Utils.css("../style.css")
-                      ,A2($Header.view,
-                      A2($Signal.forwardTo,
-                      address,
-                      ModifyHeader),
-                      model.header)
-                      ,A2($Html.div,
-                      _L.fromArray([$Html$Attributes.style(styles)]),
-                      _L.fromArray([$Html.div(_L.fromArray([]))(A2($List.map,
-                      viewLogEntry(address),
-                      model.log))]))]));
-      }();
+      return A2($Html.div,
+      _L.fromArray([]),
+      _L.fromArray([$Utils.css("../style.css")
+                   ,A2($Header.view,
+                   A2($Signal.forwardTo,
+                   address,
+                   ModifyHeader),
+                   model.header)
+                   ,A2($Html.div,
+                   _L.fromArray([$Html$Attributes.$class("content")]),
+                   _L.fromArray([A2(viewTeaLog,
+                   address,
+                   model)]))]));
    });
    var NoOp = {ctor: "NoOp"};
    var actionMailbox = $Signal.mailbox(NoOp);
@@ -15281,7 +15296,7 @@ Elm.TeaLog.make = function (_elm) {
    var Assam = {ctor: "Assam"};
    var LapsangSouchong = {ctor: "LapsangSouchong"};
    var Yunnan = {ctor: "Yunnan"};
-   var Keemum = {ctor: "Keemum"};
+   var Keemun = {ctor: "Keemun"};
    var UnknownSeason = {ctor: "UnknownSeason"};
    var Winter = {ctor: "Winter"};
    var Autumn = {ctor: "Autumn"};
@@ -15294,7 +15309,20 @@ Elm.TeaLog.make = function (_elm) {
    var Vanilla = {ctor: "Vanilla"};
    var log = _L.fromArray([{_: {}
                            ,date: "2015-12-15"
-                           ,rating: 8
+                           ,rating: 7
+                           ,review: "\nThis one is also from Octobers batch from Yunnan Sourcing\'s dark tea club.\n\nThis Oolong starts a bit bitter but after 2-3 brews quickly becomes a wonderfully mellow tea. I infused the same leaves over 7 times and it still had a good taste.\n\nI like drinking this tea when I\'m coding as the same leafs last a long time.\n"
+                           ,tea: {_: {}
+                                 ,category: Oolong
+                                 ,flavours: _L.fromArray([])
+                                 ,name: "Mi Lan Xiang * Roasted AA Grade Dan Cong"
+                                 ,region: Yunnan
+                                 ,season: Autumn
+                                 ,url: $Maybe.Just("http://yunnansourcing.com/en/oolongtea/3245-roasted-aa-grade-dan-cong-oolong-tea-mi-lan-xiang.html")
+                                 ,year: $Maybe.Just(2014)}
+                           ,vendor: YunnanSourcing}
+                          ,{_: {}
+                           ,date: "2015-12-15"
+                           ,rating: 9
                            ,review: "\nI got this tea in Octobers batch of the Yunnan Sourcing Dark Tea club. I really liked this tea, it was my first ripe pu-erh and was totally different from any other tea I\'ve tried.\n\nThe cake is a dark matte brown with a smokey smell, almost like smoked bacon. Once brewed the smell changes completely, a friend described it as sweat, but I find it to be more of an earthy nutty smell. The color of the tea is a dark nearly opaque purple brown. The tea has an incredibly nutty taste, it\'s sooo nutty, tastes like your drinking walnuts. I was really not expecting it to be so nutty.\n\nI have another ripe pu-erh that just came in from December\'s batch of the Dark Tea club, I\'m looking forward to trying it.\n"
                            ,tea: {_: {}
                                  ,category: PuErh(Ripe)

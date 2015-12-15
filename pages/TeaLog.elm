@@ -26,7 +26,26 @@ import Css.Position as Position
 import Color exposing (..)
 
 log : List LogEntry
-log = [ { tea = { name = "Menghai 7592 501"
+log = [ { tea = { name = "Mi Lan Xiang * Roasted AA Grade Dan Cong"
+                , category = Oolong
+                , region = Yunnan
+                , flavours = []
+                , season = Autumn
+                , year = Just 2014
+                , url = Just "http://yunnansourcing.com/en/oolongtea/3245-roasted-aa-grade-dan-cong-oolong-tea-mi-lan-xiang.html"
+                }
+        , date = "2015-12-15"
+        , vendor = YunnanSourcing
+        , rating = 7
+        , review = """
+This one is also from Octobers batch from Yunnan Sourcing's dark tea club.
+
+This Oolong starts a bit bitter but after 2-3 brews quickly becomes a wonderfully mellow tea. I infused the same leaves over 7 times and it still had a good taste.
+
+I like drinking this tea when I'm coding as the same leafs last a long time.
+"""
+        }
+      , { tea = { name = "Menghai 7592 501"
                 , category = PuErh Ripe
                 , region = Yunnan
                 , flavours = []
@@ -36,7 +55,7 @@ log = [ { tea = { name = "Menghai 7592 501"
                 }
         , date = "2015-12-15"
         , vendor = YunnanSourcing
-        , rating = 8
+        , rating = 9
         , review = """
 I got this tea in Octobers batch of the Yunnan Sourcing Dark Tea club. I really liked this tea, it was my first ripe pu-erh and was totally different from any other tea I've tried.
 
@@ -110,7 +129,7 @@ type Flavour = Vanilla | Grenadine | Corn | Curry | Pineapple
 
 type Season = Spring | Summer | Autumn | Winter | UnknownSeason
 
-type Region = Keemum
+type Region = Keemun
             | Yunnan
             | LapsangSouchong
             | Assam
@@ -178,20 +197,33 @@ last xs = case xs of
             [] -> Nothing
             [x] -> Just x
             _::rest -> last rest
-viewRegion region = case region of
-                      UnknownRegion -> ", I don't know which region this tea is from"
-                      _             -> " from the " ++ toString region ++ " region"
 
-viewTeaCategory category = case category of
-                             Blend blends ->
-                               let
-                                 listPart = String.join ", " <| List.map viewTeaCategory <| List.take (List.length blends - 1) blends
-                                 lastPart = case last blends of
-                                              Nothing -> ""
-                                              Just cat -> " and " ++ viewTeaCategory cat
-                               in
-                                 "Blend of " ++ listPart ++ lastPart
-                             _ -> toString category
+viewRegion region = case region of
+                      UnknownRegion      -> "I don't know which region this tea is from"
+                      LapsangSouchong    -> "Lapsang souchong"
+                      DarjeelingDistrict -> "Darjeeling District"
+                      WuyiMountains      -> "Wuyi Mountains"
+                      _                  -> toString region
+
+viewTeaCategory category =
+  case category of
+    PuErh puerhType -> case puerhType of
+                         Maocha -> "Maocha"
+                         Raw -> "Raw Pu-erh"
+                         Ripe -> "Ripe Pu-erh"
+                         AgedRaw -> "Aged Raw Pu-erh"
+    Blend blends ->
+      let
+        listPart =
+          String.join ", "
+                  <| List.map viewTeaCategory
+                  <| List.take (List.length blends - 1) blends
+        lastPart = case last blends of
+                     Just category -> " and " ++ viewTeaCategory category
+                     Nothing -> ""
+      in
+        "Blend of " ++ listPart ++ lastPart
+    _ -> toString category
        
 viewTea : Signal.Address Action -> Tea -> Html
 viewTea address tea =
@@ -200,17 +232,19 @@ viewTea address tea =
                 Nothing -> text tea.name
                 Just url -> a [ href url ] [ text tea.name ]
   in
-    div [  ] [ u [] [ teaName ]
+    div [ class "tea_description" ] [ u [] [ teaName ]
              , br [] []
-             , text <| viewTeaCategory tea.category ++ " tea " ++ viewRegion tea.region
+             , text <| viewTeaCategory tea.category ++ ", " ++ viewRegion tea.region
              ]
+
 inline = Display.display Display.InlineBlock
 
-viewStar = div [ style [ ("margin", "2px")
-                       , ("display", "inline-block") ]] [text "☆"]
+viewStar = div [ style [ ("margin-right", "2px")
+                       , ("display", "inline-block") ]] [text "★"]
          
 viewRating : Signal.Address Action -> Int -> Html
 viewRating address rating = div [] <| List.repeat rating viewStar
+
 viewVender address vender =
   let
     url = case vender of
@@ -230,23 +264,22 @@ viewLogEntry address log =
           |> Margin.all 10 10 10 10
   in
     div [ style styles ]
-          [ div [style <| ([] |> BorderBottom.width 1 |> BorderBottom.color black)]
+          [ div [ class "log_entry_header"]
                   [ div [style <| ([] |> inline) ] [text log.date]
                   , div [style <| ([] |> Float.float Float.Right) ] [ viewRating address log.rating ] ]
           , viewTea address log.tea
           , toHtml log.review
           , viewVender address log.vendor
           ]
+viewTeaLog address model =
+  div [ class "list" ] <| List.map (viewLogEntry address)  model.log
 
 view : Signal.Address Action -> Model -> Html
 view address model =
-  let styles =
-        []
-          |> centered
-  in
-    div [] [ css "../style.css"
-           , Header.view (Signal.forwardTo address ModifyHeader) model.header
-           , div [ style styles ] [ div [] <| List.map (viewLogEntry address)  model.log ] ]
+  div [ ] [ css "../style.css"
+          , Header.view (Signal.forwardTo address ModifyHeader) model.header
+          , div [ class "content" ]  [ viewTeaLog address model ]
+          ]
 
 actionMailbox : Signal.Mailbox Action
 actionMailbox = Signal.mailbox NoOp
