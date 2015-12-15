@@ -7,11 +7,14 @@ body {
 }
 
 .header {
-  display: flex;
-  flex-flow: row || nowrap;
-  justify-content: space-between;
-  border-bottom: thin solid black;
-  background-color: white;
+    position: fixed;
+    width: 100%;
+    z-index: 2;
+    display: flex;
+    flex-flow: row || nowrap;
+    justify-content: space-between;
+    border-bottom: thin solid black;
+    background-color: white;
 }
 
 .nav {
@@ -31,11 +34,11 @@ a {
 
 .content {
     position: absolute;
+    top: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
-    width: 100%;
 }
 
 .greeter {
@@ -44,4 +47,23 @@ a {
     z-index: -1;
     width: 100%;
     height: 100%;
+}
+
+.list {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tea_description {
+    background-color: #000;
+    color: #fff;
+    padding: 5px;
+}
+
+.log_entry_header {
+    background-color: #fff;
+    padding: 5px;
+    margint-top: auto;
+    margint-bottom: auto;
 }
