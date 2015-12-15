@@ -25,7 +25,27 @@ import Css.Border.Bottom as BorderBottom
 import Css.Position as Position
 import Color exposing (..)
 
-log = [ { tea = { name = "Tieluohan 'Iron Arhat' Premium Wu Yi Shan Rock"
+log : List LogEntry
+log = [ { tea = { name = "Menghai 7592 501"
+                , category = PuErh Ripe
+                , region = Yunnan
+                , flavours = []
+                , season = Winter
+                , year = Just 2005
+                , url = Just "http://yunnansourcing.com/en/menghaiteafactory/3624-2005-menghai-7592-501-ripe-pu-erh-tea-cake.html"
+                }
+        , date = "2015-12-15"
+        , vendor = YunnanSourcing
+        , rating = 8
+        , review = """
+I got this tea in Octobers batch of the Yunnan Sourcing Dark Tea club. I really liked this tea, it was my first ripe pu-erh and was totally different from any other tea I've tried.
+
+The cake is a dark matte brown with a smokey smell, almost like smoked bacon. Once brewed the smell changes completely, a friend described it as sweat, but I find it to be more of an earthy nutty smell. The color of the tea is a dark nearly opaque purple brown. The tea has an incredibly nutty taste, it's sooo nutty, tastes like your drinking walnuts. I was really not expecting it to be so nutty.
+
+I have another ripe pu-erh that just came in from December's batch of the Dark Tea club, I'm looking forward to trying it.
+"""
+        }
+      , { tea = { name = "Tieluohan 'Iron Arhat' Premium Wu Yi Shan Rock"
                 , category = Oolong
                 , region = WuyiMountains
                 , flavours = []
@@ -54,7 +74,7 @@ This tea had some really nice leafs, long, matte black with a musky aroma. The t
                 }
         , date = "2015-11-19"
         , vendor = YunnanSourcing
-        , rating = 9
+        , rating = 7
         , review = "This is a good flavoured black tea, it has a slightly flowery taste but not too much, one of my favourite  black teas so far"
       }
       , { tea = { name = "Monks Blend"
@@ -67,7 +87,7 @@ This tea had some really nice leafs, long, matte black with a musky aroma. The t
                 }
         , date = "2015-11-03"
         , vendor = DistinctlyTea
-        , rating = 7
+        , rating = 6
         , review = "One of the first teas that made me start to appreciate teas, the latest batch isn't as good as the what it was a year 
 ago"
       }
@@ -104,7 +124,7 @@ type Region = Keemum
             | WuyiMountains
             | UnknownRegion
 
-type PuErhCategory = Maocha | Raw | Ripened | AgedRaw
+type PuErhCategory = Maocha | Raw | Ripe | AgedRaw
 
 type Category = White
               | Yellow

@@ -15040,7 +15040,7 @@ Elm.TeaLog.make = function (_elm) {
                case "YunnanSourcing":
                return "https://yunnansourcing.com/";}
             _U.badCase($moduleName,
-            "between lines 196 and 199");
+            "between lines 216 and 219");
          }();
          return A2($Html.div,
          _L.fromArray([]),
@@ -15087,7 +15087,7 @@ Elm.TeaLog.make = function (_elm) {
             case "[]":
             return $Maybe.Nothing;}
          _U.badCase($moduleName,
-         "between lines 157 and 160");
+         "between lines 177 and 180");
       }();
    };
    var viewTeaCategory = function (category) {
@@ -15104,7 +15104,7 @@ Elm.TeaLog.make = function (_elm) {
                          viewTeaCategory(_v7._0));
                        case "Nothing": return "";}
                     _U.badCase($moduleName,
-                    "between lines 169 and 172");
+                    "between lines 189 and 192");
                  }();
                  var listPart = $String.join(", ")($List.map(viewTeaCategory)(A2($List.take,
                  $List.length(category._0) - 1,
@@ -15130,7 +15130,7 @@ Elm.TeaLog.make = function (_elm) {
                case "Nothing":
                return $Html.text(tea.name);}
             _U.badCase($moduleName,
-            "between lines 179 and 182");
+            "between lines 199 and 202");
          }();
          return A2($Html.div,
          _L.fromArray([]),
@@ -15189,7 +15189,7 @@ Elm.TeaLog.make = function (_elm) {
          switch (action.ctor)
          {case "NoOp": return model;}
          _U.badCase($moduleName,
-         "between lines 147 and 148");
+         "between lines 167 and 168");
       }();
    });
    var ModifyHeader = function (a) {
@@ -15266,7 +15266,7 @@ Elm.TeaLog.make = function (_elm) {
    var Yellow = {ctor: "Yellow"};
    var White = {ctor: "White"};
    var AgedRaw = {ctor: "AgedRaw"};
-   var Ripened = {ctor: "Ripened"};
+   var Ripe = {ctor: "Ripe"};
    var Raw = {ctor: "Raw"};
    var Maocha = {ctor: "Maocha"};
    var UnknownRegion = {ctor: "UnknownRegion"};
@@ -15293,6 +15293,19 @@ Elm.TeaLog.make = function (_elm) {
    var Grenadine = {ctor: "Grenadine"};
    var Vanilla = {ctor: "Vanilla"};
    var log = _L.fromArray([{_: {}
+                           ,date: "2015-12-15"
+                           ,rating: 8
+                           ,review: "\nI got this tea in Octobers batch of the Yunnan Sourcing Dark Tea club. I really liked this tea, it was my first ripe pu-erh and was totally different from any other tea I\'ve tried.\n\nThe cake is a dark matte brown with a smokey smell, almost like smoked bacon. Once brewed the smell changes completely, a friend described it as sweat, but I find it to be more of an earthy nutty smell. The color of the tea is a dark nearly opaque purple brown. The tea has an incredibly nutty taste, it\'s sooo nutty, tastes like your drinking walnuts. I was really not expecting it to be so nutty.\n\nI have another ripe pu-erh that just came in from December\'s batch of the Dark Tea club, I\'m looking forward to trying it.\n"
+                           ,tea: {_: {}
+                                 ,category: PuErh(Ripe)
+                                 ,flavours: _L.fromArray([])
+                                 ,name: "Menghai 7592 501"
+                                 ,region: Yunnan
+                                 ,season: Winter
+                                 ,url: $Maybe.Just("http://yunnansourcing.com/en/menghaiteafactory/3624-2005-menghai-7592-501-ripe-pu-erh-tea-cake.html")
+                                 ,year: $Maybe.Just(2005)}
+                           ,vendor: YunnanSourcing}
+                          ,{_: {}
                            ,date: "2015-12-14"
                            ,rating: 9
                            ,review: "\nThis was one of two oolongs that came in Octobers batch of the Yunnan Sourcing dark tea club. It was a great first batch for me from this tea club, I\'m really happy with the teas I got but it\'s a little expensive so I\'ll probably stop after next months batch\n\nThis tea had some really nice leafs, long, matte black with a musky aroma. The tea itself is very mellow with no bitterness what so ever, it has a slightly rocky taste and leaves a bit of a tacky texture in the mouth. I can get about 5 brews out this tea before it\'s lost it\'s character.\n\n*I love oolongs!*\n"
@@ -15307,7 +15320,7 @@ Elm.TeaLog.make = function (_elm) {
                            ,vendor: YunnanSourcing}
                           ,{_: {}
                            ,date: "2015-11-19"
-                           ,rating: 9
+                           ,rating: 7
                            ,review: "This is a good flavoured black tea, it has a slightly flowery taste but not too much, one of my favourite  black teas so far"
                            ,tea: {_: {}
                                  ,category: Black
@@ -15320,7 +15333,7 @@ Elm.TeaLog.make = function (_elm) {
                            ,vendor: YunnanSourcing}
                           ,{_: {}
                            ,date: "2015-11-03"
-                           ,rating: 7
+                           ,rating: 6
                            ,review: "One of the first teas that made me start to appreciate teas, the latest batch isn\'t as good as the what it was a year \nago"
                            ,tea: {_: {}
                                  ,category: Black
