@@ -26,7 +26,26 @@ import Css.Position as Position
 import Color exposing (..)
 
 log : List LogEntry
-log = [ { tea = { name = "Mi Lan Xiang * Roasted AA Grade Dan Cong"
+log = [ { tea = { name = "Iron Goddess of Mercy"
+                , category = Oolong
+                , region = Fujian
+                , flavours = []
+                , season = UnknownSeason
+                , year = Nothing
+                , url = Just "http://shop.distinctlytea.com/store/product/3400/IRON-GODDESS-OF-MERCY-50G/"
+                }
+        , date = "2015-12-18"
+        , vendor = DistinctlyTea
+        , rating = 7
+        , review = """
+This tea has been sitting in the pantry for over a year now, I found it tucked away in the back and decided to give it a try. It seems to be a common meme among oolongs tea to be have a name referencing iron or rock, the last two oolongs I had were 'Iron Arhat' and 'Wu Yi Rock' (didn't write a log for this one yet).
+
+The leafs from this one has a bit of a musty smell, not sure if that's just cause they're old. It's a rolled leaf that unfurls during the infusion process. The tea does leave a bit of a iron taste in the mouth, I didn't get that from the 'Iron Arhat' tea. It has a lighter taste than the other oolongs so it's probably not as oxidized.
+
+The taste is good, but doesn't survive as many infusions as some of the other oolongs, I got 2 good infusions out of the leafs.
+"""
+        }
+      , { tea = { name = "Mi Lan Xiang * Roasted AA Grade Dan Cong"
                 , category = Oolong
                 , region = Yunnan
                 , flavours = []
@@ -131,6 +150,7 @@ type Season = Spring | Summer | Autumn | Winter | UnknownSeason
 
 type Region = Keemun
             | Yunnan
+            | Fujian
             | LapsangSouchong
             | Assam
             | DarjeelingDistrict

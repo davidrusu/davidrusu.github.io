@@ -15038,7 +15038,7 @@ Elm.TeaLog.make = function (_elm) {
                case "YunnanSourcing":
                return "https://yunnansourcing.com/";}
             _U.badCase($moduleName,
-            "between lines 250 and 253");
+            "between lines 270 and 273");
          }();
          return A2($Html.div,
          _L.fromArray([]),
@@ -15087,7 +15087,7 @@ Elm.TeaLog.make = function (_elm) {
             case "[]":
             return $Maybe.Nothing;}
          _U.badCase($moduleName,
-         "between lines 196 and 199");
+         "between lines 216 and 219");
       }();
    };
    var viewTeaCategory = function (category) {
@@ -15104,7 +15104,7 @@ Elm.TeaLog.make = function (_elm) {
                          viewTeaCategory(_v8._0));
                        case "Nothing": return "";}
                     _U.badCase($moduleName,
-                    "between lines 221 and 224");
+                    "between lines 241 and 244");
                  }();
                  var listPart = $String.join(", ")($List.map(viewTeaCategory)(A2($List.take,
                  $List.length(category._0) - 1,
@@ -15125,7 +15125,7 @@ Elm.TeaLog.make = function (_elm) {
                     case "Ripe":
                     return "Ripe Pu-erh";}
                  _U.badCase($moduleName,
-                 "between lines 210 and 215");
+                 "between lines 230 and 235");
               }();}
          return $Basics.toString(category);
       }();
@@ -15142,7 +15142,7 @@ Elm.TeaLog.make = function (_elm) {
                case "Nothing":
                return $Html.text(tea.name);}
             _U.badCase($moduleName,
-            "between lines 231 and 234");
+            "between lines 251 and 254");
          }();
          return A2($Html.div,
          _L.fromArray([$Html$Attributes.$class("tea_description")]),
@@ -15207,7 +15207,7 @@ Elm.TeaLog.make = function (_elm) {
          switch (action.ctor)
          {case "NoOp": return model;}
          _U.badCase($moduleName,
-         "between lines 186 and 187");
+         "between lines 206 and 207");
       }();
    });
    var ModifyHeader = function (a) {
@@ -15295,6 +15295,7 @@ Elm.TeaLog.make = function (_elm) {
    var DarjeelingDistrict = {ctor: "DarjeelingDistrict"};
    var Assam = {ctor: "Assam"};
    var LapsangSouchong = {ctor: "LapsangSouchong"};
+   var Fujian = {ctor: "Fujian"};
    var Yunnan = {ctor: "Yunnan"};
    var Keemun = {ctor: "Keemun"};
    var UnknownSeason = {ctor: "UnknownSeason"};
@@ -15308,6 +15309,19 @@ Elm.TeaLog.make = function (_elm) {
    var Grenadine = {ctor: "Grenadine"};
    var Vanilla = {ctor: "Vanilla"};
    var log = _L.fromArray([{_: {}
+                           ,date: "2015-12-18"
+                           ,rating: 7
+                           ,review: "\nThis tea has been sitting in the pantry for over a year now, I found it tucked away in the back and decided to give it a try. It seems to be a common meme among oolongs tea to be have a name referencing iron or rock, the last two oolongs I had were \'Iron Arhat\' and \'Wu Yi Rock\' (didn\'t write a log for this one yet).\n\nThe leafs from this one has a bit of a musty smell, not sure if that\'s just cause they\'re old. It\'s a rolled leaf that unfurls during the infusion process. The tea does leave a bit of a iron taste in the mouth, I didn\'t get that from the \'Iron Arhat\' tea. It has a lighter taste than the other oolongs so it\'s probably not as oxidized.\n\nThe taste is good, but doesn\'t survive as many infusions as some of the other oolongs, I got 2 good infusions out of the leafs.\n"
+                           ,tea: {_: {}
+                                 ,category: Oolong
+                                 ,flavours: _L.fromArray([])
+                                 ,name: "Iron Goddess of Mercy"
+                                 ,region: Fujian
+                                 ,season: UnknownSeason
+                                 ,url: $Maybe.Just("http://shop.distinctlytea.com/store/product/3400/IRON-GODDESS-OF-MERCY-50G/")
+                                 ,year: $Maybe.Nothing}
+                           ,vendor: DistinctlyTea}
+                          ,{_: {}
                            ,date: "2015-12-15"
                            ,rating: 7
                            ,review: "\nThis one is also from Octobers batch from Yunnan Sourcing\'s dark tea club.\n\nThis Oolong starts a bit bitter but after 2-3 brews quickly becomes a wonderfully mellow tea. I infused the same leaves over 7 times and it still had a good taste.\n\nI like drinking this tea when I\'m coding as the same leafs last a long time.\n"
