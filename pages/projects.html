@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html><head><meta charset="UTF-8"><title>Main</title><style>html,head,body { padding:0; margin:0; }
+<html><head><meta charset="UTF-8"><title>Projects</title><style>html,head,body { padding:0; margin:0; }
 body { font-family: calibri, helvetica, arial, sans-serif; }</style><script type="text/javascript">var Elm = Elm || { Native: {} };Elm.Array = Elm.Array || {};
 Elm.Array.make = function (_elm) {
    "use strict";
@@ -782,274 +782,83 @@ Elm.Color.make = function (_elm) {
                        ,gray: gray
                        ,darkGray: darkGray};
    return _elm.Color.values;
-};Elm.Curve = Elm.Curve || {};
-Elm.Curve.make = function (_elm) {
+};Elm.Date = Elm.Date || {};
+Elm.Date.make = function (_elm) {
    "use strict";
-   _elm.Curve = _elm.Curve || {};
-   if (_elm.Curve.values)
-   return _elm.Curve.values;
+   _elm.Date = _elm.Date || {};
+   if (_elm.Date.values)
+   return _elm.Date.values;
    var _op = {},
    _N = Elm.Native,
    _U = _N.Utils.make(_elm),
    _L = _N.List.make(_elm),
-   $moduleName = "Curve",
-   $Basics = Elm.Basics.make(_elm),
-   $Color = Elm.Color.make(_elm),
-   $Graphics$Collage = Elm.Graphics.Collage.make(_elm),
-   $Graphics$Element = Elm.Graphics.Element.make(_elm),
-   $List = Elm.List.make(_elm),
-   $Maybe = Elm.Maybe.make(_elm),
-   $Mouse = Elm.Mouse.make(_elm),
+   $moduleName = "Date",
+   $Native$Date = Elm.Native.Date.make(_elm),
    $Result = Elm.Result.make(_elm),
-   $Signal = Elm.Signal.make(_elm),
-   $Signal$Extra = Elm.Signal.Extra.make(_elm),
-   $Window = Elm.Window.make(_elm);
-   var transformMouse = F2(function (model,
-   _v0) {
-      return function () {
-         switch (_v0.ctor)
-         {case "_Tuple2":
-            return {ctor: "_Tuple2"
-                   ,_0: _v0._0 - $Basics.toFloat(model.w) / 2
-                   ,_1: 0 - _v0._1 + $Basics.toFloat(model.h) / 2};}
-         _U.badCase($moduleName,
-         "on line 91, column 4 to 59");
-      }();
-   });
-   var intPair2FloatPair = function (_v4) {
-      return function () {
-         switch (_v4.ctor)
-         {case "_Tuple2":
-            return {ctor: "_Tuple2"
-                   ,_0: $Basics.toFloat(_v4._0)
-                   ,_1: $Basics.toFloat(_v4._1)};}
-         _U.badCase($moduleName,
-         "on line 85, column 29 to 49");
-      }();
-   };
-   var scaleP = F2(function (s,
-   _v8) {
-      return function () {
-         switch (_v8.ctor)
-         {case "_Tuple2":
-            return {ctor: "_Tuple2"
-                   ,_0: s * _v8._0
-                   ,_1: s * _v8._1};}
-         _U.badCase($moduleName,
-         "on line 63, column 20 to 32");
-      }();
-   });
-   var addP = F2(function (_v12,
-   _v13) {
-      return function () {
-         switch (_v13.ctor)
-         {case "_Tuple2":
-            return function () {
-                 switch (_v12.ctor)
-                 {case "_Tuple2":
-                    return {ctor: "_Tuple2"
-                           ,_0: _v12._0 + _v13._0
-                           ,_1: _v12._1 + _v13._1};}
-                 _U.badCase($moduleName,
-                 "on line 62, column 23 to 35");
-              }();}
-         _U.badCase($moduleName,
-         "on line 62, column 23 to 35");
-      }();
-   });
-   var warpDist = function (d) {
-      return -1;
-   };
-   var NoOp = {ctor: "NoOp"};
-   var MouseMove = function (a) {
-      return {ctor: "MouseMove"
-             ,_0: a};
-   };
-   var mousePos = A2($Signal.map,
-   function ($) {
-      return MouseMove(intPair2FloatPair($));
-   },
-   $Mouse.position);
-   var WindowDim = function (a) {
-      return {ctor: "WindowDim"
-             ,_0: a};
-   };
-   var windowDims = A2($Signal.map,
-   WindowDim,
-   $Window.dimensions);
-   var connection = F2(function (a,
-   b) {
-      return $Graphics$Collage.traced($Graphics$Collage.solid(A4($Color.rgba,
-      0,
-      0,
-      0,
-      1)))(A2($Graphics$Collage.segment,
-      a,
-      b));
-   });
-   var curve = function (model) {
-      return $Graphics$Collage.traced($Graphics$Collage.solid($Color.black))($Graphics$Collage.path(model.points));
-   };
-   var background = function (model) {
-      return $Graphics$Collage.filled($Color.white)(A2($Graphics$Collage.rect,
-      $Basics.toFloat(model.w),
-      $Basics.toFloat(model.h)));
-   };
-   var init = {_: {}
-              ,h: 0
-              ,mouse: {ctor: "_Tuple2"
-                      ,_0: 0
-                      ,_1: 100}
-              ,points: _L.fromArray([])
-              ,targetPoints: _L.fromArray([])
-              ,w: 0};
-   var distortion = 50;
-   var distortVector = F2(function (_v20,
-   _v21) {
-      return function () {
-         switch (_v21.ctor)
-         {case "_Tuple2":
-            return function () {
-                 switch (_v20.ctor)
-                 {case "_Tuple2":
-                    return function () {
-                         var dy = _v20._1 - _v21._1;
-                         var dx = _v20._0 - _v21._0;
-                         var d = $Basics.max(1)($Basics.sqrt(Math.pow(dx,
-                         2) + Math.pow(dy,2)));
-                         var distortionAmnt = distortion * warpDist(d);
-                         var $ = {ctor: "_Tuple2"
-                                 ,_0: dx / d
-                                 ,_1: dy / d},
-                         nx = $._0,
-                         ny = $._1;
-                         return {ctor: "_Tuple2"
-                                ,_0: nx * distortionAmnt
-                                ,_1: ny * distortionAmnt};
-                      }();}
-                 _U.badCase($moduleName,
-                 "between lines 55 and 60");
-              }();}
-         _U.badCase($moduleName,
-         "between lines 55 and 60");
-      }();
-   });
-   var distortPoint = F2(function (model,
-   point) {
-      return A2(addP,
-      point,
-      A2(distortVector,
-      model.mouse,
-      point));
-   });
-   var distort = F2(function (model,
-   ps) {
-      return A2($List.map,
-      distortPoint(model),
-      ps);
-   });
-   var numPoints = 500;
-   var genPoints = function (_v28) {
-      return function () {
-         switch (_v28.ctor)
-         {case "_Tuple2":
-            return function () {
-                 var windowDiag = $Basics.sqrt(Math.pow($Basics.toFloat(_v28._0),
-                 2) + Math.pow($Basics.toFloat(_v28._1),
-                 2)) / 2;
-                 return A2($List.map,
-                 function (n) {
-                    return function () {
-                       var p = n / numPoints;
-                       var scale = p * windowDiag;
-                       return {ctor: "_Tuple2"
-                              ,_0: (0 - windowDiag) / 2 + scale
-                              ,_1: 0};
-                    }();
-                 },
-                 _L.range(0,numPoints));
-              }();}
-         _U.badCase($moduleName,
-         "between lines 23 and 28");
-      }();
-   };
-   var update = F2(function (action,
-   model) {
-      return function () {
-         switch (action.ctor)
-         {case "MouseMove":
-            return _U.replace([["mouse"
-                               ,addP(model.mouse)(scaleP(1)(A2(addP,
-                               A2(transformMouse,
-                               model,
-                               action._0),
-                               A2(scaleP,-1,model.mouse))))]
-                              ,["points"
-                               ,A2(distort,
-                               model,
-                               model.targetPoints)]],
-              model);
-            case "NoOp": return model;
-            case "WindowDim":
-            switch (action._0.ctor)
-              {case "_Tuple2":
-                 return function () {
-                      var ps = genPoints({ctor: "_Tuple2"
-                                         ,_0: action._0._0
-                                         ,_1: action._0._1});
-                      return _U.replace([["w"
-                                         ,action._0._0]
-                                        ,["h",action._0._1]
-                                        ,["targetPoints",ps]
-                                        ,["points"
-                                         ,A2(distort,model,ps)]],
-                      model);
-                   }();}
-              break;}
-         _U.badCase($moduleName,
-         "between lines 73 and 81");
-      }();
-   });
-   var modelSignal = A2($Signal$Extra.foldp$,
-   update,
-   function (a) {
-      return A2(update,a,init);
-   })(A2($Signal.merge,
-   windowDims,
-   mousePos));
-   var numToDrop = $Basics.floor($Basics.toFloat(numPoints) / distortion * 4);
-   var view = function (model) {
-      return A2($Graphics$Collage.collage,
-      model.w,
-      model.h)(_L.fromArray([background(model)
-                            ,$Graphics$Collage.group(A2($List.map2,
-                            connection,
-                            model.points)(A2($List.drop,
-                            numToDrop,
-                            model.points)))]));
-   };
-   var main = A2($Signal.map,
-   view,
-   modelSignal);
-   var Model = F5(function (a,
-   b,
-   c,
-   d,
-   e) {
-      return {_: {}
-             ,h: c
-             ,mouse: a
-             ,points: e
-             ,targetPoints: d
-             ,w: b};
-   });
-   _elm.Curve.values = {_op: _op
-                       ,init: init
-                       ,modelSignal: modelSignal
-                       ,view: view
-                       ,main: main
-                       ,Model: Model};
-   return _elm.Curve.values;
+   $Time = Elm.Time.make(_elm);
+   var millisecond = $Native$Date.millisecond;
+   var second = $Native$Date.second;
+   var minute = $Native$Date.minute;
+   var hour = $Native$Date.hour;
+   var dayOfWeek = $Native$Date.dayOfWeek;
+   var day = $Native$Date.day;
+   var month = $Native$Date.month;
+   var year = $Native$Date.year;
+   var fromTime = $Native$Date.fromTime;
+   var toTime = $Native$Date.toTime;
+   var fromString = $Native$Date.read;
+   var Dec = {ctor: "Dec"};
+   var Nov = {ctor: "Nov"};
+   var Oct = {ctor: "Oct"};
+   var Sep = {ctor: "Sep"};
+   var Aug = {ctor: "Aug"};
+   var Jul = {ctor: "Jul"};
+   var Jun = {ctor: "Jun"};
+   var May = {ctor: "May"};
+   var Apr = {ctor: "Apr"};
+   var Mar = {ctor: "Mar"};
+   var Feb = {ctor: "Feb"};
+   var Jan = {ctor: "Jan"};
+   var Sun = {ctor: "Sun"};
+   var Sat = {ctor: "Sat"};
+   var Fri = {ctor: "Fri"};
+   var Thu = {ctor: "Thu"};
+   var Wed = {ctor: "Wed"};
+   var Tue = {ctor: "Tue"};
+   var Mon = {ctor: "Mon"};
+   var Date = {ctor: "Date"};
+   _elm.Date.values = {_op: _op
+                      ,fromString: fromString
+                      ,toTime: toTime
+                      ,fromTime: fromTime
+                      ,year: year
+                      ,month: month
+                      ,day: day
+                      ,dayOfWeek: dayOfWeek
+                      ,hour: hour
+                      ,minute: minute
+                      ,second: second
+                      ,millisecond: millisecond
+                      ,Jan: Jan
+                      ,Feb: Feb
+                      ,Mar: Mar
+                      ,Apr: Apr
+                      ,May: May
+                      ,Jun: Jun
+                      ,Jul: Jul
+                      ,Aug: Aug
+                      ,Sep: Sep
+                      ,Oct: Oct
+                      ,Nov: Nov
+                      ,Dec: Dec
+                      ,Mon: Mon
+                      ,Tue: Tue
+                      ,Wed: Wed
+                      ,Thu: Thu
+                      ,Fri: Fri
+                      ,Sat: Sat
+                      ,Sun: Sun};
+   return _elm.Date.values;
 };Elm.Debug = Elm.Debug || {};
 Elm.Debug.make = function (_elm) {
    "use strict";
@@ -3013,10 +2822,8 @@ Elm.Header.make = function (_elm) {
              ,selected: selected};
    });
    var statsPath = "http://davidrusu.github.io/mastery/";
+   var projectsPath = "https://github.com/davidrusu";
    var basePath = "https://davidrusu.github.io";
-   var projectsPath = A2($Basics._op["++"],
-   basePath,
-   "pages//projects.html");
    var teasPath = A2($Basics._op["++"],
    basePath,
    "/pages/tea_log.html");
@@ -4402,108 +4209,59 @@ Elm.List.make = function (_elm) {
                       ,sortBy: sortBy
                       ,sortWith: sortWith};
    return _elm.List.values;
-};Elm.Main = Elm.Main || {};
-Elm.Main.make = function (_elm) {
+};Elm.Markdown = Elm.Markdown || {};
+Elm.Markdown.make = function (_elm) {
    "use strict";
-   _elm.Main = _elm.Main || {};
-   if (_elm.Main.values)
-   return _elm.Main.values;
+   _elm.Markdown = _elm.Markdown || {};
+   if (_elm.Markdown.values)
+   return _elm.Markdown.values;
    var _op = {},
    _N = Elm.Native,
    _U = _N.Utils.make(_elm),
    _L = _N.List.make(_elm),
-   $moduleName = "Main",
+   $moduleName = "Markdown",
    $Basics = Elm.Basics.make(_elm),
-   $Curve = Elm.Curve.make(_elm),
-   $Header = Elm.Header.make(_elm),
+   $Graphics$Element = Elm.Graphics.Element.make(_elm),
    $Html = Elm.Html.make(_elm),
-   $Html$Attributes = Elm.Html.Attributes.make(_elm),
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
+   $Native$Markdown = Elm.Native.Markdown.make(_elm),
    $Result = Elm.Result.make(_elm),
-   $Signal = Elm.Signal.make(_elm),
-   $Signal$Extra = Elm.Signal.Extra.make(_elm),
-   $Utils = Elm.Utils.make(_elm);
-   var update = F2(function (action,
-   model) {
-      return function () {
-         switch (action.ctor)
-         {case "Curve":
-            return _U.replace([["curve"
-                               ,action._0]],
-              model);
-            case "ModifyHeader":
-            return _U.replace([["header"
-                               ,A2($Header.update,
-                               action._0,
-                               model.header)]],
-              model);
-            case "NoOp": return model;}
-         _U.badCase($moduleName,
-         "between lines 24 and 27");
-      }();
-   });
-   var Curve = function (a) {
-      return {ctor: "Curve",_0: a};
-   };
-   var curveSignal = A2($Signal.map,
-   Curve,
-   $Curve.modelSignal);
-   var ModifyHeader = function (a) {
-      return {ctor: "ModifyHeader"
-             ,_0: a};
-   };
-   var viewHeader = F2(function (a,
-   m) {
-      return A2($Header.view,
-      A2($Signal.forwardTo,
-      a,
-      ModifyHeader),
-      m.header);
-   });
-   var view = F2(function (address,
-   model) {
-      return A2($Html.div,
-      _L.fromArray([]),
-      _L.fromArray([$Utils.css("style.css")
-                   ,A2(viewHeader,address,model)
-                   ,A2($Html.div,
-                   _L.fromArray([$Html$Attributes.$class("greeter")]),
-                   _L.fromArray([$Html.fromElement($Curve.view(model.curve))]))]));
-   });
-   var NoOp = {ctor: "NoOp"};
-   var actionMailbox = $Signal.mailbox(NoOp);
-   var init = {_: {}
-              ,curve: $Curve.init
-              ,header: $Header.init};
-   var modelSignal = A2($Signal$Extra.foldp$,
-   update,
-   function (a) {
-      return A2(update,a,init);
-   })($Signal.mergeMany(_L.fromArray([curveSignal
-                                     ,actionMailbox.signal])));
-   var main = A2($Signal.map,
-   view(actionMailbox.address),
-   modelSignal);
-   var Model = F2(function (a,b) {
+   $Signal = Elm.Signal.make(_elm);
+   var toElementWith = $Native$Markdown.toElementWith;
+   var toHtmlWith = $Native$Markdown.toHtmlWith;
+   var defaultOptions = {_: {}
+                        ,githubFlavored: $Maybe.Just({_: {}
+                                                     ,breaks: false
+                                                     ,tables: false})
+                        ,sanitize: false
+                        ,smartypants: false};
+   var Options = F3(function (a,
+   b,
+   c) {
       return {_: {}
-             ,curve: b
-             ,header: a};
+             ,githubFlavored: a
+             ,sanitize: b
+             ,smartypants: c};
    });
-   _elm.Main.values = {_op: _op
-                      ,Model: Model
-                      ,init: init
-                      ,NoOp: NoOp
-                      ,ModifyHeader: ModifyHeader
-                      ,Curve: Curve
-                      ,actionMailbox: actionMailbox
-                      ,update: update
-                      ,viewHeader: viewHeader
-                      ,view: view
-                      ,curveSignal: curveSignal
-                      ,modelSignal: modelSignal
-                      ,main: main};
-   return _elm.Main.values;
+   var toElement = function (string) {
+      return A2($Native$Markdown.toElementWith,
+      defaultOptions,
+      string);
+   };
+   var toHtml = function (string) {
+      return A2($Native$Markdown.toHtmlWith,
+      defaultOptions,
+      string);
+   };
+   _elm.Markdown.values = {_op: _op
+                          ,toHtml: toHtml
+                          ,toElement: toElement
+                          ,Options: Options
+                          ,defaultOptions: defaultOptions
+                          ,toHtmlWith: toHtmlWith
+                          ,toElementWith: toElementWith};
+   return _elm.Markdown.values;
 };Elm.Maybe = Elm.Maybe || {};
 Elm.Maybe.make = function (_elm) {
    "use strict";
@@ -4576,36 +4334,6 @@ Elm.Maybe.make = function (_elm) {
                        ,Just: Just
                        ,Nothing: Nothing};
    return _elm.Maybe.values;
-};Elm.Mouse = Elm.Mouse || {};
-Elm.Mouse.make = function (_elm) {
-   "use strict";
-   _elm.Mouse = _elm.Mouse || {};
-   if (_elm.Mouse.values)
-   return _elm.Mouse.values;
-   var _op = {},
-   _N = Elm.Native,
-   _U = _N.Utils.make(_elm),
-   _L = _N.List.make(_elm),
-   $moduleName = "Mouse",
-   $Basics = Elm.Basics.make(_elm),
-   $Native$Mouse = Elm.Native.Mouse.make(_elm),
-   $Signal = Elm.Signal.make(_elm);
-   var clicks = $Native$Mouse.clicks;
-   var isDown = $Native$Mouse.isDown;
-   var position = $Native$Mouse.position;
-   var x = A2($Signal.map,
-   $Basics.fst,
-   position);
-   var y = A2($Signal.map,
-   $Basics.snd,
-   position);
-   _elm.Mouse.values = {_op: _op
-                       ,position: position
-                       ,x: x
-                       ,y: y
-                       ,isDown: isDown
-                       ,clicks: clicks};
-   return _elm.Mouse.values;
 };Elm.Native.Array = {};
 Elm.Native.Array.make = function(localRuntime) {
 
@@ -5781,6 +5509,51 @@ Elm.Native.Color.make = function(localRuntime) {
 
 	return localRuntime.Native.Color.values = {
 		toCss: toCss
+	};
+
+};
+Elm.Native.Date = {};
+Elm.Native.Date.make = function(localRuntime) {
+	localRuntime.Native = localRuntime.Native || {};
+	localRuntime.Native.Date = localRuntime.Native.Date || {};
+	if (localRuntime.Native.Date.values)
+	{
+		return localRuntime.Native.Date.values;
+	}
+
+	var Result = Elm.Result.make(localRuntime);
+
+	function dateNow()
+	{
+		return new window.Date;
+	}
+
+	function readDate(str)
+	{
+		var date = new window.Date(str);
+		return isNaN(date.getTime())
+			? Result.Err("unable to parse '" + str + "' as a date")
+			: Result.Ok(date);
+	}
+
+	var dayTable = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+	var monthTable =
+		["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+		 "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+
+	return localRuntime.Native.Date.values = {
+		read    : readDate,
+		year    : function(d) { return d.getFullYear(); },
+		month   : function(d) { return { ctor:monthTable[d.getMonth()] }; },
+		day     : function(d) { return d.getDate(); },
+		hour    : function(d) { return d.getHours(); },
+		minute  : function(d) { return d.getMinutes(); },
+		second  : function(d) { return d.getSeconds(); },
+		millisecond: function (d) { return d.getMilliseconds(); },
+		toTime  : function(d) { return d.getTime(); },
+		fromTime: function(t) { return new window.Date(t); },
+		dayOfWeek : function(d) { return { ctor:dayTable[d.getDay()] }; }
 	};
 
 };
@@ -7936,50 +7709,108 @@ Elm.Native.List.make = function(localRuntime) {
 	return localRuntime.Native.List.values = Elm.Native.List.values;
 
 };
-Elm.Native = Elm.Native || {};
-Elm.Native.Mouse = {};
-Elm.Native.Mouse.make = function(localRuntime) {
 
-	localRuntime.Native = localRuntime.Native || {};
-	localRuntime.Native.Mouse = localRuntime.Native.Mouse || {};
-	if (localRuntime.Native.Mouse.values)
+// setup
+Elm.Native = Elm.Native || {};
+Elm.Native.Markdown = Elm.Native.Markdown || {};
+
+// definition
+Elm.Native.Markdown.make = function(localRuntime) {
+	'use strict';
+
+	// attempt to short-circuit
+	if ('values' in Elm.Native.Markdown)
 	{
-		return localRuntime.Native.Mouse.values;
+		return Elm.Native.Markdown.values;
 	}
 
-	var NS = Elm.Native.Signal.make(localRuntime);
-	var Utils = Elm.Native.Utils.make(localRuntime);
+	var Element = Elm.Native.Graphics.Element.make(localRuntime);
 
-	var position = NS.input('Mouse.position', Utils.Tuple2(0,0));
+	/**
+	 * marked - a markdown parser
+	 * Copyright (c) 2011-2014, Christopher Jeffrey. (MIT Licensed)
+	 * https://github.com/chjj/marked
+	 */
+	(function(){var block={newline:/^\n+/,code:/^( {4}[^\n]+\n*)+/,fences:noop,hr:/^( *[-*_]){3,} *(?:\n+|$)/,heading:/^ *(#{1,6}) *([^\n]+?) *#* *(?:\n+|$)/,nptable:noop,lheading:/^([^\n]+)\n *(=|-){2,} *(?:\n+|$)/,blockquote:/^( *>[^\n]+(\n(?!def)[^\n]+)*\n*)+/,list:/^( *)(bull) [\s\S]+?(?:hr|def|\n{2,}(?! )(?!\1bull )\n*|\s*$)/,html:/^ *(?:comment|closed|closing) *(?:\n{2,}|\s*$)/,def:/^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +["(]([^\n]+)[")])? *(?:\n+|$)/,table:noop,paragraph:/^((?:[^\n]+\n?(?!hr|heading|lheading|blockquote|tag|def))+)\n*/,text:/^[^\n]+/};block.bullet=/(?:[*+-]|\d+\.)/;block.item=/^( *)(bull) [^\n]*(?:\n(?!\1bull )[^\n]*)*/;block.item=replace(block.item,"gm")(/bull/g,block.bullet)();block.list=replace(block.list)(/bull/g,block.bullet)("hr","\\n+(?=\\1?(?:[-*_] *){3,}(?:\\n+|$))")("def","\\n+(?="+block.def.source+")")();block.blockquote=replace(block.blockquote)("def",block.def)();block._tag="(?!(?:"+"a|em|strong|small|s|cite|q|dfn|abbr|data|time|code"+"|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo"+"|span|br|wbr|ins|del|img)\\b)\\w+(?!:/|[^\\w\\s@]*@)\\b";block.html=replace(block.html)("comment",/<!--[\s\S]*?-->/)("closed",/<(tag)[\s\S]+?<\/\1>/)("closing",/<tag(?:"[^"]*"|'[^']*'|[^'">])*?>/)(/tag/g,block._tag)();block.paragraph=replace(block.paragraph)("hr",block.hr)("heading",block.heading)("lheading",block.lheading)("blockquote",block.blockquote)("tag","<"+block._tag)("def",block.def)();block.normal=merge({},block);block.gfm=merge({},block.normal,{fences:/^ *(`{3,}|~{3,}) *(\S+)? *\n([\s\S]+?)\s*\1 *(?:\n+|$)/,paragraph:/^/});block.gfm.paragraph=replace(block.paragraph)("(?!","(?!"+block.gfm.fences.source.replace("\\1","\\2")+"|"+block.list.source.replace("\\1","\\3")+"|")();block.tables=merge({},block.gfm,{nptable:/^ *(\S.*\|.*)\n *([-:]+ *\|[-| :]*)\n((?:.*\|.*(?:\n|$))*)\n*/,table:/^ *\|(.+)\n *\|( *[-:]+[-| :]*)\n((?: *\|.*(?:\n|$))*)\n*/});function Lexer(options){this.tokens=[];this.tokens.links={};this.options=options||marked.defaults;this.rules=block.normal;if(this.options.gfm){if(this.options.tables){this.rules=block.tables}else{this.rules=block.gfm}}}Lexer.rules=block;Lexer.lex=function(src,options){var lexer=new Lexer(options);return lexer.lex(src)};Lexer.prototype.lex=function(src){src=src.replace(/\r\n|\r/g,"\n").replace(/\t/g,"    ").replace(/\u00a0/g," ").replace(/\u2424/g,"\n");return this.token(src,true)};Lexer.prototype.token=function(src,top,bq){var src=src.replace(/^ +$/gm,""),next,loose,cap,bull,b,item,space,i,l;while(src){if(cap=this.rules.newline.exec(src)){src=src.substring(cap[0].length);if(cap[0].length>1){this.tokens.push({type:"space"})}}if(cap=this.rules.code.exec(src)){src=src.substring(cap[0].length);cap=cap[0].replace(/^ {4}/gm,"");this.tokens.push({type:"code",text:!this.options.pedantic?cap.replace(/\n+$/,""):cap});continue}if(cap=this.rules.fences.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"code",lang:cap[2],text:cap[3]});continue}if(cap=this.rules.heading.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"heading",depth:cap[1].length,text:cap[2]});continue}if(top&&(cap=this.rules.nptable.exec(src))){src=src.substring(cap[0].length);item={type:"table",header:cap[1].replace(/^ *| *\| *$/g,"").split(/ *\| */),align:cap[2].replace(/^ *|\| *$/g,"").split(/ *\| */),cells:cap[3].replace(/\n$/,"").split("\n")};for(i=0;i<item.align.length;i++){if(/^ *-+: *$/.test(item.align[i])){item.align[i]="right"}else if(/^ *:-+: *$/.test(item.align[i])){item.align[i]="center"}else if(/^ *:-+ *$/.test(item.align[i])){item.align[i]="left"}else{item.align[i]=null}}for(i=0;i<item.cells.length;i++){item.cells[i]=item.cells[i].split(/ *\| */)}this.tokens.push(item);continue}if(cap=this.rules.lheading.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"heading",depth:cap[2]==="="?1:2,text:cap[1]});continue}if(cap=this.rules.hr.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"hr"});continue}if(cap=this.rules.blockquote.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"blockquote_start"});cap=cap[0].replace(/^ *> ?/gm,"");this.token(cap,top,true);this.tokens.push({type:"blockquote_end"});continue}if(cap=this.rules.list.exec(src)){src=src.substring(cap[0].length);bull=cap[2];this.tokens.push({type:"list_start",ordered:bull.length>1});cap=cap[0].match(this.rules.item);next=false;l=cap.length;i=0;for(;i<l;i++){item=cap[i];space=item.length;item=item.replace(/^ *([*+-]|\d+\.) +/,"");if(~item.indexOf("\n ")){space-=item.length;item=!this.options.pedantic?item.replace(new RegExp("^ {1,"+space+"}","gm"),""):item.replace(/^ {1,4}/gm,"")}if(this.options.smartLists&&i!==l-1){b=block.bullet.exec(cap[i+1])[0];if(bull!==b&&!(bull.length>1&&b.length>1)){src=cap.slice(i+1).join("\n")+src;i=l-1}}loose=next||/\n\n(?!\s*$)/.test(item);if(i!==l-1){next=item.charAt(item.length-1)==="\n";if(!loose)loose=next}this.tokens.push({type:loose?"loose_item_start":"list_item_start"});this.token(item,false,bq);this.tokens.push({type:"list_item_end"})}this.tokens.push({type:"list_end"});continue}if(cap=this.rules.html.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:this.options.sanitize?"paragraph":"html",pre:cap[1]==="pre"||cap[1]==="script"||cap[1]==="style",text:cap[0]});continue}if(!bq&&top&&(cap=this.rules.def.exec(src))){src=src.substring(cap[0].length);this.tokens.links[cap[1].toLowerCase()]={href:cap[2],title:cap[3]};continue}if(top&&(cap=this.rules.table.exec(src))){src=src.substring(cap[0].length);item={type:"table",header:cap[1].replace(/^ *| *\| *$/g,"").split(/ *\| */),align:cap[2].replace(/^ *|\| *$/g,"").split(/ *\| */),cells:cap[3].replace(/(?: *\| *)?\n$/,"").split("\n")};for(i=0;i<item.align.length;i++){if(/^ *-+: *$/.test(item.align[i])){item.align[i]="right"}else if(/^ *:-+: *$/.test(item.align[i])){item.align[i]="center"}else if(/^ *:-+ *$/.test(item.align[i])){item.align[i]="left"}else{item.align[i]=null}}for(i=0;i<item.cells.length;i++){item.cells[i]=item.cells[i].replace(/^ *\| *| *\| *$/g,"").split(/ *\| */)}this.tokens.push(item);continue}if(top&&(cap=this.rules.paragraph.exec(src))){src=src.substring(cap[0].length);this.tokens.push({type:"paragraph",text:cap[1].charAt(cap[1].length-1)==="\n"?cap[1].slice(0,-1):cap[1]});continue}if(cap=this.rules.text.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"text",text:cap[0]});continue}if(src){throw new Error("Infinite loop on byte: "+src.charCodeAt(0))}}return this.tokens};var inline={escape:/^\\([\\`*{}\[\]()#+\-.!_>])/,autolink:/^<([^ >]+(@|:\/)[^ >]+)>/,url:noop,tag:/^<!--[\s\S]*?-->|^<\/?\w+(?:"[^"]*"|'[^']*'|[^'">])*?>/,link:/^!?\[(inside)\]\(href\)/,reflink:/^!?\[(inside)\]\s*\[([^\]]*)\]/,nolink:/^!?\[((?:\[[^\]]*\]|[^\[\]])*)\]/,strong:/^__([\s\S]+?)__(?!_)|^\*\*([\s\S]+?)\*\*(?!\*)/,em:/^\b_((?:__|[\s\S])+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,code:/^(`+)\s*([\s\S]*?[^`])\s*\1(?!`)/,br:/^ {2,}\n(?!\s*$)/,del:noop,text:/^[\s\S]+?(?=[\\<!\[_*`]| {2,}\n|$)/};inline._inside=/(?:\[[^\]]*\]|[^\[\]]|\](?=[^\[]*\]))*/;inline._href=/\s*<?([\s\S]*?)>?(?:\s+['"]([\s\S]*?)['"])?\s*/;inline.link=replace(inline.link)("inside",inline._inside)("href",inline._href)();inline.reflink=replace(inline.reflink)("inside",inline._inside)();inline.normal=merge({},inline);inline.pedantic=merge({},inline.normal,{strong:/^__(?=\S)([\s\S]*?\S)__(?!_)|^\*\*(?=\S)([\s\S]*?\S)\*\*(?!\*)/,em:/^_(?=\S)([\s\S]*?\S)_(?!_)|^\*(?=\S)([\s\S]*?\S)\*(?!\*)/});inline.gfm=merge({},inline.normal,{escape:replace(inline.escape)("])","~|])")(),url:/^(https?:\/\/[^\s<]+[^<.,:;"')\]\s])/,del:/^~~(?=\S)([\s\S]*?\S)~~/,text:replace(inline.text)("]|","~]|")("|","|https?://|")()});inline.breaks=merge({},inline.gfm,{br:replace(inline.br)("{2,}","*")(),text:replace(inline.gfm.text)("{2,}","*")()});function InlineLexer(links,options){this.options=options||marked.defaults;this.links=links;this.rules=inline.normal;this.renderer=this.options.renderer||new Renderer;this.renderer.options=this.options;if(!this.links){throw new Error("Tokens array requires a `links` property.")}if(this.options.gfm){if(this.options.breaks){this.rules=inline.breaks}else{this.rules=inline.gfm}}else if(this.options.pedantic){this.rules=inline.pedantic}}InlineLexer.rules=inline;InlineLexer.output=function(src,links,options){var inline=new InlineLexer(links,options);return inline.output(src)};InlineLexer.prototype.output=function(src){var out="",link,text,href,cap;while(src){if(cap=this.rules.escape.exec(src)){src=src.substring(cap[0].length);out+=cap[1];continue}if(cap=this.rules.autolink.exec(src)){src=src.substring(cap[0].length);if(cap[2]==="@"){text=cap[1].charAt(6)===":"?this.mangle(cap[1].substring(7)):this.mangle(cap[1]);href=this.mangle("mailto:")+text}else{text=escape(cap[1]);href=text}out+=this.renderer.link(href,null,text);continue}if(!this.inLink&&(cap=this.rules.url.exec(src))){src=src.substring(cap[0].length);text=escape(cap[1]);href=text;out+=this.renderer.link(href,null,text);continue}if(cap=this.rules.tag.exec(src)){if(!this.inLink&&/^<a /i.test(cap[0])){this.inLink=true}else if(this.inLink&&/^<\/a>/i.test(cap[0])){this.inLink=false}src=src.substring(cap[0].length);out+=this.options.sanitize?escape(cap[0]):cap[0];continue}if(cap=this.rules.link.exec(src)){src=src.substring(cap[0].length);this.inLink=true;out+=this.outputLink(cap,{href:cap[2],title:cap[3]});this.inLink=false;continue}if((cap=this.rules.reflink.exec(src))||(cap=this.rules.nolink.exec(src))){src=src.substring(cap[0].length);link=(cap[2]||cap[1]).replace(/\s+/g," ");link=this.links[link.toLowerCase()];if(!link||!link.href){out+=cap[0].charAt(0);src=cap[0].substring(1)+src;continue}this.inLink=true;out+=this.outputLink(cap,link);this.inLink=false;continue}if(cap=this.rules.strong.exec(src)){src=src.substring(cap[0].length);out+=this.renderer.strong(this.output(cap[2]||cap[1]));continue}if(cap=this.rules.em.exec(src)){src=src.substring(cap[0].length);out+=this.renderer.em(this.output(cap[2]||cap[1]));continue}if(cap=this.rules.code.exec(src)){src=src.substring(cap[0].length);out+=this.renderer.codespan(escape(cap[2],true));continue}if(cap=this.rules.br.exec(src)){src=src.substring(cap[0].length);out+=this.renderer.br();continue}if(cap=this.rules.del.exec(src)){src=src.substring(cap[0].length);out+=this.renderer.del(this.output(cap[1]));continue}if(cap=this.rules.text.exec(src)){src=src.substring(cap[0].length);out+=escape(this.smartypants(cap[0]));continue}if(src){throw new Error("Infinite loop on byte: "+src.charCodeAt(0))}}return out};InlineLexer.prototype.outputLink=function(cap,link){var href=escape(link.href),title=link.title?escape(link.title):null;return cap[0].charAt(0)!=="!"?this.renderer.link(href,title,this.output(cap[1])):this.renderer.image(href,title,escape(cap[1]))};InlineLexer.prototype.smartypants=function(text){if(!this.options.smartypants)return text;return text.replace(/--/g,"—").replace(/(^|[-\u2014/(\[{"\s])'/g,"$1‘").replace(/'/g,"’").replace(/(^|[-\u2014/(\[{\u2018\s])"/g,"$1“").replace(/"/g,"”").replace(/\.{3}/g,"…")};InlineLexer.prototype.mangle=function(text){var out="",l=text.length,i=0,ch;for(;i<l;i++){ch=text.charCodeAt(i);if(Math.random()>.5){ch="x"+ch.toString(16)}out+="&#"+ch+";"}return out};function Renderer(options){this.options=options||{}}Renderer.prototype.code=function(code,lang,escaped){if(this.options.highlight){var out=this.options.highlight(code,lang);if(out!=null&&out!==code){escaped=true;code=out}}if(!lang){return"<pre><code>"+(escaped?code:escape(code,true))+"\n</code></pre>"}return'<pre><code class="'+this.options.langPrefix+escape(lang,true)+'">'+(escaped?code:escape(code,true))+"\n</code></pre>\n"};Renderer.prototype.blockquote=function(quote){return"<blockquote>\n"+quote+"</blockquote>\n"};Renderer.prototype.html=function(html){return html};Renderer.prototype.heading=function(text,level,raw){return"<h"+level+' id="'+this.options.headerPrefix+raw.toLowerCase().replace(/[^\w]+/g,"-")+'">'+text+"</h"+level+">\n"};Renderer.prototype.hr=function(){return this.options.xhtml?"<hr/>\n":"<hr>\n"};Renderer.prototype.list=function(body,ordered){var type=ordered?"ol":"ul";return"<"+type+">\n"+body+"</"+type+">\n"};Renderer.prototype.listitem=function(text){return"<li>"+text+"</li>\n"};Renderer.prototype.paragraph=function(text){return"<p>"+text+"</p>\n"};Renderer.prototype.table=function(header,body){return"<table>\n"+"<thead>\n"+header+"</thead>\n"+"<tbody>\n"+body+"</tbody>\n"+"</table>\n"};Renderer.prototype.tablerow=function(content){return"<tr>\n"+content+"</tr>\n"};Renderer.prototype.tablecell=function(content,flags){var type=flags.header?"th":"td";var tag=flags.align?"<"+type+' style="text-align:'+flags.align+'">':"<"+type+">";return tag+content+"</"+type+">\n"};Renderer.prototype.strong=function(text){return"<strong>"+text+"</strong>"};Renderer.prototype.em=function(text){return"<em>"+text+"</em>"};Renderer.prototype.codespan=function(text){return"<code>"+text+"</code>"};Renderer.prototype.br=function(){return this.options.xhtml?"<br/>":"<br>"};Renderer.prototype.del=function(text){return"<del>"+text+"</del>"};Renderer.prototype.link=function(href,title,text){if(this.options.sanitize){try{var prot=decodeURIComponent(unescape(href)).replace(/[^\w:]/g,"").toLowerCase()}catch(e){return""}if(prot.indexOf("javascript:")===0){return""}}var out='<a href="'+href+'"';if(title){out+=' title="'+title+'"'}out+=">"+text+"</a>";return out};Renderer.prototype.image=function(href,title,text){var out='<img src="'+href+'" alt="'+text+'"';if(title){out+=' title="'+title+'"'}out+=this.options.xhtml?"/>":">";return out};function Parser(options){this.tokens=[];this.token=null;this.options=options||marked.defaults;this.options.renderer=this.options.renderer||new Renderer;this.renderer=this.options.renderer;this.renderer.options=this.options}Parser.parse=function(src,options,renderer){var parser=new Parser(options,renderer);return parser.parse(src)};Parser.prototype.parse=function(src){this.inline=new InlineLexer(src.links,this.options,this.renderer);this.tokens=src.reverse();var out="";while(this.next()){out+=this.tok()}return out};Parser.prototype.next=function(){return this.token=this.tokens.pop()};Parser.prototype.peek=function(){return this.tokens[this.tokens.length-1]||0};Parser.prototype.parseText=function(){var body=this.token.text;while(this.peek().type==="text"){body+="\n"+this.next().text}return this.inline.output(body)};Parser.prototype.tok=function(){switch(this.token.type){case"space":{return""}case"hr":{return this.renderer.hr()}case"heading":{return this.renderer.heading(this.inline.output(this.token.text),this.token.depth,this.token.text)}case"code":{return this.renderer.code(this.token.text,this.token.lang,this.token.escaped)}case"table":{var header="",body="",i,row,cell,flags,j;cell="";for(i=0;i<this.token.header.length;i++){flags={header:true,align:this.token.align[i]};cell+=this.renderer.tablecell(this.inline.output(this.token.header[i]),{header:true,align:this.token.align[i]})}header+=this.renderer.tablerow(cell);for(i=0;i<this.token.cells.length;i++){row=this.token.cells[i];cell="";for(j=0;j<row.length;j++){cell+=this.renderer.tablecell(this.inline.output(row[j]),{header:false,align:this.token.align[j]})}body+=this.renderer.tablerow(cell)}return this.renderer.table(header,body)}case"blockquote_start":{var body="";while(this.next().type!=="blockquote_end"){body+=this.tok()}return this.renderer.blockquote(body)}case"list_start":{var body="",ordered=this.token.ordered;while(this.next().type!=="list_end"){body+=this.tok()}return this.renderer.list(body,ordered)}case"list_item_start":{var body="";while(this.next().type!=="list_item_end"){body+=this.token.type==="text"?this.parseText():this.tok()}return this.renderer.listitem(body)}case"loose_item_start":{var body="";while(this.next().type!=="list_item_end"){body+=this.tok()}return this.renderer.listitem(body)}case"html":{var html=!this.token.pre&&!this.options.pedantic?this.inline.output(this.token.text):this.token.text;return this.renderer.html(html)}case"paragraph":{return this.renderer.paragraph(this.inline.output(this.token.text))}case"text":{return this.renderer.paragraph(this.parseText())}}};function escape(html,encode){return html.replace(!encode?/&(?!#?\w+;)/g:/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}function unescape(html){return html.replace(/&([#\w]+);/g,function(_,n){n=n.toLowerCase();if(n==="colon")return":";if(n.charAt(0)==="#"){return n.charAt(1)==="x"?String.fromCharCode(parseInt(n.substring(2),16)):String.fromCharCode(+n.substring(1))}return""})}function replace(regex,opt){regex=regex.source;opt=opt||"";return function self(name,val){if(!name)return new RegExp(regex,opt);val=val.source||val;val=val.replace(/(^|[^\[])\^/g,"$1");regex=regex.replace(name,val);return self}}function noop(){}noop.exec=noop;function merge(obj){var i=1,target,key;for(;i<arguments.length;i++){target=arguments[i];for(key in target){if(Object.prototype.hasOwnProperty.call(target,key)){obj[key]=target[key]}}}return obj}function marked(src,opt,callback){if(callback||typeof opt==="function"){if(!callback){callback=opt;opt=null}opt=merge({},marked.defaults,opt||{});var highlight=opt.highlight,tokens,pending,i=0;try{tokens=Lexer.lex(src,opt)}catch(e){return callback(e)}pending=tokens.length;var done=function(err){if(err){opt.highlight=highlight;return callback(err)}var out;try{out=Parser.parse(tokens,opt)}catch(e){err=e}opt.highlight=highlight;return err?callback(err):callback(null,out)};if(!highlight||highlight.length<3){return done()}delete opt.highlight;if(!pending)return done();for(;i<tokens.length;i++){(function(token){if(token.type!=="code"){return--pending||done()}return highlight(token.text,token.lang,function(err,code){if(err)return done(err);if(code==null||code===token.text){return--pending||done()}token.text=code;token.escaped=true;--pending||done()})})(tokens[i])}return}try{if(opt)opt=merge({},marked.defaults,opt);return Parser.parse(Lexer.lex(src,opt),opt)}catch(e){e.message+="\nPlease report this to https://github.com/chjj/marked.";if((opt||marked.defaults).silent){return"<p>An error occured:</p><pre>"+escape(e.message+"",true)+"</pre>"}throw e}}marked.options=marked.setOptions=function(opt){merge(marked.defaults,opt);return marked};marked.defaults={gfm:true,tables:true,breaks:false,pedantic:false,sanitize:false,smartLists:false,silent:false,highlight:null,langPrefix:"lang-",smartypants:false,headerPrefix:"",renderer:new Renderer,xhtml:false};marked.Parser=Parser;marked.parser=Parser.parse;marked.Renderer=Renderer;marked.Lexer=Lexer;marked.lexer=Lexer.lex;marked.InlineLexer=InlineLexer;marked.inlineLexer=InlineLexer.output;marked.parse=marked;if(typeof module!=="undefined"&&typeof exports==="object"){module.exports=marked}else if(typeof define==="function"&&define.amd){define(function(){return marked})}else{this.marked=marked}}).call(function(){return this||(typeof window!=="undefined"?window:global)}());
 
-	var isDown = NS.input('Mouse.isDown', false);
-
-	var clicks = NS.input('Mouse.clicks', Utils.Tuple0);
-
-	var node = localRuntime.isFullscreen()
-		? document
-		: localRuntime.node;
-
-	localRuntime.addListener([clicks.id], node, 'click', function click() {
-		localRuntime.notify(clicks.id, Utils.Tuple0);
-	});
-	localRuntime.addListener([isDown.id], node, 'mousedown', function down() {
-		localRuntime.notify(isDown.id, true);
-	});
-	localRuntime.addListener([isDown.id], node, 'mouseup', function up() {
-		localRuntime.notify(isDown.id, false);
-	});
-	localRuntime.addListener([position.id], node, 'mousemove', function move(e) {
-		localRuntime.notify(position.id, Utils.getXY(e));
+	marked.setOptions({
+		highlight: function (code, lang) {
+			if (typeof hljs !== 'undefined'
+				&& lang
+				&& hljs.listLanguages().indexOf(lang) >= 0)
+			{
+				return hljs.highlight(lang, code, true).value;
+			}
+			return code;
+		}
 	});
 
-	return localRuntime.Native.Mouse.values = {
-		position: position,
-		isDown: isDown,
-		clicks: clicks
+	function formatOptions(options) {
+		var gfm = options.githubFlavored;
+		if (gfm.ctor === 'Just')
+		{
+			return {
+				gfm: true,
+				tables: gfm.tables,
+				breaks: gfm.breaks,
+				sanitize: options.sanitize,
+				smartypants: options.smartypants
+			};
+		}
+		else
+		{
+			return {
+				gfm: false,
+				tables: false,
+				breaks: false,
+				sanitize: options.sanitize,
+				smartypants: options.smartypants
+			};
+		}
+	}
+
+	function toHtmlWith(options, rawMarkdown)
+	{
+		return new MarkdownWidget(options, rawMarkdown);
+	}
+
+	function MarkdownWidget(options, rawMarkdown)
+	{
+		this.options = options;
+		this.markdown = rawMarkdown;
+	}
+
+	MarkdownWidget.prototype.type = "Widget";
+
+	MarkdownWidget.prototype.init = function init()
+	{
+		var html = marked(this.markdown, formatOptions(this.options));
+		var div = document.createElement('div');
+		div.innerHTML = html;
+		return div;
 	};
-};
-Elm.Native.Port = {};
+
+	MarkdownWidget.prototype.update = function update(previous, node)
+	{
+		if (this.markdown !== previous.markdown || this.options != previous.options)
+		{
+			var html = marked(this.markdown, formatOptions(this.options));
+			node.innerHTML = html;
+		}
+		return node;
+	};
+
+
+	function toElementWith(options, rawMarkdown)
+	{
+		return Element.markdown(marked(rawMarkdown, formatOptions(options)));
+	}
+
+	return Elm.Native.Markdown.values = {
+		toHtmlWith: F2(toHtmlWith),
+		toElementWith: F2(toElementWith)
+	};
+};Elm.Native.Port = {};
 Elm.Native.Port.make = function(localRuntime) {
 
 	localRuntime.Native = localRuntime.Native || {};
@@ -12443,75 +12274,239 @@ Elm.Native.VirtualDom.make = function(elm)
 };
 
 },{"virtual-dom/vdom/create-element":6,"virtual-dom/vdom/patch":9,"virtual-dom/vnode/is-vhook":13,"virtual-dom/vnode/vnode":18,"virtual-dom/vnode/vtext":20,"virtual-dom/vtree/diff":22}]},{},[23]);
-Elm.Native = Elm.Native || {};
-Elm.Native.Window = {};
-Elm.Native.Window.make = function(localRuntime) {
-
-	localRuntime.Native = localRuntime.Native || {};
-	localRuntime.Native.Window = localRuntime.Native.Window || {};
-	if (localRuntime.Native.Window.values)
-	{
-		return localRuntime.Native.Window.values;
-	}
-
-	var NS = Elm.Native.Signal.make(localRuntime);
-	var Tuple2 = Elm.Native.Utils.make(localRuntime).Tuple2;
-
-
-	function getWidth()
-	{
-		return localRuntime.node.clientWidth;
-	}
-
-
-	function getHeight()
-	{
-		if (localRuntime.isFullscreen())
-		{
-			return window.innerHeight;
-		}
-		return localRuntime.node.clientHeight;
-	}
-
-
-	var dimensions = NS.input('Window.dimensions', Tuple2(getWidth(), getHeight()));
-
-
-	function resizeIfNeeded()
-	{
-		// Do not trigger event if the dimensions have not changed.
-		// This should be most of the time.
-		var w = getWidth();
-		var h = getHeight();
-		if (dimensions.value._0 === w && dimensions.value._1 === h)
-		{
-			return;
-		}
-
-		setTimeout(function () {
-			// Check again to see if the dimensions have changed.
-			// It is conceivable that the dimensions have changed
-			// again while some other event was being processed.
-			var w = getWidth();
-			var h = getHeight();
-			if (dimensions.value._0 === w && dimensions.value._1 === h)
-			{
-				return;
-			}
-			localRuntime.notify(dimensions.id, Tuple2(w,h));
-		}, 0);
-	}
-
-
-	localRuntime.addListener([dimensions.id], window, 'resize', resizeIfNeeded);
-
-
-	return localRuntime.Native.Window.values = {
-		dimensions: dimensions,
-		resizeIfNeeded: resizeIfNeeded
-	};
-};
-Elm.Result = Elm.Result || {};
+Elm.Projects = Elm.Projects || {};
+Elm.Projects.make = function (_elm) {
+   "use strict";
+   _elm.Projects = _elm.Projects || {};
+   if (_elm.Projects.values)
+   return _elm.Projects.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Projects",
+   $Basics = Elm.Basics.make(_elm),
+   $Header = Elm.Header.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Html$Attributes = Elm.Html.Attributes.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Markdown = Elm.Markdown.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $Utils = Elm.Utils.make(_elm);
+   var viewTitle = F2(function (address,
+   project) {
+      return function () {
+         var link = function () {
+            var _v0 = project.url;
+            switch (_v0.ctor)
+            {case "Just": return A2($Html.a,
+                 _L.fromArray([$Html$Attributes.$class("icon_btn")
+                              ,$Html$Attributes.href(_v0._0)]),
+                 _L.fromArray([A2($Html.img,
+                 _L.fromArray([$Html$Attributes.src("./link_icon.png")]),
+                 _L.fromArray([]))]));
+               case "Nothing":
+               return A2($Html.div,
+                 _L.fromArray([]),
+                 _L.fromArray([]));}
+            _U.badCase($moduleName,
+            "between lines 93 and 96");
+         }();
+         var github = function () {
+            var _v2 = project.code;
+            switch (_v2.ctor)
+            {case "Just": return A2($Html.a,
+                 _L.fromArray([$Html$Attributes.$class("icon_btn")
+                              ,$Html$Attributes.href(_v2._0)]),
+                 _L.fromArray([A2($Html.img,
+                 _L.fromArray([$Html$Attributes.src("./GitHub-Mark-32px.png")]),
+                 _L.fromArray([]))]));
+               case "Nothing":
+               return A2($Html.div,
+                 _L.fromArray([]),
+                 _L.fromArray([]));}
+            _U.badCase($moduleName,
+            "between lines 90 and 93");
+         }();
+         var name = function () {
+            var _v4 = project.url;
+            switch (_v4.ctor)
+            {case "Just": return A2($Html.a,
+                 _L.fromArray([$Html$Attributes.href(_v4._0)]),
+                 _L.fromArray([$Html.text(project.name)]));
+               case "Nothing":
+               return $Html.text(project.name);}
+            _U.badCase($moduleName,
+            "between lines 87 and 90");
+         }();
+         return A2($Html.div,
+         _L.fromArray([$Html$Attributes.$class("project_header")]),
+         _L.fromArray([A2($Html.div,
+                      _L.fromArray([$Html$Attributes.$class("project_name")]),
+                      _L.fromArray([name]))
+                      ,A2($Html.div,
+                      _L.fromArray([$Html$Attributes.$class("project_links")]),
+                      _L.fromArray([link,github]))]));
+      }();
+   });
+   var viewTag = F2(function (address,
+   tag) {
+      return A2($Html.div,
+      _L.fromArray([$Html$Attributes.$class("tag")]),
+      _L.fromArray([$Html.text(tag)]));
+   });
+   var viewProject = F2(function (address,
+   project) {
+      return A2($Html.div,
+      _L.fromArray([$Html$Attributes.$class("project")]),
+      _L.fromArray([A2($Html.img,
+                   _L.fromArray([$Html$Attributes.$class("project_logo")
+                                ,$Html$Attributes.src(project.thumbnail)]),
+                   _L.fromArray([]))
+                   ,A2($Html.div,
+                   _L.fromArray([$Html$Attributes.$class("project_details")]),
+                   _L.fromArray([A2(viewTitle,
+                                address,
+                                project)
+                                ,$Markdown.toHtml(project.description)
+                                ,$Html.div(_L.fromArray([$Html$Attributes.$class("tag-list")]))(A2($List.map,
+                                viewTag(address),
+                                project.tech))]))]));
+   });
+   var last = function (xs) {
+      return function () {
+         switch (xs.ctor)
+         {case "::": switch (xs._1.ctor)
+              {case "[]":
+                 return $Maybe.Just(xs._0);}
+              return last(xs._1);
+            case "[]":
+            return $Maybe.Nothing;}
+         _U.badCase($moduleName,
+         "between lines 76 and 79");
+      }();
+   };
+   var update = F2(function (action,
+   model) {
+      return function () {
+         switch (action.ctor)
+         {case "ModifyHeader":
+            return _U.replace([["header"
+                               ,A2($Header.update,
+                               action._0,
+                               model.header)]],
+              model);
+            case "NoOp": return model;}
+         _U.badCase($moduleName,
+         "between lines 71 and 73");
+      }();
+   });
+   var ModifyHeader = function (a) {
+      return {ctor: "ModifyHeader"
+             ,_0: a};
+   };
+   var view = F2(function (address,
+   model) {
+      return A2($Html.div,
+      _L.fromArray([]),
+      _L.fromArray([$Utils.css("../style.css")
+                   ,A2($Header.view,
+                   A2($Signal.forwardTo,
+                   address,
+                   ModifyHeader),
+                   model.header)
+                   ,A2($Html.div,
+                   _L.fromArray([$Html$Attributes.$class("content")]),
+                   _L.fromArray([$Html.div(_L.fromArray([]))(A2($List.map,
+                   viewProject(address),
+                   model.projects))]))]));
+   });
+   var NoOp = {ctor: "NoOp"};
+   var actionMailbox = $Signal.mailbox(NoOp);
+   var Model = F2(function (a,b) {
+      return {_: {}
+             ,header: b
+             ,projects: a};
+   });
+   var Project = F6(function (a,
+   b,
+   c,
+   d,
+   e,
+   f) {
+      return {_: {}
+             ,code: f
+             ,description: b
+             ,name: a
+             ,tech: c
+             ,thumbnail: d
+             ,url: e};
+   });
+   var projects = _L.fromArray([{_: {}
+                                ,code: $Maybe.Nothing
+                                ,description: "..."
+                                ,name: "Rooster Engine"
+                                ,tech: _L.fromArray(["Game Engine"
+                                                    ,"Rigid Body Physics"
+                                                    ,"Continuous Collision Detection"
+                                                    ,"Java"])
+                                ,thumbnail: "./rooster_engine.png"
+                                ,url: $Maybe.Nothing}
+                               ,{_: {}
+                                ,code: $Maybe.Just("https://github.com/davidozhang/off-the-grid")
+                                ,description: "..."
+                                ,name: "Off The Grid"
+                                ,tech: _L.fromArray(["iOS"
+                                                    ,"Multipeer Networking"
+                                                    ,"Swift"
+                                                    ,"P2P Networking"])
+                                ,thumbnail: "./off_the_grid.png"
+                                ,url: $Maybe.Just("http://devpost.com/software/off-the-grid-lhgj8q")}
+                               ,{_: {}
+                                ,code: $Maybe.Just("https://github.com/davidrusu/type-the-web")
+                                ,description: "..."
+                                ,name: "Type The Web"
+                                ,tech: _L.fromArray(["Firfox Addon"
+                                                    ,"RamdaJS"
+                                                    ,"JavaScript"])
+                                ,thumbnail: "./type_the_web.png"
+                                ,url: $Maybe.Just("https://addons.mozilla.org/en-US/firefox/addon/type-the-web/")}
+                               ,{_: {}
+                                ,code: $Maybe.Just("https://github.com/davidrusu/LaurierCourseGraph")
+                                ,description: "..."
+                                ,name: "Laurier Course Graph"
+                                ,tech: _L.fromArray(["ProcessingJS"
+                                                    ,"JavaScript"])
+                                ,thumbnail: "./laurier_course_graph.png"
+                                ,url: $Maybe.Just("https://davidrusu.github.io/LaurierCourseGraph")}
+                               ,{_: {}
+                                ,code: $Maybe.Just("https://github.com/davidrusu/markov_chain")
+                                ,description: "Ever wonder how your phone can predict what you are trying to type? Well it\'s a Markov Chain that\'s doing the heavy lifting. Here I implemented one such text suggester using a markov chain.\n\nThis was also an experiment in writing some non trivial algorithms in Elm, it was a great success, I really like Elm :)"
+                                ,name: "Markov Chain Text Suggester"
+                                ,tech: _L.fromArray(["Elm"
+                                                    ,"Markov Chain"])
+                                ,thumbnail: "./markov_chains.png"
+                                ,url: $Maybe.Just("https://davidrusu.github.io/markov_chain")}]);
+   var init = {_: {}
+              ,header: $Header.init
+              ,projects: projects};
+   var models = A3($Signal.foldp,
+   update,
+   init,
+   actionMailbox.signal);
+   var main = A2($Signal.map,
+   view(actionMailbox.address),
+   models);
+   _elm.Projects.values = {_op: _op
+                          ,init: init
+                          ,update: update
+                          ,view: view
+                          ,main: main
+                          ,Model: Model};
+   return _elm.Projects.values;
+};Elm.Result = Elm.Result || {};
 Elm.Result.make = function (_elm) {
    "use strict";
    _elm.Result = _elm.Result || {};
@@ -12897,547 +12892,6 @@ Elm.Signal.make = function (_elm) {
                         ,forwardTo: forwardTo
                         ,Mailbox: Mailbox};
    return _elm.Signal.values;
-};Elm.Signal = Elm.Signal || {};
-Elm.Signal.Extra = Elm.Signal.Extra || {};
-Elm.Signal.Extra.make = function (_elm) {
-   "use strict";
-   _elm.Signal = _elm.Signal || {};
-   _elm.Signal.Extra = _elm.Signal.Extra || {};
-   if (_elm.Signal.Extra.values)
-   return _elm.Signal.Extra.values;
-   var _op = {},
-   _N = Elm.Native,
-   _U = _N.Utils.make(_elm),
-   _L = _N.List.make(_elm),
-   $moduleName = "Signal.Extra",
-   $Basics = Elm.Basics.make(_elm),
-   $List = Elm.List.make(_elm),
-   $Maybe = Elm.Maybe.make(_elm),
-   $Result = Elm.Result.make(_elm),
-   $Signal = Elm.Signal.make(_elm);
-   var passiveMap2 = F2(function (func,
-   a) {
-      return function ($) {
-         return A2($Signal.map2,
-         func,
-         a)($Signal.sampleOn(a)($));
-      };
-   });
-   var withPassive = passiveMap2(F2(function (x,
-   y) {
-      return x(y);
-   }));
-   var combine = A2($List.foldr,
-   $Signal.map2(F2(function (x,y) {
-      return A2($List._op["::"],
-      x,
-      y);
-   })),
-   $Signal.constant(_L.fromArray([])));
-   var mapMany = F2(function (f,
-   l) {
-      return A2($Signal._op["<~"],
-      f,
-      combine(l));
-   });
-   var applyMany = F2(function (fs,
-   l) {
-      return A2($Signal._op["~"],
-      fs,
-      combine(l));
-   });
-   var mergeMany = F2(function (original,
-   others) {
-      return A3($List.foldl,
-      $Signal.merge,
-      original,
-      others);
-   });
-   var filter = function (initial) {
-      return A2($Signal.filterMap,
-      $Basics.identity,
-      initial);
-   };
-   var keepIf = $Signal.filter;
-   var runBuffer$ = F3(function (l,
-   n,
-   input) {
-      return function () {
-         var f = F2(function (inp,
-         prev) {
-            return function () {
-               var l = $List.length(prev);
-               return _U.cmp(l,
-               n) < 0 ? A2($Basics._op["++"],
-               prev,
-               _L.fromArray([inp])) : A2($Basics._op["++"],
-               A2($List.drop,l - n + 1,prev),
-               _L.fromArray([inp]));
-            }();
-         });
-         return A3($Signal.foldp,
-         f,
-         l,
-         input);
-      }();
-   });
-   var runBuffer = runBuffer$(_L.fromArray([]));
-   var foldps = F3(function (f,
-   bs,
-   aS) {
-      return A2($Signal._op["<~"],
-      $Basics.fst,
-      A3($Signal.foldp,
-      F2(function (a,_v0) {
-         return function () {
-            switch (_v0.ctor)
-            {case "_Tuple2": return A2(f,
-                 a,
-                 _v0._1);}
-            _U.badCase($moduleName,
-            "on line 174, column 29 to 34");
-         }();
-      }),
-      bs,
-      aS));
-   });
-   var delayRound = F2(function (b,
-   bS) {
-      return A3(foldps,
-      F2(function ($new,old) {
-         return {ctor: "_Tuple2"
-                ,_0: old
-                ,_1: $new};
-      }),
-      {ctor: "_Tuple2",_0: b,_1: b},
-      bS);
-   });
-   var filterFold = F2(function (f,
-   initial) {
-      return function () {
-         var f$ = F2(function (a,s) {
-            return function () {
-               var res = A2(f,a,s);
-               return {ctor: "_Tuple2"
-                      ,_0: res
-                      ,_1: A2($Maybe.withDefault,
-                      s,
-                      res)};
-            }();
-         });
-         return function ($) {
-            return filter(initial)(A2(foldps,
-            f$,
-            {ctor: "_Tuple2"
-            ,_0: $Maybe.Just(initial)
-            ,_1: initial})($));
-         };
-      }();
-   });
-   var initSignal = function (s) {
-      return A2($Signal.sampleOn,
-      $Signal.constant({ctor: "_Tuple0"}),
-      s);
-   };
-   var switchHelper = F4(function (filter,
-   b,
-   l,
-   r) {
-      return function () {
-         var fromJust = function (_v4) {
-            return function () {
-               switch (_v4.ctor)
-               {case "Just": return _v4._0;}
-               _U.badCase($moduleName,
-               "on line 285, column 25 to 26");
-            }();
-         };
-         var lAndR = A2($Signal.merge,
-         A3(filter,
-         b,
-         $Maybe.Nothing,
-         A2($Signal._op["<~"],
-         $Maybe.Just,
-         l)),
-         A3(filter,
-         A2($Signal._op["<~"],
-         $Basics.not,
-         b),
-         $Maybe.Nothing,
-         A2($Signal._op["<~"],
-         $Maybe.Just,
-         r)));
-         var base = A2($Signal._op["~"],
-         A2($Signal._op["~"],
-         A2($Signal._op["<~"],
-         F3(function (bi,li,ri) {
-            return $Maybe.Just(bi ? li : ri);
-         }),
-         initSignal(b)),
-         initSignal(l)),
-         initSignal(r));
-         return A2($Signal._op["<~"],
-         fromJust,
-         A2($Signal.merge,base,lAndR));
-      }();
-   });
-   var unzip4 = function (pairS) {
-      return {ctor: "_Tuple4"
-             ,_0: A2($Signal._op["<~"],
-             function (_v7) {
-                return function () {
-                   switch (_v7.ctor)
-                   {case "_Tuple4": return _v7._0;}
-                   _U.badCase($moduleName,
-                   "on line 134, column 19 to 20");
-                }();
-             },
-             pairS)
-             ,_1: A2($Signal._op["<~"],
-             function (_v13) {
-                return function () {
-                   switch (_v13.ctor)
-                   {case "_Tuple4":
-                      return _v13._1;}
-                   _U.badCase($moduleName,
-                   "on line 134, column 47 to 48");
-                }();
-             },
-             pairS)
-             ,_2: A2($Signal._op["<~"],
-             function (_v19) {
-                return function () {
-                   switch (_v19.ctor)
-                   {case "_Tuple4":
-                      return _v19._2;}
-                   _U.badCase($moduleName,
-                   "on line 134, column 75 to 76");
-                }();
-             },
-             pairS)
-             ,_3: A2($Signal._op["<~"],
-             function (_v25) {
-                return function () {
-                   switch (_v25.ctor)
-                   {case "_Tuple4":
-                      return _v25._3;}
-                   _U.badCase($moduleName,
-                   "on line 134, column 103 to 104");
-                }();
-             },
-             pairS)};
-   };
-   var unzip3 = function (pairS) {
-      return {ctor: "_Tuple3"
-             ,_0: A2($Signal._op["<~"],
-             function (_v31) {
-                return function () {
-                   switch (_v31.ctor)
-                   {case "_Tuple3":
-                      return _v31._0;}
-                   _U.badCase($moduleName,
-                   "on line 128, column 17 to 18");
-                }();
-             },
-             pairS)
-             ,_1: A2($Signal._op["<~"],
-             function (_v36) {
-                return function () {
-                   switch (_v36.ctor)
-                   {case "_Tuple3":
-                      return _v36._1;}
-                   _U.badCase($moduleName,
-                   "on line 128, column 43 to 44");
-                }();
-             },
-             pairS)
-             ,_2: A2($Signal._op["<~"],
-             function (_v41) {
-                return function () {
-                   switch (_v41.ctor)
-                   {case "_Tuple3":
-                      return _v41._2;}
-                   _U.badCase($moduleName,
-                   "on line 128, column 69 to 70");
-                }();
-             },
-             pairS)};
-   };
-   var unzip = function (pairS) {
-      return {ctor: "_Tuple2"
-             ,_0: A2($Signal._op["<~"],
-             $Basics.fst,
-             pairS)
-             ,_1: A2($Signal._op["<~"],
-             $Basics.snd,
-             pairS)};
-   };
-   var zip4 = $Signal.map4(F4(function (v0,
-   v1,
-   v2,
-   v3) {
-      return {ctor: "_Tuple4"
-             ,_0: v0
-             ,_1: v1
-             ,_2: v2
-             ,_3: v3};
-   }));
-   var zip3 = $Signal.map3(F3(function (v0,
-   v1,
-   v2) {
-      return {ctor: "_Tuple3"
-             ,_0: v0
-             ,_1: v1
-             ,_2: v2};
-   }));
-   var zip = $Signal.map2(F2(function (v0,
-   v1) {
-      return {ctor: "_Tuple2"
-             ,_0: v0
-             ,_1: v1};
-   }));
-   var keepWhen = F3(function (boolSig,
-   a,
-   aSig) {
-      return $Signal.map($Basics.snd)(A2(keepIf,
-      $Basics.fst,
-      {ctor: "_Tuple2"
-      ,_0: true
-      ,_1: a})($Signal.sampleOn(aSig)(A2(zip,
-      boolSig,
-      aSig))));
-   });
-   var switchWhen = F3(function (b,
-   l,
-   r) {
-      return A4(switchHelper,
-      keepWhen,
-      b,
-      l,
-      r);
-   });
-   var sampleWhen = F3(function (bs,
-   def,
-   sig) {
-      return $Signal.map($Basics.snd)(A2(keepIf,
-      $Basics.fst,
-      {ctor: "_Tuple2"
-      ,_0: true
-      ,_1: def})(A2(zip,bs,sig)));
-   });
-   var switchSample = F3(function (b,
-   l,
-   r) {
-      return A4(switchHelper,
-      sampleWhen,
-      b,
-      l,
-      r);
-   });
-   var keepThen = F3(function (choice,
-   base,
-   signal) {
-      return A2(switchSample,
-      choice,
-      signal)($Signal.constant(base));
-   });
-   var andMap = F2(function (x,y) {
-      return A2($Signal._op["~"],
-      x,
-      y);
-   });
-   _op["~>"] = $Basics.flip($Signal.map);
-   var foldp$ = F3(function (fun,
-   initFun,
-   input) {
-      return function () {
-         var fromJust = function (_v46) {
-            return function () {
-               switch (_v46.ctor)
-               {case "Just": return _v46._0;}
-               _U.badCase($moduleName,
-               "on line 161, column 25 to 26");
-            }();
-         };
-         var fun$ = F2(function (_v49,
-         mb) {
-            return function () {
-               switch (_v49.ctor)
-               {case "_Tuple2":
-                  return $Maybe.Just(fun(_v49._0)(A2($Maybe.withDefault,
-                    _v49._1,
-                    mb)));}
-               _U.badCase($moduleName,
-               "between lines 158 and 159");
-            }();
-         });
-         var initial = A2(_op["~>"],
-         initSignal(input),
-         initFun);
-         var rest = A3($Signal.foldp,
-         fun$,
-         $Maybe.Nothing,
-         A2(zip,input,initial));
-         return A2($Signal._op["<~"],
-         fromJust,
-         A2($Signal.merge,
-         A2($Signal._op["<~"],
-         $Maybe.Just,
-         initial),
-         rest));
-      }();
-   });
-   var foldps$ = F3(function (f,
-   iF,
-   aS) {
-      return A2($Signal._op["<~"],
-      $Basics.fst,
-      A3(foldp$,
-      F2(function (a,_v53) {
-         return function () {
-            switch (_v53.ctor)
-            {case "_Tuple2": return A2(f,
-                 a,
-                 _v53._1);}
-            _U.badCase($moduleName,
-            "on line 180, column 46 to 51");
-         }();
-      }),
-      iF,
-      aS));
-   });
-   var deltas = function (signal) {
-      return function () {
-         var initial = function (value) {
-            return {ctor: "_Tuple2"
-                   ,_0: value
-                   ,_1: value};
-         };
-         var step = F2(function (value,
-         delta) {
-            return {ctor: "_Tuple2"
-                   ,_0: $Basics.snd(delta)
-                   ,_1: value};
-         });
-         return A3(foldp$,
-         step,
-         initial,
-         signal);
-      }();
-   };
-   var foldpWith = F4(function (unpack,
-   step,
-   init,
-   input) {
-      return function () {
-         var step$ = F2(function (a,
-         _v57) {
-            return function () {
-               switch (_v57.ctor)
-               {case "_Tuple2":
-                  return unpack(A2(step,
-                    a,
-                    _v57._1));}
-               _U.badCase($moduleName,
-               "on line 194, column 7 to 25");
-            }();
-         });
-         return A2(_op["~>"],
-         A3($Signal.foldp,
-         step$,
-         init,
-         input),
-         $Basics.fst);
-      }();
-   });
-   var keepWhenI = F2(function (fs,
-   s) {
-      return function () {
-         var fromJust = function (_v61) {
-            return function () {
-               switch (_v61.ctor)
-               {case "Just": return _v61._0;}
-               _U.badCase($moduleName,
-               "on line 331, column 25 to 26");
-            }();
-         };
-         return A2(_op["~>"],
-         A3(keepWhen,
-         A2($Signal.merge,
-         $Signal.constant(true),
-         fs),
-         $Maybe.Nothing,
-         A2($Signal._op["<~"],
-         $Maybe.Just,
-         s)),
-         fromJust);
-      }();
-   });
-   var fairMerge = F3(function (resolve,
-   left,
-   right) {
-      return function () {
-         var merged = A2($Signal.merge,
-         left,
-         right);
-         var boolRight = A2($Signal._op["<~"],
-         $Basics.always(false),
-         right);
-         var boolLeft = A2($Signal._op["<~"],
-         $Basics.always(true),
-         left);
-         var bothUpdated = A2($Signal._op["~"],
-         A2($Signal._op["<~"],
-         F2(function (x,y) {
-            return !_U.eq(x,y);
-         }),
-         A2($Signal.merge,
-         boolLeft,
-         boolRight)),
-         A2($Signal.merge,
-         boolRight,
-         boolLeft));
-         var keep = keepWhenI(bothUpdated);
-         var resolved = A2($Signal._op["~"],
-         A2($Signal._op["<~"],
-         resolve,
-         keep(left)),
-         keep(right));
-         return $Signal.merge(resolved)(merged);
-      }();
-   });
-   _elm.Signal.Extra.values = {_op: _op
-                              ,andMap: andMap
-                              ,zip: zip
-                              ,zip3: zip3
-                              ,zip4: zip4
-                              ,unzip: unzip
-                              ,unzip3: unzip3
-                              ,unzip4: unzip4
-                              ,foldp$: foldp$
-                              ,foldps: foldps
-                              ,foldps$: foldps$
-                              ,runBuffer: runBuffer
-                              ,runBuffer$: runBuffer$
-                              ,deltas: deltas
-                              ,delayRound: delayRound
-                              ,keepIf: keepIf
-                              ,keepWhen: keepWhen
-                              ,sampleWhen: sampleWhen
-                              ,switchWhen: switchWhen
-                              ,keepWhenI: keepWhenI
-                              ,switchSample: switchSample
-                              ,keepThen: keepThen
-                              ,filter: filter
-                              ,filterFold: filterFold
-                              ,fairMerge: fairMerge
-                              ,mergeMany: mergeMany
-                              ,combine: combine
-                              ,mapMany: mapMany
-                              ,applyMany: applyMany
-                              ,passiveMap2: passiveMap2
-                              ,withPassive: withPassive};
-   return _elm.Signal.Extra.values;
 };Elm.String = Elm.String || {};
 Elm.String.make = function (_elm) {
    "use strict";
@@ -14083,30 +13537,4 @@ Elm.VirtualDom.make = function (_elm) {
                             ,lazy3: lazy3
                             ,Options: Options};
    return _elm.VirtualDom.values;
-};Elm.Window = Elm.Window || {};
-Elm.Window.make = function (_elm) {
-   "use strict";
-   _elm.Window = _elm.Window || {};
-   if (_elm.Window.values)
-   return _elm.Window.values;
-   var _op = {},
-   _N = Elm.Native,
-   _U = _N.Utils.make(_elm),
-   _L = _N.List.make(_elm),
-   $moduleName = "Window",
-   $Basics = Elm.Basics.make(_elm),
-   $Native$Window = Elm.Native.Window.make(_elm),
-   $Signal = Elm.Signal.make(_elm);
-   var dimensions = $Native$Window.dimensions;
-   var width = A2($Signal.map,
-   $Basics.fst,
-   dimensions);
-   var height = A2($Signal.map,
-   $Basics.snd,
-   dimensions);
-   _elm.Window.values = {_op: _op
-                        ,dimensions: dimensions
-                        ,width: width
-                        ,height: height};
-   return _elm.Window.values;
-};</script></head><body><script type="text/javascript">Elm.fullscreen(Elm.Main)</script></body></html>
+};</script></head><body><script type="text/javascript">Elm.fullscreen(Elm.Projects)</script></body></html>

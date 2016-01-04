@@ -11,7 +11,7 @@ type alias Model = { home : (String, Path)
                    , selected : Int }
 
 basePath = "https://davidrusu.github.io"
-projectsPath = "https://github.com/davidrusu" -- basePath ++ "/projects.html"
+projectsPath = basePath ++ "pages//projects.html"
 statsPath = "http://davidrusu.github.io/mastery/" -- basePath ++ "/stats.html"
 teasPath = basePath ++ "/pages/tea_log.html"
 

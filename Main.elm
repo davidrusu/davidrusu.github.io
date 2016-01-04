@@ -30,7 +30,7 @@ viewHeader a m = Header.view (Signal.forwardTo a ModifyHeader) m.header
 
 view address model =
   div
-    [class "content"]
+    []
     [ css "style.css"
     , viewHeader address model
     , div

@@ -1,5 +1,6 @@
 html,head,body {
     padding:0;
+
     margin:0;
 }
 body {
@@ -7,7 +8,6 @@ body {
 }
 
 .header {
-    position: fixed;
     width: 100%;
     z-index: 2;
     display: flex;
@@ -33,12 +33,11 @@ a {
 }
 
 .content {
-    position: absolute;
-    top: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    padding: 50px;
 }
 
 .greeter {
@@ -66,4 +65,55 @@ a {
     padding: 5px;
     margint-top: auto;
     margint-bottom: auto;
+}
+
+.project {
+    display: flex;
+    flex-flow: row || nowrap;
+    padding: 10px;
+    border-bottom: 1px dashed;
+}
+
+.project_logo {
+    border-radius: 10%;
+    margin-right: 15px;
+    min-width: 150px;
+    min-height: 150px;
+    width: 150px;
+    height: 150px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.tag-list {
+    display: flex;
+    flex-flow: row;
+}
+.tag {
+    background-color: #000000;
+    color: #ffffff;
+    font-weight: bold;
+    margin: 2px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.project_details {
+    width: 100%
+}
+
+.project_header {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+
+.project_name {
+    font-size: 18pt;
+    font-weight: bold;
+}
+.project_links {
+}
+
+.icon_btn {
+    margin-left: 10px;
 }
