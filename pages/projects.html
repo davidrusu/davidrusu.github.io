@@ -2822,8 +2822,10 @@ Elm.Header.make = function (_elm) {
              ,selected: selected};
    });
    var statsPath = "http://davidrusu.github.io/mastery/";
-   var projectsPath = "https://github.com/davidrusu";
    var basePath = "https://davidrusu.github.io";
+   var projectsPath = A2($Basics._op["++"],
+   basePath,
+   "/pages/projects.html");
    var teasPath = A2($Basics._op["++"],
    basePath,
    "/pages/tea_log.html");
