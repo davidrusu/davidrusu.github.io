@@ -4822,8 +4822,10 @@ Elm.Header.make = function (_elm) {
              ,selected: selected};
    });
    var statsPath = "http://davidrusu.github.io/mastery/";
-   var projectsPath = "https://github.com/davidrusu";
    var basePath = "https://davidrusu.github.io";
+   var projectsPath = A2($Basics._op["++"],
+   basePath,
+   "/pages/projects.html");
    var teasPath = A2($Basics._op["++"],
    basePath,
    "/pages/tea_log.html");
@@ -15038,7 +15040,7 @@ Elm.TeaLog.make = function (_elm) {
                case "YunnanSourcing":
                return "https://yunnansourcing.com/";}
             _U.badCase($moduleName,
-            "between lines 270 and 273");
+            "between lines 289 and 292");
          }();
          return A2($Html.div,
          _L.fromArray([]),
@@ -15087,7 +15089,7 @@ Elm.TeaLog.make = function (_elm) {
             case "[]":
             return $Maybe.Nothing;}
          _U.badCase($moduleName,
-         "between lines 216 and 219");
+         "between lines 235 and 238");
       }();
    };
    var viewTeaCategory = function (category) {
@@ -15104,7 +15106,7 @@ Elm.TeaLog.make = function (_elm) {
                          viewTeaCategory(_v8._0));
                        case "Nothing": return "";}
                     _U.badCase($moduleName,
-                    "between lines 241 and 244");
+                    "between lines 260 and 263");
                  }();
                  var listPart = $String.join(", ")($List.map(viewTeaCategory)(A2($List.take,
                  $List.length(category._0) - 1,
@@ -15125,7 +15127,7 @@ Elm.TeaLog.make = function (_elm) {
                     case "Ripe":
                     return "Ripe Pu-erh";}
                  _U.badCase($moduleName,
-                 "between lines 230 and 235");
+                 "between lines 249 and 254");
               }();}
          return $Basics.toString(category);
       }();
@@ -15142,7 +15144,7 @@ Elm.TeaLog.make = function (_elm) {
                case "Nothing":
                return $Html.text(tea.name);}
             _U.badCase($moduleName,
-            "between lines 251 and 254");
+            "between lines 270 and 273");
          }();
          return A2($Html.div,
          _L.fromArray([$Html$Attributes.$class("tea_description")]),
@@ -15207,7 +15209,7 @@ Elm.TeaLog.make = function (_elm) {
          switch (action.ctor)
          {case "NoOp": return model;}
          _U.badCase($moduleName,
-         "between lines 206 and 207");
+         "between lines 225 and 226");
       }();
    });
    var ModifyHeader = function (a) {
@@ -15309,6 +15311,19 @@ Elm.TeaLog.make = function (_elm) {
    var Grenadine = {ctor: "Grenadine"};
    var Vanilla = {ctor: "Vanilla"};
    var log = _L.fromArray([{_: {}
+                           ,date: "2016-1-10"
+                           ,rating: 8
+                           ,review: "\nOk, first review of 2016, let\'s go!\nThis one is one of the black teas that came in the December batch of the Yunnan Sourcing Dark Tea Club, the tea leafs are a dark grey with some blond strands. They don\'t seem to have much of an aroma, I tried crushing some of the leafs to see if increasing the surface area would help, but no, not much of a scent, just a little hint of flowers.\n\nThe tea liquour is a very dark reddish brown, almost opaque, I\'m not sure if it\'s the opaqueness, but the tea seems to have a bit more viscosity than other teas. As for the aroma, it is more pronounced once brewed, it\'s a flowery scent. The tea, feels a bit viscous and has a bit of a tang with hints of flowers, it\'s got a nice, simple flavour. The tea is quite smooth, the slight viscosity probably helps with this. Overall, it\'s a comfortable and yummy tea, it\'ll warm you right up :)\n\nThe leafs also last a good number of brews, I was able to squeeze 6 cups out a batch.\n"
+                           ,tea: {_: {}
+                                 ,category: Black
+                                 ,flavours: _L.fromArray([])
+                                 ,name: "Da Hu Sai Village Wild Arbor Black Tea of Yunnan"
+                                 ,region: Yunnan
+                                 ,season: Autumn
+                                 ,url: $Maybe.Just("http://yunnansourcing.com/en/yunnan-black-teas/3696-da-hu-sai-village-wild-arbor-black-tea-of-yunnan-autumn-2015.html")
+                                 ,year: $Maybe.Just(2015)}
+                           ,vendor: YunnanSourcing}
+                          ,{_: {}
                            ,date: "2015-12-18"
                            ,rating: 7
                            ,review: "\nThis tea has been sitting in the pantry for over a year now, I found it tucked away in the back and decided to give it a try. It seems to be a common meme among oolongs tea to be have a name referencing iron or rock, the last two oolongs I had were \'Iron Arhat\' and \'Wu Yi Rock\' (didn\'t write a log for this one yet).\n\nThe leafs from this one has a bit of a musty smell, not sure if that\'s just cause they\'re old. It\'s a rolled leaf that unfurls during the infusion process. The tea does leave a bit of a iron taste in the mouth, I didn\'t get that from the \'Iron Arhat\' tea. It has a lighter taste than the other oolongs so it\'s probably not as oxidized.\n\nThe taste is good, but doesn\'t survive as many infusions as some of the other oolongs, I got 2 good infusions out of the leafs.\n"

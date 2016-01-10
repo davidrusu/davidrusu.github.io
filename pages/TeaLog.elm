@@ -1,4 +1,3 @@
-
 module TeaLog (Model, init, Action, update, view, main) where
 import String
 import Header
@@ -26,7 +25,43 @@ import Css.Position as Position
 import Color exposing (..)
 
 log : List LogEntry
-log = [ { tea = { name = "Iron Goddess of Mercy"
+log = [ { tea = { name = "Buddha's Hand 'Fo Shou' Wu Yi Rock"
+                , category = Oolong
+                , region = 
+                , flavours = []
+                , season = Spring
+                , year = 2015
+                , url = Just 
+                }
+        , date = "2015-12-24"
+        , vendor = YunnanSourcing
+        , rating = 
+        , review = """
+leafs a bit Milky smelling
+
+"""
+        },
+        { tea = { name = "Da Hu Sai Village Wild Arbor Black Tea of Yunnan"
+                , category = Black
+                , region = Yunnan
+                , flavours = []
+                , season = Autumn
+                , year = Just 2015
+                , url = Just "http://yunnansourcing.com/en/yunnan-black-teas/3696-da-hu-sai-village-wild-arbor-black-tea-of-yunnan-autumn-2015.html"
+                }
+        , date = "2016-1-10"
+        , vendor = YunnanSourcing
+        , rating = 8
+        , review = """
+Ok, first review of 2016, let's go!
+This one is one of the black teas that came in the December batch of the Yunnan Sourcing Dark Tea Club, the tea leafs are a dark grey with some blond strands. They don't seem to have much of an aroma, I tried crushing some of the leafs to see if increasing the surface area would help, but no, not much of a scent, just a little hint of flowers.
+
+The tea liquour is a very dark reddish brown, almost opaque, I'm not sure if it's the opaqueness, but the tea seems to have a bit more viscosity than other teas. As for the aroma, it is more pronounced once brewed, it's a flowery scent. The tea, feels a bit viscous and has a bit of a tang with hints of flowers, it's got a nice, simple flavour. The tea is quite smooth, the slight viscosity probably helps with this. Overall, it's a comfortable and yummy tea, it'll warm you right up :)
+
+The leafs also last a good number of brews, I was able to squeeze 6 cups out a batch.
+"""
+        }
+      , { tea = { name = "Iron Goddess of Mercy"
                 , category = Oolong
                 , region = Fujian
                 , flavours = []
