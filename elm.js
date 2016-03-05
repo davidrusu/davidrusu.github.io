@@ -2830,8 +2830,10 @@ Elm.Header.make = function (_elm) {
              ,selected: selected};
    });
    var statsPath = "http://davidrusu.github.io/mastery/";
-   var projectsPath = "https://github.com/davidrusu";
    var basePath = "https://davidrusu.github.io";
+   var projectsPath = A2($Basics._op["++"],
+   basePath,
+   "/pages/projects.html");
    var teasPath = A2($Basics._op["++"],
    basePath,
    "/pages/tea_log.html");
@@ -12484,7 +12486,7 @@ Elm.Projects.make = function (_elm) {
    });
    var projects = _L.fromArray([{_: {}
                                 ,code: $Maybe.Nothing
-                                ,description: "..."
+                                ,description: "Rooster Engine is a Game Engine + Physics Engine written entirely from the ground up. The physics engine features continuous collision detection which means you will never miss a collision no matter how fast or small your shapes are."
                                 ,name: "Rooster Engine"
                                 ,tech: _L.fromArray(["Game Engine"
                                                     ,"Rigid Body Physics"
@@ -12494,7 +12496,7 @@ Elm.Projects.make = function (_elm) {
                                 ,url: $Maybe.Nothing}
                                ,{_: {}
                                 ,code: $Maybe.Just("https://github.com/davidozhang/off-the-grid")
-                                ,description: "..."
+                                ,description: "Off The Grid is an iOS app for realtime offline collaboration. We used the iOS Multipeer Connectivity Framework to create a real time offline collaborative whiteboard. This project was completed in 36 hours at Hack Western 2 where we were awarded a top 6 finish."
                                 ,name: "Off The Grid"
                                 ,tech: _L.fromArray(["iOS"
                                                     ,"Multipeer Networking"
@@ -12504,7 +12506,7 @@ Elm.Projects.make = function (_elm) {
                                 ,url: $Maybe.Just("http://devpost.com/software/off-the-grid-lhgj8q")}
                                ,{_: {}
                                 ,code: $Maybe.Just("https://github.com/davidrusu/type-the-web")
-                                ,description: "..."
+                                ,description: "Type The Web is a Firefox add-on for improving your typing speed using the content of any website. I built this addon while I was learning the Colemak keyboard layout because I found the existing typing tutors tedious and boring. I wanted a something where I go on Hacker News and be able to type out the content."
                                 ,name: "Type The Web"
                                 ,tech: _L.fromArray(["Firfox Addon"
                                                     ,"RamdaJS"
@@ -12513,10 +12515,11 @@ Elm.Projects.make = function (_elm) {
                                 ,url: $Maybe.Just("https://addons.mozilla.org/en-US/firefox/addon/type-the-web/")}
                                ,{_: {}
                                 ,code: $Maybe.Just("https://github.com/davidrusu/LaurierCourseGraph")
-                                ,description: "..."
+                                ,description: "Laurier Course Graph is a website with an interactive graph of the dependencies between courses at Laurier. You can use it to quickly understand the structure of the graph and to plan your course selections."
                                 ,name: "Laurier Course Graph"
                                 ,tech: _L.fromArray(["ProcessingJS"
-                                                    ,"JavaScript"])
+                                                    ,"JavaScript"
+                                                    ,"Python"])
                                 ,thumbnail: "./laurier_course_graph.png"
                                 ,url: $Maybe.Just("https://davidrusu.github.io/LaurierCourseGraph")}
                                ,{_: {}

@@ -10,29 +10,29 @@ import Markdown exposing (..)
 
 projects : List Project
 projects = [ { name = "Rooster Engine"
-             , description = """..."""
+             , description = """Rooster Engine is a Game Engine + Physics Engine written entirely from the ground up. The physics engine features continuous collision detection which means you will never miss a collision no matter how fast or small your shapes are."""
              , tech = ["Game Engine", "Rigid Body Physics", "Continuous Collision Detection", "Java"]
              , url = Nothing
              , code = Nothing
              , thumbnail = "./rooster_engine.png"
              }
            , { name = "Off The Grid"
-             , description = """..."""
+             , description = """Off The Grid is an iOS app for realtime offline collaboration. We used the iOS Multipeer Connectivity Framework to create a real time offline collaborative whiteboard. This project was completed in 36 hours at Hack Western 2 where we were awarded a top 6 finish."""
              , tech = ["iOS", "Multipeer Networking", "Swift", "P2P Networking"]
              , url = Just "http://devpost.com/software/off-the-grid-lhgj8q"
              , code = Just "https://github.com/davidozhang/off-the-grid"
              , thumbnail = "./off_the_grid.png"
              }
            , { name = "Type The Web"
-             , description = """..."""
+             , description = """Type The Web is a Firefox add-on for improving your typing speed using the content of any website. I built this addon while I was learning the Colemak keyboard layout because I found the existing typing tutors tedious and boring. I wanted a something where I go on Hacker News and be able to type out the content."""
              , tech = ["Firfox Addon", "RamdaJS", "JavaScript"]
              , url = Just "https://addons.mozilla.org/en-US/firefox/addon/type-the-web/"
              , code = Just "https://github.com/davidrusu/type-the-web"
              , thumbnail = "./type_the_web.png"
              }
            , { name = "Laurier Course Graph"
-             , description = """..."""
-             , tech = ["ProcessingJS", "JavaScript"]
+             , description = """Laurier Course Graph is a website with an interactive graph of the dependencies between courses at Laurier. You can use it to quickly understand the structure of the graph and to plan your course selections."""
+             , tech = ["ProcessingJS", "JavaScript", "Python"]
              , url = Just "https://davidrusu.github.io/LaurierCourseGraph"
              , code = Just "https://github.com/davidrusu/LaurierCourseGraph"
              , thumbnail = "./laurier_course_graph.png"
