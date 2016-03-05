@@ -23,8 +23,8 @@ actionMailbox = mailbox NoOp
 update : Action -> Model -> Model
 update action model = case action of
                         NoOp           -> model
-                        ModifyHeader a -> { model | header <- Header.update a model.header }
-                        Curve curve    -> { model | curve <- curve }
+                        ModifyHeader a -> { model | header = Header.update a model.header }
+                        Curve curve    -> { model | curve = curve }
 
 viewHeader a m = Header.view (Signal.forwardTo a ModifyHeader) m.header
 

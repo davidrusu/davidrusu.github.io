@@ -25,22 +25,21 @@ import Css.Position as Position
 import Color exposing (..)
 
 log : List LogEntry
-log = [ { tea = { name = "Buddha's Hand 'Fo Shou' Wu Yi Rock"
-                , category = Oolong
-                , region = 
-                , flavours = []
-                , season = Spring
-                , year = 2015
-                , url = Just 
-                }
-        , date = "2015-12-24"
-        , vendor = YunnanSourcing
-        , rating = 
-        , review = """
-leafs a bit Milky smelling
-
-"""
-        },
+log = [ -- { tea = { name = "Buddha's Hand 'Fo Shou' Wu Yi Rock"
+--                 , category = Oolong
+--                 , region = Fujian
+--                 , flavours = []
+--                 , season = Spring
+--                 , year = 2015
+--                 , url = Just 
+--                 }
+--         , date = "2015-12-24"
+--         , vendor = YunnanSourcing
+--         , rating = 
+--         , review = """
+-- leafs a bit Milky smelling
+-- """
+--         },
         { tea = { name = "Da Hu Sai Village Wild Arbor Black Tea of Yunnan"
                 , category = Black
                 , region = Yunnan
@@ -240,6 +239,7 @@ type Action = NoOp | ModifyHeader Header.Action
 update : Action -> Model -> Model
 update action model = case action of
                         NoOp -> model
+                        ModifyHeader headerAction -> { model | header = Header.update headerAction model.header }
 
 centered styles =
   styles

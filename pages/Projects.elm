@@ -70,7 +70,7 @@ update : Action -> Model -> Model
 update action model =
   case action of
     NoOp -> model
-    ModifyHeader headerAction -> { model | header <- Header.update headerAction model.header }
+    ModifyHeader headerAction -> { model | header = Header.update headerAction model.header }
 
 last : List a -> Maybe a
 last xs = case xs of

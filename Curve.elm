@@ -73,12 +73,12 @@ update action model =
   case action of
     NoOp             -> model
     WindowDim (w, h) -> let ps = genPoints (w, h) in
-                        { model | w <- w
-                                , h <- h
-                                , targetPoints <- ps
-                                , points <- distort model ps }
-    MouseMove mouse  -> { model | mouse <-  addP model.mouse <| scaleP 1 <| (transformMouse model mouse) `addP` (scaleP -1 model.mouse)
-                                , points <- distort model model.targetPoints }
+                        { model | w = w
+                                , h = h
+                                , targetPoints = ps
+                                , points = distort model ps }
+    MouseMove mouse  -> { model | mouse =  addP model.mouse <| scaleP 1 <| (transformMouse model mouse) `addP` (scaleP -1 model.mouse)
+                                , points = distort model model.targetPoints }
 
 windowDims = Signal.map (WindowDim) Window.dimensions
 
