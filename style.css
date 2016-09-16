@@ -1,0 +1,96 @@
+body, p {
+    font-family: 'Roboto Slab', serif;
+    padding: 0;
+    margin: 0;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+li {
+    display: inline-block;
+    margin: 10px;
+}
+
+a {
+    color: #000;
+}
+
+#navbar {
+    float: right;
+}
+
+#content {
+    text-align: center;
+    width: 100%;
+}
+
+.sidebar {
+    vertical-align: top;
+    margin: 1em;
+    text-align: left;
+}
+
+#name {
+    font-size: 50pt;
+}
+
+#work {
+    display: inline-block;
+    width: 35%;
+}
+
+#links {
+    display: inline-block;
+}
+
+
+.link {
+    display: block;
+}
+
+.project {
+    display: inline-block;
+    margin: 10px;
+    vertical-align: top;
+}
+
+.project_detail {
+    vertical-align: top;
+    display: inline-block;
+    width: 250px;
+    margin-left: 0.1em;
+}
+
+.project_logo {
+    height: 100px;
+    display: inline-block;
+    border-radius: 3px;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
+}
+
+.project_title {
+    font-weight: bold;
+}
+
+.project_blurb {
+}
+
+#header {
+    
+}
+
+
+#sidebar_wrapper {
+    
+}
+
+.sidebar_header {
+    font-weight: bold;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 0.01em black solid;
+}
