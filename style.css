@@ -4,6 +4,16 @@ body, p {
     margin: 0;
 }
 
+body {
+}
+
+#bg_sketch {
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
 ul {
     list-style-type: none;
     margin: 0;
@@ -32,6 +42,8 @@ a {
     vertical-align: top;
     margin: 1em;
     text-align: left;
+    /*background-color: rgba(255, 255, 255, 0.7);*/
+    padding: 0.2em;
 }
 
 #name {
@@ -73,10 +85,10 @@ a {
 }
 
 .project_title {
-    font-weight: bold;
+    font-weight: project;
 }
 
-.project_blurb {
+.bold_blurb {
 }
 
 #header {

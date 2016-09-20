@@ -1,123 +1,107 @@
-var Header = {
-  ACTIONS: {
-    SELECT: 'SELECT'
-  },
-  
-  initModel: {
-    items: ['a', 'b', 'c'],
-    selected: 0
-  },
+$(function() {
+  console.log('on load');
 
-  update: function (model, action) {
-    var m = Object.assign({}, model);
-    switch (action.type) {
-    case Header.ACTIONS.SELECT:
-      m.selected = action.selected;
-      break;
-    default:
-      console.log('INVALID HEADER ACTION TYPE', action);
-    }
-    return m;
-  },
-  
-  actions: {
-    select: function (index) {
-      return {
-	type: Header.ACTIONS.SELECT,
-	selected: index
-      };
-    }
-  },
+  console.log(p5);
+});
 
-  headerItem: function (model, item, index, dispatch) {
-    var isSelected = model.selected === index;
-    var style = {
-      'display': 'inline-block',
-      'padding': '5px',
-      'margin': '2px',
-      'background': isSelected ? '#333' : '#aaa',
-      'color': isSelected ? '#fff' : '#000'
-    };
-    
-    return $('<div>')
-      .text(item)
-      .css(style)
-      .click(function() {dispatch(Header.actions.select(index));});
-  },
+var AIR = 0.9;
+var points = [];
 
-  render: function (model, dispatch) {
-    var style = {
-      width: '100%',
-      height: '50px'
-    };
-    return $('<div class="header">').css(style).append(
-      $('<div class="header-home">').text('David Rusu').css({display: 'inline-block'}),
-      model.items.map(
-	function (item, index) {
-	  return Header.headerItem(model, item, index, dispatch);
-	}
-      )
-    );
-  }
-};
+function Point(x, y, vx, vy) {
+  this.x = x;
+  this.y = y;
+  this.vx = vx;
+  this.vy = vy;
 
-var App = {
-  ACTIONS: {
-    HEADER: 'HEADER'
-  },
-  
-  initModel: {
-    header: Header.initModel
-  },
+  this.update = function() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.vx *= AIR;
+    this.vy *= AIR;
+  };
 
-  update: function(model, action) {
-    var m = Object.assign({}, model);
-    switch (action.type) {
-    case App.ACTIONS.HEADER:
-      m.header = Header.update(m.header, action.action);
-      break;
-    default:
-      console.log('INVALID ACTION TYPE', action);
-    }
-    return m;
-  },
-  
-  actions: {
-    header: function (action) {
-      return {
-	type: App.ACTIONS.HEADER,
-	action: action
-      };
-    }
-  },
-
-  render: function (model, dispatch) {
-    var headerDispatch = function (action) {dispatch(App.actions.header(action));};
-    
-    return $('<div id="app">').append(
-      Header.render(model.header,headerDispatch)
-    );
-  }
-};
-
-function init(root, app) {
-  var dispatcher = $(document);
-  var dispatch = function (action) {dispatcher.trigger('flux:action', action);};
-  var model = app.initModel;
-  
-  dispatcher.on('flux:action', function (_, action) {
-    model = app.update(model, action);
-    dispatcher.trigger('flux:render', model);
-  });
-
-  dispatcher.on('flux:render',
-		function (_, model) {
-		  return $(root)
-		    .empty()
-		    .append(app.render(model, dispatch));
-		});
-  
-  dispatcher.trigger('flux:render', model);
+  this.draw = function() {
+    ellipse(this.x, this.y, 1, 1);
+  };
 }
 
-init('#root', App);
+function setup() {
+  var cnv = createCanvas(windowWidth, windowHeight);
+  cnv.parent('bg_sketch');
+  for (var i = 0; i < 100; i++) {
+    points.push(new Point(random(width), random(height), 0, 0));
+  }
+}
+
+function update() {
+  points.forEach(function(p) {
+    p.update();
+  });
+  
+  for (var i = 0; i < points.length; i++) {
+    var p1 = points[i];
+    for (var j = i + 1; j < points.length; j++) {
+      var p2 = points[j];
+      var dx = p2.x - p1.x;
+      var dy = p2.y - p1.y;
+      var d = max(1, sqrt(dx * dx + dy * dy));
+      var nx = dx / d;
+      var ny = dy / d;
+      var k = 0.01;
+      var f;
+      if (abs(i - j) < 3) {
+	f = (d - 500) * k;
+      } else {
+	f = -1 / (d * d) * k * 100;
+      }
+      p1.vx += nx * f;
+      p1.vy += ny * f;
+      p2.vx -= nx * f;
+      p2.vy -= ny * f;
+    }
+  }
+
+  for (var i = 0; i < points.length; i++) {
+    var p = points[i];
+    var w = 0.000001;
+    p.vx += (width / 2 - p.x) * w;
+    p.vy += (height / 2 - p.y) * w;
+  }
+
+  for (var i = 0; i < points.length; i++) {
+    var p = points[i];
+    var w = 0.001;
+    var cellWidth = 50;
+    var cellHeight = 50;
+    //p.vx += (Math.floor((p.x + cellWidth / 2) / cellWidth) * cellWidth - p.x) * w;
+    //p.vy += (Math.floor((p.y + cellHeight / 2) / cellHeight) * cellHeight - p.y) * w;
+  }
+}
+
+function draw() {
+  background(255);
+  update();
+
+  for (var i = 0; i < points.length * 2; i += 1) {
+    var p1 = points[i % points.length];
+    var p2 = points[(i + 1) % points.length];
+    var p3 = points[(i + 2) % points.length];
+//    for (var j = i+1; j < points.length; j++) {
+    var t = (sin(millis() / 1000.0) + 1) / 2;
+    //stroke(t * 255);
+    stroke(0);
+    strokeWeight(0.1);
+    noFill();
+    bezier(p1.x + (p2.x - p1.x) * 0.5,
+	   p1.y + (p2.y - p1.y) * 0.5,
+	   p2.x, p2.y,
+	   p2.x, p2.y,
+	   p3.x + (p2.x - p3.x) * 0.5,
+	   p3.y + (p2.y - p3.y) * 0.5);
+    
+//    stroke(255, 0, 0);
+    
+    //line(p1.x, p1.y, p2.x, p2.y);
+  //  }
+  }
+}
