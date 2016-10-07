@@ -155,7 +155,11 @@ function update() {
       var p2 = points[j];
       var dx = p2.x - p1.x;
       var dy = p2.y - p1.y;
-      var d = max(100, sqrt(dx*dx + dy*dy));
+      var d = dx*dx + dy*dy;
+      if (d > 300) {
+	continue;
+      }
+      d = max(50, sqrt(d));
       var nx = dx / d;
       var ny = dy / d;
       var f = -1 / (d * d) * 100;
