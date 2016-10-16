@@ -7,7 +7,7 @@ function Point(x, y) {
   this.vy = random(-1, 1);
 
   this.update = function() {
-    var padding = 50;
+    var padding = 70;
     var wall_k = 0.1;
     if (this.x < padding) {
       this.vx += (padding - this.x) * wall_k;
@@ -24,9 +24,10 @@ function Point(x, y) {
     this.vy += ((height / 2) - this.y) * -0.00001;
 
     var v = max(0.001, sqrt(this.vx * this.vx + this.vy * this.vy));
-    var speed = 1;
-    this.vx = this.vx / v * speed;
-    this.vy = this.vy / v * speed;
+    var speed = 0.5;
+    var ratio = 0.2;
+    this.vx = this.vx * ratio + (this.vx / v * speed * (1 - ratio));
+    this.vy = this.vy * ratio + (this.vy / v * speed * (1 - ratio));
     this.x += this.vx;
     this.y += this.vy;
   };
@@ -43,7 +44,7 @@ function Point(x, y) {
 function Edge(a, b) {
   this.a = a;
   this.b = b;
-  this.l = a.dist(b) * 0.5;
+  this.l = a.dist(b) * 0.1;
   this.k = 1;
   
   this.update = function() {
@@ -62,8 +63,8 @@ function Edge(a, b) {
   };
 
   this.draw = function() {
-    stroke(150);
-    strokeWeight(max(0.5, min(1.5, this.k * 100)));
+    stroke(200);
+    strokeWeight(max(0.5, min(1, this.k * 100)));
     line(this.b.x, this.b.y, this.a.x, this.a.y);
   };
 

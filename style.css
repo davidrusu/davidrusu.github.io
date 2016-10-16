@@ -44,10 +44,13 @@ a {
     text-align: left;
     /*background-color: rgba(255, 255, 255, 0.7);*/
     padding: 0.2em;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAPElEQVQoU2NkIA5IMhKhTpKBgeE5IYVgRSDD8CmEK8KnEEURLoUYirApxKoIXSFORcgK8SqCKSSoCKQQAI9pCSRK6e3oAAAAAElFTkSuQmCC) repeat;x
 }
 
 #name {
-    font-size: 50pt;
+    /*font-size: 20pt;*/
+    font-weight: bold;
+    display: inline-block;
 }
 
 #work {
@@ -105,4 +108,17 @@ a {
     padding-bottom: 10px;
     margin-bottom: 10px;
     border-bottom: 0.01em black solid;
+}
+
+.navbar_item {
+    margin: 10px;
+}
+
+.navbar {
+    display: inline-block;
+    font-weight: light;
+}
+
+#header {
+    margin-top: 20px;
 }
