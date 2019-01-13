@@ -20,12 +20,12 @@ function Point(x, y) {
       this.vy += ((height - padding) - this.y) * wall_k;
     }
 
-    this.vx += ((width / 2) - this.x) * -0.00001;
-    this.vy += ((height / 2) - this.y) * -0.00001;
+    this.vx += ((width / 2) - this.x) * -0.0001;
+    this.vy += ((height / 2) - this.y) * -0.0001;
 
-    var v = max(0.001, sqrt(this.vx * this.vx + this.vy * this.vy));
-    var speed = 0.5;
-    var ratio = 0.2;
+    var v = max(0.01, sqrt(this.vx * this.vx + this.vy * this.vy));
+    var speed = 1.;
+    var ratio = 0.3;
     this.vx = this.vx * ratio + (this.vx / v * speed * (1 - ratio));
     this.vy = this.vy * ratio + (this.vy / v * speed * (1 - ratio));
     this.x += this.vx;
@@ -45,14 +45,14 @@ function Edge(a, b) {
   this.a = a;
   this.b = b;
   this.l = a.dist(b) * 0.1;
-  this.k = 1;
+  this.k = 1 * 0.5;
   
   this.update = function() {
-    this.k *= 0.9;
+    this.k *= random(0.9, 1.05);
     var dx = this.b.x - this.a.x;
     var dy = this.b.y - this.a.y;
     var d = max(1, sqrt(dx*dx + dy*dy));
-    var f = -(this.l - d) * this.k;
+    var f = -(this.l - d) * (1 - this.k);
     var fx = f * dx / d;
     var fy = f * dy / d;
 
@@ -60,11 +60,17 @@ function Edge(a, b) {
     this.a.vy += fy;
     this.b.vx -= fx;
     this.b.vy -= fy;
+
+    this.a.vx *= 0.9;
+    this.a.vy *= 0.9;
+    this.b.vx *= 0.9;
+    this.b.vy *= 0.9;    
   };
 
   this.draw = function() {
-    stroke(200);
-    strokeWeight(max(0.5, min(1, this.k * 100)));
+    stroke(0);
+    strokeCap(SQUARE);
+    strokeWeight(max(0.1, min(10, Math.pow(this.k, 2) * 10)));
     line(this.b.x, this.b.y, this.a.x, this.a.y);
   };
 
@@ -83,46 +89,70 @@ var edges = [];
 function setup() {
   var cnv = createCanvas(windowWidth, windowHeight);
   cnv.parent('bg_sketch');
-  for (var i = 0; i < 300; i++) {
+  for (var i = 0; i < 2000; i++) {
     points.push(new Point(random(width), random(height)));
   }
+  mouseX = 0;
+  mouseY = height / 2;
 }
 
 function expand_graph() {
-  points.sort(function(a, b) {
-    return dist(a.x, a.y, mouseX, mouseY) - dist(b.x, b.y, mouseX, mouseY);
-  });
-  var valid = points.filter(function(p) {
+  let close_p = undefined;
+  let close_dist = undefined;
+  let scd_close_p = undefined;
+  let scd_close_dist = undefined;
+
+  for (let i = 0; i < points.length; i++) {
+    let p = points[i];
+    let already_in_graph = false;
     for (var e of edges) {
       if (e.has_point(p)) {
-	return false;
+	already_in_graph = true;
+        break;
       }
     }
-    return true;
-  });
+    if (already_in_graph) continue;
+    
+    let p_dist = dist(p.x, p.y, mouseX, mouseY);
+    if (close_p == undefined || p_dist < close_dist) {
+      scd_close_p = close_p;
+      scd_close_dist = close_dist;
+      close_p = p;
+      close_dist = p_dist;
+    } else if (scd_close_p == undefined || p_dist < scd_close_dist) {
+      scd_close_p = p;
+      scd_close_dist = p_dist;
+    }
+  }
   if (edges.length == 0) {
-    if (valid.length > 2) {
-      edges.push(new Edge(valid[0], valid[1]));
+    if (scd_close_p != undefined) {
+      edges.push(new Edge(close_p, scd_close_p));
     }
-  } else if (valid.length >= 1) {
-    var p = valid[0];
-    points.sort(function(a, b) {
-      return dist(a.x, a.y, p.x, p.y) - dist(b.x, b.y, p.x, p.y);
-    });
-    var attachablePoints = points.filter(function(p) {
-      for (var e of edges) {
-	if (e.has_point(p)) {
-	  return true;
-	}
+  } else if (close_p != undefined) {
+    let close_attached_point = undefined;
+    let close_attached_point_dist = undefined;
+    for (var e of edges) {
+      let a_dist = dist(e.a.x, e.a.y, close_p.x, close_p.y);
+      let b_dist = dist(e.b.x, e.b.y, close_p.x, close_p.y);
+      if (close_attached_point == undefined ||
+	  a_dist < close_attached_point_dist) {
+	close_attached_point = e.a;
+	close_attached_point_dist = a_dist;
       }
-      return false;
-    });
-    edges.push(new Edge(p, attachablePoints[0]));
+      if (close_attached_point == undefined ||
+	  b_dist < close_attached_point_dist) {
+	close_attached_point = e.b;
+	close_attached_point_dist = b_dist;
+      }
+    }
+    if (close_attached_point) {
+      edges.push(new Edge(close_p, close_attached_point));
+    }
   }
 }
 
 function update() {
-  for (var k = 0; k < 1; k++) {
+  for (var k = 0; k < 2; k++) {
     expand_graph();
   }
   
